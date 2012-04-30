@@ -8,10 +8,13 @@
         this.playAssetName = 'img/play.png';
         this.mapAssetName = 'map1.gif';
 
+        this.buttonWidth = 60;
+        this.buttonHeight = 40;
+        this.buttonAAssetName = "img/buttonA.png";
+        this.buttonBAssetName = "img/buttonB.png";
+
         this.soundStart = 'sounds/se6.wav';
         this.soundOK = 'sounds/lock4.wav';
-        this.soundSelect = 'sounds/lock3.wav';
-        this.soundCancel = 'sounds/se8.wav';
         this.soundBGM = 'sounds/bgm08.wav';
     },
     getAssetList: function () {
@@ -19,10 +22,10 @@
             this.iconAssetName,
             this.playAssetName,
             this.mapAssetName,
+            this.buttonAAssetName,
+            this.buttonBAssetName,
             this.soundStart,
             this.soundOK,
-            this.soundSelect,
-            this.soundCancel,
             this.soundBGM);
         return assetList;
     },

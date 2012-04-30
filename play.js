@@ -68,7 +68,7 @@ function CreatePlayScene1(gameData) {
         }
 
         // 円
-        var circle = new exte.Figure.Circle(60, 200, 30);
+        var circle = new exte.Figure.Circle(60, 190, 30);
         mainGroup.addChild(circle.createSprite(exte.toRGBString(100), false));
 
         // 円内にランダム配置
@@ -88,8 +88,8 @@ function CreatePlayScene1(gameData) {
         mainGroup.addChild(arc.createSprite(exte.toRGBString(100), false));
 
         var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 10;
-        nextLabel.y = 300;
+        nextLabel.x = 220;
+        nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
@@ -98,9 +98,25 @@ function CreatePlayScene1(gameData) {
     var uiGroup = new Group();
     (function () {
         var pad = new Pad();
-        pad.x = 220;
+        pad.x = 0;
         pad.y = 220;
         uiGroup.addChild(pad);
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
     })();
     scene.addChild(uiGroup);
 
@@ -221,8 +237,8 @@ function CreatePlayScene2(gameData) {
         mainGroup.addChild(tLabel);
 
         var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 10;
-        nextLabel.y = 300;
+        nextLabel.x = 220;
+        nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
@@ -235,12 +251,29 @@ function CreatePlayScene2(gameData) {
     var uiGroup = new Group();
     (function () {
         var pad = new Pad();
-        pad.x = 220;
+        pad.x = 0;
         pad.y = 220;
         uiGroup.addChild(pad);
 
         uiGroup.addChild(rsp);
         uiGroup.addChild(timer);
+        
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
     })();
     scene.addChild(uiGroup);
 
@@ -343,13 +376,13 @@ function CreatePlayScene3(gameData) {
 
         var label1 = new Label('exte.shuffleArray[' + suffles.join(',') + ']');
         label1.x = 10;
-        label1.y = 20;
+        label1.y = 10;
         mainGroup.addChild(label1);
 
         var map = new Map(16, 16);
         map.image = game.assets[gameData.mapAssetName];
         map.x = 10;
-        map.y = 40;
+        map.y = 30;
         exte.setMazeData(map, 7, 7, 322, 520);
         mainGroup.addChild(map);
 
@@ -360,7 +393,7 @@ function CreatePlayScene3(gameData) {
 
         var str = 'ABCDE';
 
-        var rect = new exte.Figure.Rectangle(10, 190, 100, 50);
+        var rect = new exte.Figure.Rectangle(10, 170, 100, 50);
         var rp = rect.createSprite(exte.toRGBString(200), true);
         mainGroup.addChild(rp);
 
@@ -371,20 +404,8 @@ function CreatePlayScene3(gameData) {
 
         var label4 = new Label('exte.stringWidth:"' + str + '"=' + exte.stringWidth(rp.image, str));
         label4.x = rect.right;
-        label4.y = rect.top;
+        label4.y = rect.top + 50;
         mainGroup.addChild(label4);
-
-        var str5 = 'あいうえお';
-        var label5 = new Label(str5 + '→' + exte.toKatakanaCase(str5));
-        label5.x = 10;
-        label5.y = 250;
-        mainGroup.addChild(label5);
-
-        var str6 = 'ガギグゲゴ';
-        var label6 = new Label(str6 + '→' + exte.toHirakanaCase(str6));
-        label6.x = 10;
-        label6.y = 262;
-        mainGroup.addChild(label6);
 
         rlabel = new Label('exte.randomString' + exte.makeSpace() + 'push"A"');
         rlabel.x = 140;
@@ -406,9 +427,22 @@ function CreatePlayScene3(gameData) {
         alabel.y = 120;
         mainGroup.addChild(alabel);
 
+        var str5 = 'あいうえお';
+        var label5 = new Label(str5 + '→' + exte.toKatakanaCase(str5));
+        label5.x = 140;
+        label5.y = 140;
+        mainGroup.addChild(label5);
+
+        var str6 = 'ガギグゲゴ';
+        var label6 = new Label(str6 + '→' + exte.toHirakanaCase(str6));
+        label6.x = 140;
+        label6.y = 155;
+        mainGroup.addChild(label6);
+
+
         var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 10;
-        nextLabel.y = 300;
+        nextLabel.x = 220;
+        nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
@@ -418,9 +452,26 @@ function CreatePlayScene3(gameData) {
     var uiGroup = new Group();
     (function () {
         var pad = new Pad();
-        pad.x = 220;
+        pad.x = 0;
         pad.y = 220;
         uiGroup.addChild(pad);
+        
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
     })();
     scene.addChild(uiGroup);
 
@@ -563,8 +614,8 @@ function CreatePlayScene4(gameData) {
         mainGroup.addChild(label8);
 
         var nextLabel = new Label('push"B"→top');
-        nextLabel.x = 10;
-        nextLabel.y = 270;
+        nextLabel.x = 220;
+        nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
@@ -574,9 +625,26 @@ function CreatePlayScene4(gameData) {
     var uiGroup = new Group();
     (function () {
         var pad = new Pad();
-        pad.x = 220;
+        pad.x = 0;
         pad.y = 220;
         uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
     })();
     scene.addChild(uiGroup);
 
