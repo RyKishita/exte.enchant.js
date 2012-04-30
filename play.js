@@ -223,17 +223,34 @@ function CreatePlayScene2(gameData) {
 
         var rLabelT = new Label('AverageRandamizer(push"UP")');
         rLabelT.x = 10;
-        rLabelT.y = 120;
+        rLabelT.y = 80;
         mainGroup.addChild(rLabelT);
 
         rLabel = new Label('');
         rLabel.x = 10;
-        rLabel.y = 150;
+        rLabel.y = 100;
         mainGroup.addChild(rLabel);
+
+        var str = 'ABCDE';
+
+        var rect = new exte.Figure.Rectangle(10, 120, 50, 20);
+        var rp = rect.createSprite(exte.toRGBString(200), true);
+        mainGroup.addChild(rp);
+
+        var label13 = new Label(str);
+        label13.x = rect.left;
+        label13.y = rect.top;
+        mainGroup.addChild(label13);
+
+        var label14 = new Label('exte.stringWidth:"' + str + '"=' + exte.stringWidth(rp.image, str));
+        label14.x = rect.right;
+        label14.y = rect.top;
+        mainGroup.addChild(label14);
+
 
         tLabel = new Label('timer');
         tLabel.x = 10;
-        tLabel.y = 180;
+        tLabel.y = 150;
         mainGroup.addChild(tLabel);
 
         var nextLabel = new Label('push"B"→next');
@@ -391,21 +408,22 @@ function CreatePlayScene3(gameData) {
         label2.y = 150;
         mainGroup.addChild(label2);
 
-        var str = 'ABCDE';
+        var targetRow = rand(7);
+        var targetColumn = rand(7);
+        var samepoints = [];
+        exte.samePartsForEach(map.collisionData, targetRow, targetColumn, function(row, column){
+        	samepoints.push('('+row+','+column+')');
+        });
 
-        var rect = new exte.Figure.Rectangle(10, 170, 100, 50);
-        var rp = rect.createSprite(exte.toRGBString(200), true);
-        mainGroup.addChild(rp);
+        var label20 = new Label('exte.samePartsForEach(' + targetRow + ','+targetColumn+ ')');
+        label20.x = 10;
+        label20.y = 170;
+        mainGroup.addChild(label20);
 
-        var label3 = new Label(str);
-        label3.x = rect.left;
-        label3.y = rect.top;
-        mainGroup.addChild(label3);
-
-        var label4 = new Label('exte.stringWidth:"' + str + '"=' + exte.stringWidth(rp.image, str));
-        label4.x = rect.right;
-        label4.y = rect.top + 50;
-        mainGroup.addChild(label4);
+        var label21 = new Label(''+samepoints);
+        label21.x = 10;
+        label21.y = 185;
+        mainGroup.addChild(label21);
 
         rlabel = new Label('exte.randomString' + exte.makeSpace() + 'push"A"');
         rlabel.x = 140;

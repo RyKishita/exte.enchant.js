@@ -838,7 +838,7 @@ var exte =
     // 四捨五入
     // @param {実数} [num] 数値
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.roundと同じ)
-    // @return {Boolen} 出たならtrue
+    // @return {実数} 結果
     var round = function (num, figure) {
         if (typeof figure == "number") {
             var base = Math.pow(10, figure);
@@ -851,7 +851,7 @@ var exte =
     // 切り上げ
     // @param {実数} [num] 数値
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.ceilと同じ)
-    // @return {Boolen} 出たならtrue
+    // @return {実数} 結果
     var ceil = function (num, figure) {
         if (typeof figure == "number") {
             var base = Math.pow(10, figure);
@@ -864,7 +864,7 @@ var exte =
     // 切り捨て
     // @param {実数} [num] 数値
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.floorと同じ)
-    // @return {Boolen} 出たならtrue
+    // @return {実数} 結果
     var floor = function (num, figure) {
         if (typeof figure == "number") {
             var base = Math.pow(10, figure);
@@ -945,6 +945,68 @@ var exte =
     var arrayEraseIf = function (ary, fn) {
         for (var i = ary.length - 1; i >= 0; i--) {// 逆順
             if (fn(ary[i], i, ary)) { ary.splice(i, 1); }
+        }
+    };
+
+    // 指定した地点と同じ値が続く地点毎にfuncを呼ぶ
+    // お絵かきソフトの塗りつぶしのイメージ
+    // @param {Array<Array>} [map] 2次元配列。各行の列数は全て同じであることを期待します
+    // @param {整数} [baseRowNo] 基準地点の行番号
+    // @param {整数} [baseColumnNo] 基準地点の列番号
+    // @param {Function} [func] 処理関数。基準地点も呼ばれます。
+    // @param {Function} [matchFunc] 値比較関数。matchFunc(value1, value2)戻り値Boolen 省略時は'=='で比較 
+    var samePartsForEach = function(map, baseRowNo, baseColumnNo, func, matchFunc) {
+        var rowNum = map.length;
+        var columnNum = map[0].length;
+        var baseValue = map[baseRowNo][baseColumnNo];
+
+        var points = [];
+        function AddPoint(row, column) {
+            for (var i in points) {
+                var point = points[i];
+                if (point.row == row && point.column == column) return;
+            }
+
+            var v = map[row][column];
+
+            var bMatch;
+            if (matchFunc){
+            	bMatch = matchFunc(baseValue, v);
+            } else {
+            	bMatch = (baseValue == v);
+            }
+
+            if (bMatch) {
+	            func(row, column);
+            }
+
+            points.push({ row: row, column: column, valid: bMatch });
+        }
+        AddPoint(baseRowNo, baseColumnNo);
+
+        while (true) {
+            var point = null;
+            for (var i in points) {
+                if (points[i].valid) {
+                    point = points[i];
+                    break;
+                }
+            }
+            if (point == null) break;
+            point.valid = false;
+
+            if (0 < point.row) {
+                AddPoint(point.row - 1, point.column);
+            }
+            if (0 < point.column) {
+                AddPoint(point.row, point.column - 1);
+            }
+            if ((point.row + 1) < rowNum) {
+                AddPoint(point.row + 1, point.column);
+            }
+            if ((point.column + 1) < columnNum) {
+                AddPoint(point.row, point.column + 1);
+            }
         }
     };
 
@@ -2503,6 +2565,7 @@ var exte =
         formatString: formatString,
         arrayQueryIf: arrayQueryIf,
         arrayEraseIf: arrayEraseIf,
+        samePartsForEach: samePartsForEach,
         Figure: Figure
     };
 })();
