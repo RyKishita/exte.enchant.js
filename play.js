@@ -631,7 +631,7 @@ function CreatePlayScene4(gameData) {
         label8.y = 200;
         mainGroup.addChild(label8);
 
-        var nextLabel = new Label('push"B"→top');
+        var nextLabel = new Label('push"B"→next');
         nextLabel.x = 220;
         nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
@@ -689,6 +689,131 @@ function CreatePlayScene4(gameData) {
             update_calc();
         }
         if (game.input.b) {
+            scene.moveSceneTo('5');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlayScene5(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('5');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+    var mainGroup = new Group();
+    (function () {
+        var label = new Label('exte.findWorkForEach(row5column5cost10) push"a"→update');
+        label.x = 0;
+        label.y = 10;
+        mainGroup.addChild(label);
+
+        var nextLabel = new Label('push"B"→top');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        mainGroup.addChild(nextLabel);
+    })();
+    scene.addChild(mainGroup);
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    var rowNum = 10;
+    var columnNum = 10;
+    var costMap = [];
+    var labelMap = [];
+    for (var row = 0; row < rowNum; row++) {
+        var rows = [];
+        var labels = [];
+        for (var column = 0; column < columnNum; column++) {
+            rows.push(0);
+
+            var label = new Label('0');
+            label.x = column * 15 + 10;
+            label.y = row * 15 + 40;
+            mainGroup.addChild(label);
+            labels.push(label);
+
+            if (row == 5 && column == 5) {
+                var rs = exte.Figure.createRectangleSprite(15, 15, 'black');
+                rs.x = label.x-5;
+                rs.y = label.y;
+                mainGroup.addChild(rs);
+            }
+        }
+        costMap.push(rows);
+        labelMap.push(labels);
+    }
+    function makeMap() {
+        for (var row = 0; row < rowNum; row++) {
+            for (var column = 0; column < columnNum; column++) {
+                var cost = rand(5) + 1;
+                costMap[row][column] = cost;
+                labelMap[row][column].text = cost.toString();
+                labelMap[row][column].color = 'black';
+            }
+        }
+
+        exte.findWorkForEach(costMap, 5, 5, 10, function (row, column, rest) {
+            labelMap[row][column].color = 'red';
+        });
+    }
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+        makeMap();
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        // game.end(scoreLabel.score, scoreLabel.score + '点');
+
+        if (game.input.up) {
+        }
+        if (game.input.down) {
+        }
+        if (game.input.left) {
+        }
+        if (game.input.right) {
+        }
+        if (game.input.a) {
+            makeMap();
+        }
+        if (game.input.b) {
             scene.moveSceneTo('1');
         }
     });
@@ -701,4 +826,5 @@ function CreatePlayScene(gameData) {
     CreatePlayScene2(gameData);
     CreatePlayScene3(gameData);
     CreatePlayScene4(gameData);
+    CreatePlayScene5(gameData);
 }

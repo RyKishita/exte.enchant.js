@@ -989,7 +989,7 @@ var exte =
     // @param {Array<Array>} [map] 2次元配列。各行の列数は全て同じであることを期待します
     // @param {整数} [baseRowNo] 基準地点の行番号
     // @param {整数} [baseColumnNo] 基準地点の列番号
-    // @param {Function} [func] 処理関数。基準地点も呼ばれます。
+    // @param {Function} [func] 処理関数。func(row,column)。基準地点も呼ばれます。
     // @param {Function} [matchFunc] 値比較関数。matchFunc(value1, value2)戻り値Boolen 省略時は'=='で比較 
     var samePartsForEach = function (map, baseRowNo, baseColumnNo, func, matchFunc) {
         var rowNum = map.length;
@@ -1046,6 +1046,75 @@ var exte =
         }
     };
 
+    // シミュレーションゲームなどのユニット移動判定。移動可能マス毎にfuncを呼ぶ
+    // @param {Array<Array>} [map] 2次元配列。各マスの移動コスト(0やマイナスも可)を設定。各行の列数は全て同じであることを期待します
+    // @param {整数} [baseRowNo] ユニットの現在位置の行番号
+    // @param {整数} [baseColumnNo] ユニットの現在位置の列番号
+    // @param {整数} [cost] ユニットの移動力
+    // @param {Function} [func] 処理関数。func(row, column, rest)。コストが足りれば基準地点も呼ばれます。
+    var findWorkForEach = function (map, baseRowNo, baseColumnNo, cost, func) {
+        var rowNum = map.length;
+        var columnNum = map[0].length;
+
+        var points = [];
+        points.push({ row: baseRowNo, column: baseColumnNo, rest: cost, valid: true });
+        var firstPos = true;
+
+        function AddPoint(row, column, rest) {
+            var r = map[row][column];
+            if (rest < r) return;
+            rest -= r;
+
+            for (var i in points) {
+                var point = points[i];
+                if (point.row != row || point.column != column) continue;
+
+                if (point.rest < rest) {
+                    point.rest = rest;
+                    point.valid = true;
+                }
+                return;
+            }
+
+            points.push({ row: row, column: column, rest: rest, valid: true });
+        }
+
+        while (true) {
+            var point = null;
+            for (var i in points) {
+                if (points[i].valid) {
+                    point = points[i];
+                    break;
+                }
+            }
+            if (point == null) break;
+            point.valid = false;
+
+            if (0 < point.row) {
+                AddPoint(point.row - 1, point.column, point.rest);
+            }
+            if (0 < point.column) {
+                AddPoint(point.row, point.column - 1, point.rest);
+            }
+            if ((point.row + 1) < rowNum) {
+                AddPoint(point.row + 1, point.column, point.rest);
+            }
+            if ((point.column + 1) < columnNum) {
+                AddPoint(point.row, point.column + 1, point.rest);
+            }
+
+            if (firstPos) {
+                firstPos = false;
+                point.rest = 0;
+            }
+        }
+
+        for (var i in points) {
+            var point = points[i];
+            func(point.row, point.column, point.rest);
+        }
+    };
+
     // 超多数オブジェクト管理
     //var ManySpritesManager = enchant.Class.create({
     //    initialize: function () {
@@ -1085,7 +1154,7 @@ var exte =
         // @return {enchant.Sprite} 結果
         var createRectangleSprite = function (width, height, color, fill) {
             var sprite = new Sprite(width, height);
-            sprite.image = createSimpleSurface(width, height, color, fill);
+            sprite.image = createRectangleSurface(width, height, color, fill);
             return sprite;
         };
 
@@ -2575,6 +2644,7 @@ var exte =
         arrayQueryIf: arrayQueryIf,
         arrayEraseIf: arrayEraseIf,
         samePartsForEach: samePartsForEach,
+        findWorkForEach: findWorkForEach,
         Figure: Figure
     };
 })();
