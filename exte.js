@@ -175,6 +175,11 @@ var exte =
                         this._setFadeIn = true;
                         this.opacity = 0;
                     });
+                } else {
+                    this.addEventListener(enchant.Event.ENTER, function (e) {
+                        this._setFadeIn = false;
+                        this.opacity = 1;
+                    });
                 }
 
                 s = (fadeOutSec == undefined) ? 0.5 : fadeOutSec;
@@ -189,7 +194,11 @@ var exte =
 
                         var nextScene = _scenes[this._nextSceneName];
                         nextScene.dispatchEvent(new enchant.Event(Event_SceneExStarting));
-                        enchant.Game.instance.replaceScene(nextScene);
+                        if (nextScene == this) {
+                            nextScene.dispatchEvent(new enchant.Event(enchant.Event.ENTER));
+                        } else {
+                            enchant.Game.instance.replaceScene(nextScene);
+                        }
                     }
                     for (var i in this.inputPatterns) {
                         var p = this.inputPatterns[i];
@@ -273,6 +282,16 @@ var exte =
                         return false;
                     }
                 };
+
+                // 内部用 透過率設定再帰
+                this._setOpacityChilds = function (me, opct) {
+                    if (me.childNodes === undefined) return;
+                    for (var i in me.childNodes) {
+                        var node = me.childNodes[i];
+                        if (node.opacity !== undefined) node.opacity = opct;
+                        this._setOpacityChilds(node, opct);
+                    }
+                }
             },
             // フェードインまたはフェードアウト中
             fadeProsessing: {
@@ -287,19 +306,10 @@ var exte =
                 },
                 set: function (v) {
                     this._opacity = v;
-
-                    for (var i in this.childNodes) {
-                        var node = this.childNodes[i];
-                        if (node.opacity) node.opacity = v;
-                        if (node.childNodes) {
-                            for (var j in node.childNodes) {
-                                node.childNodes[j].opacity = v;
-                            }
-                        }
-                    }
+                    this._setOpacityChilds(this, v);
                 }
             },
-            // シーン切り替え
+            // シーン切り替え。現在のシーンを指定した場合リスタート
             // @param {string} [name] 切り替えるシーンの名前
             moveSceneTo: function (name) {
                 this._nextSceneName = name;
@@ -497,14 +507,40 @@ var exte =
     // @param {実数} [d] 度
     // @return {実数} ラジアン
     var degToRad = function (d) {
-        return d * Math.PI / 180;
+        return d * Math.PI / 180.0;
     };
 
     // ラジアン → 度
     // @param {実数} [r] ラジアン
     // @return {実数} 度
     var radToDeg = function (r) {
-        return r * 180 / Math.PI;
+        return r * 180.0 / Math.PI;
+    };
+
+    // ラジアンを0～Math.PI * 2.0未満の範囲に補正
+    // @param {実数} [r] ラジアン
+    // @return {実数} 結果
+    var normalinzeRad = function (r) {
+        if (r < 0.0) {
+            return this.normalinzeRad(r + Math.PI * 2.0); //再帰
+        }
+        if (Math.PI * 2.0 <= r) {
+            return this.normalinzeRad(r - Math.PI * 2.0); //再帰
+        }
+        return r;
+    };
+
+    // 度を0～360未満の範囲に補正
+    // @param {実数} [d] 度
+    // @return {実数} 結果
+    var normalinzeDeg = function (d) {
+        if (d < 0.0) {
+            return this.normalinzeDeg(d + 360.0); //再帰
+        }
+        if (360.0 <= d) {
+            return this.normalinzeDeg(d - 360.0); //再帰
+        }
+        return d;
     };
 
     // 例えば全て1をセットしたArrayなどを作る
@@ -639,74 +675,74 @@ var exte =
     var collision2Sprites = function (sprite1, sprite2) {
         if (sprite1.rotation == 0 && sprite2.rotation == 0) return sprite1.intersect(sprite2);
 
-	    //aはthis,bはother
-	    var a = new Array(9);
-	    var b = new Array(9);
-	 
-	    //回転してないときの４点を格納+各辺の中点4点([0]=[4],[5][6][7][8]はすり抜けがひどいので追加)
-	    a[0] = { X: sprite1.x                , Y: sprite1.y                      };
-	    a[1] = { X: sprite1.x + sprite1.width, Y: sprite1.y                      };
-	    a[2] = { X: sprite1.x + sprite1.width, Y: sprite1.y + sprite1.height     };
-	    a[3] = { X: sprite1.x                , Y: sprite1.y + sprite1.height     };
-	    a[4] = { X: sprite1.x                , Y: sprite1.y                      };
-	    a[5] = { X: sprite1.x + sprite1.width / 2, Y: sprite1.y                  };
-	    a[6] = { X: sprite1.x + sprite1.width / 2, Y: sprite1.y + sprite1.height };
-	    a[7] = { X: sprite1.x                , Y: sprite1.y + sprite1.height / 2 };
-	    a[8] = { X: sprite1.x + sprite1.width, Y: sprite1.y + sprite1.height / 2 };
-	    b[0] = { X: sprite2.x                , Y: sprite2.y                      };
-	    b[1] = { X: sprite2.x + sprite2.width, Y: sprite2.y                      };
-	    b[2] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height     };
-	    b[3] = { X: sprite2.x                , Y: sprite2.y + sprite2.height     };
-	    b[4] = { X: sprite2.x                , Y: sprite2.y                      };
-	    b[5] = { X: sprite2.x + sprite2.width / 2, Y: sprite2.y                  };
-	    b[6] = { X: sprite2.x + sprite2.width / 2, Y: sprite2.y + sprite2.height };
-	    b[7] = { X: sprite2.x                , Y: sprite2.y + sprite2.height / 2 };
-	    b[8] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height / 2 };
-	 
-	    //スプライトの中心を原点に平行移動
-	    for (var i in a) {
-	        a[i].X -= (sprite1.x + sprite1.width / 2);
-	        a[i].Y -= (sprite1.y + sprite1.height / 2);
-	    }
-	    for (var i in b) {
-	        b[i].X -= (sprite2.x + sprite2.width / 2);
-	        b[i].Y -= (sprite2.y + sprite2.height / 2);
-	    }
-	 
-	    //スプライトを回転させる
-	    for (var i in a) {
-	        var tmpX = a[i].X;
-	        var tmpY = a[i].Y;
-	        a[i].X = tmpX * Math.cos(sprite1.rotation * Math.PI / 180) - tmpY * Math.sin(sprite1.rotation * Math.PI / 180);
-	        a[i].Y = tmpX * Math.sin(sprite1.rotation * Math.PI / 180) + tmpY * Math.cos(sprite1.rotation * Math.PI / 180);
-	    }
-	    for (var i in b) {
-	        var tmpX = b[i].X;
-	        var tmpY = b[i].Y;
-	        b[i].X = tmpX * Math.cos(sprite2.rotation * Math.PI / 180) - tmpY * Math.sin(sprite2.rotation * Math.PI / 180);
-	        b[i].Y = tmpX * Math.sin(sprite2.rotation * Math.PI / 180) + tmpY * Math.cos(sprite2.rotation * Math.PI / 180);
-	    }
-	 
-	    //元の位置に平行移動
-	    for (var i in a) {
-	        a[i].X += (sprite1.x + sprite1.width / 2);
-	        a[i].Y += (sprite1.y + sprite1.height / 2);
-	    }
-	    for (var i in b) {
-	        b[i].X += (sprite2.x + sprite2.width / 2);
-	        b[i].Y += (sprite2.y + sprite2.height / 2);
-	    }
-	 
-	    //それぞれの線分で交差判定
-	    for (var i = 0; i < a.length-1; i++) for (var j = 0; j < b.length-1; j++) {
-	        var penetrate1 = (a[i + 1].X - a[i].X) * (b[    j].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[    j].X - a[i].X);
-	        var penetrate2 = (a[i + 1].X - a[i].X) * (b[j + 1].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[j + 1].X - a[i].X);
-	        var penetrate3 = (b[j + 1].X - b[j].X) * (a[    i].Y - b[j].Y) - (b[j + 1].Y - b[j].Y) * (a[    i].X - b[j].X);
-	        var penetrate4 = (b[j + 1].X - b[j].X) * (a[i + 1].Y - b[j].Y) - (b[j + 1].Y - b[j].Y) * (a[i + 1].X - b[j].X);
-	        if (penetrate1 * penetrate2 < 0 && penetrate3 * penetrate4 < 0)
-	            return true;
-	    }
-	    return false;
+        //aはthis,bはother
+        var a = new Array(9);
+        var b = new Array(9);
+
+        //回転してないときの４点を格納+各辺の中点4点([0]=[4],[5][6][7][8]はすり抜けがひどいので追加)
+        a[0] = { X: sprite1.x, Y: sprite1.y };
+        a[1] = { X: sprite1.x + sprite1.width, Y: sprite1.y };
+        a[2] = { X: sprite1.x + sprite1.width, Y: sprite1.y + sprite1.height };
+        a[3] = { X: sprite1.x, Y: sprite1.y + sprite1.height };
+        a[4] = { X: sprite1.x, Y: sprite1.y };
+        a[5] = { X: sprite1.x + sprite1.width / 2, Y: sprite1.y };
+        a[6] = { X: sprite1.x + sprite1.width / 2, Y: sprite1.y + sprite1.height };
+        a[7] = { X: sprite1.x, Y: sprite1.y + sprite1.height / 2 };
+        a[8] = { X: sprite1.x + sprite1.width, Y: sprite1.y + sprite1.height / 2 };
+        b[0] = { X: sprite2.x, Y: sprite2.y };
+        b[1] = { X: sprite2.x + sprite2.width, Y: sprite2.y };
+        b[2] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height };
+        b[3] = { X: sprite2.x, Y: sprite2.y + sprite2.height };
+        b[4] = { X: sprite2.x, Y: sprite2.y };
+        b[5] = { X: sprite2.x + sprite2.width / 2, Y: sprite2.y };
+        b[6] = { X: sprite2.x + sprite2.width / 2, Y: sprite2.y + sprite2.height };
+        b[7] = { X: sprite2.x, Y: sprite2.y + sprite2.height / 2 };
+        b[8] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height / 2 };
+
+        //スプライトの中心を原点に平行移動
+        for (var i in a) {
+            a[i].X -= (sprite1.x + sprite1.width / 2);
+            a[i].Y -= (sprite1.y + sprite1.height / 2);
+        }
+        for (var i in b) {
+            b[i].X -= (sprite2.x + sprite2.width / 2);
+            b[i].Y -= (sprite2.y + sprite2.height / 2);
+        }
+
+        //スプライトを回転させる
+        for (var i in a) {
+            var tmpX = a[i].X;
+            var tmpY = a[i].Y;
+            a[i].X = tmpX * Math.cos(sprite1.rotation * Math.PI / 180) - tmpY * Math.sin(sprite1.rotation * Math.PI / 180);
+            a[i].Y = tmpX * Math.sin(sprite1.rotation * Math.PI / 180) + tmpY * Math.cos(sprite1.rotation * Math.PI / 180);
+        }
+        for (var i in b) {
+            var tmpX = b[i].X;
+            var tmpY = b[i].Y;
+            b[i].X = tmpX * Math.cos(sprite2.rotation * Math.PI / 180) - tmpY * Math.sin(sprite2.rotation * Math.PI / 180);
+            b[i].Y = tmpX * Math.sin(sprite2.rotation * Math.PI / 180) + tmpY * Math.cos(sprite2.rotation * Math.PI / 180);
+        }
+
+        //元の位置に平行移動
+        for (var i in a) {
+            a[i].X += (sprite1.x + sprite1.width / 2);
+            a[i].Y += (sprite1.y + sprite1.height / 2);
+        }
+        for (var i in b) {
+            b[i].X += (sprite2.x + sprite2.width / 2);
+            b[i].Y += (sprite2.y + sprite2.height / 2);
+        }
+
+        //それぞれの線分で交差判定
+        for (var i = 0; i < a.length - 1; i++) for (var j = 0; j < b.length - 1; j++) {
+            var penetrate1 = (a[i + 1].X - a[i].X) * (b[j].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[j].X - a[i].X);
+            var penetrate2 = (a[i + 1].X - a[i].X) * (b[j + 1].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[j + 1].X - a[i].X);
+            var penetrate3 = (b[j + 1].X - b[j].X) * (a[i].Y - b[j].Y) - (b[j + 1].Y - b[j].Y) * (a[i].X - b[j].X);
+            var penetrate4 = (b[j + 1].X - b[j].X) * (a[i + 1].Y - b[j].Y) - (b[j + 1].Y - b[j].Y) * (a[i + 1].X - b[j].X);
+            if (penetrate1 * penetrate2 < 0 && penetrate3 * penetrate4 < 0)
+                return true;
+        }
+        return false;
     };
 
     // 迷路作成(棒倒し法) enchant.MapのcollisionDataと同じ形式で返す（壁は1、通路は0）
@@ -936,7 +972,7 @@ var exte =
     // @param {Function} [fn] 条件判定関数。function(配列内の要素、配列内の順番、配列自体)。取得するならtrueを返す
     // @return {Array} 結果
     var arrayQueryIf = function (ary, fn) {
-        return ary.filter(fn);//既にあった
+        return ary.filter(fn); //既にあった
     };
 
     // 配列内にある、条件に合う要素の削除
@@ -955,7 +991,7 @@ var exte =
     // @param {整数} [baseColumnNo] 基準地点の列番号
     // @param {Function} [func] 処理関数。基準地点も呼ばれます。
     // @param {Function} [matchFunc] 値比較関数。matchFunc(value1, value2)戻り値Boolen 省略時は'=='で比較 
-    var samePartsForEach = function(map, baseRowNo, baseColumnNo, func, matchFunc) {
+    var samePartsForEach = function (map, baseRowNo, baseColumnNo, func, matchFunc) {
         var rowNum = map.length;
         var columnNum = map[0].length;
         var baseValue = map[baseRowNo][baseColumnNo];
@@ -970,14 +1006,14 @@ var exte =
             var v = map[row][column];
 
             var bMatch;
-            if (matchFunc){
-            	bMatch = matchFunc(baseValue, v);
+            if (matchFunc) {
+                bMatch = matchFunc(baseValue, v);
             } else {
-            	bMatch = (baseValue == v);
+                bMatch = (baseValue == v);
             }
 
             if (bMatch) {
-	            func(row, column);
+                func(row, column);
             }
 
             points.push({ row: row, column: column, valid: bMatch });
@@ -1459,13 +1495,13 @@ var exte =
                 sprite.x = this.x;
                 sprite.y = this.y;
                 if (updateSize) {
-	                sprite.scaleX =
+                    sprite.scaleX =
 	                sprite.scaleY = 1.0;
-	                sprite.height = this.height;
-	                sprite.width = this.width;
+                    sprite.height = this.height;
+                    sprite.width = this.width;
                 } else {
-	                sprite.scaleX = this.width / sprite.width; 
-	                sprite.scaleY = this.height / sprite.height;
+                    sprite.scaleX = this.width / sprite.width;
+                    sprite.scaleY = this.height / sprite.height;
                 }
             },
             // 色情報の一括取得
@@ -1684,8 +1720,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Circle.intersectRect is not implemented');
-
-                return false;
             },
             // 指定した線と重なっているならtrue
             // @param {Line} [line] 線
@@ -1698,8 +1732,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Circle.intersectLine is not implemented');
-
-                return false;
             },
             // 指定した円と重なっているならtrue
             // @param {Circle} [circle] 円
@@ -1776,8 +1808,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Ellipse.hitTest is not implemented');
-
-                return false;
             },
             // 指定した四角形と重なっているならtrue
             // @param {Rectangle} [rect] 四角形
@@ -1788,8 +1818,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Ellipse.intersectRect is not implemented');
-
-                return false;
             },
             // 指定した線と重なっているならtrue
             // @param {Line} [line] 線
@@ -1802,8 +1830,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Ellipse.intersectLine is not implemented');
-
-                return false;
             },
             // 指定した座標を楕円内に収める
             // @param {object} [pos] 位置{x,y}
@@ -1834,7 +1860,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Ellipse.getRandomPos is not implemented');
-                return new Point();
             },
             // Surface作成
             // @param {string} [color] 色。'red'など。もしくは toRGBString で作る
@@ -1873,33 +1898,22 @@ var exte =
             initialize: function (centerX, centerY, radius, angle, range) {
                 Circle.call(this, centerX, centerY, radius);
 
-                // 内部用。角度の補正
-                this._normalAngle = function (r) {
-                    if (r < 0) {
-                        return this._normalAngle(r + Math.PI * 2.0); //再帰
-                    }
-                    if (Math.PI * 2.0 < r) {
-                        return this._normalAngle(r - Math.PI * 2.0); //再帰
-                    }
-                    return r;
-                };
-
                 // 方向角(弧の中央)
-                this.angle = this._normalAngle(angle | 0);
+                this.angle = normalinzeRad(angle | 0);
 
                 // 弧の範囲。angle±(range/2)が描画される
-                this.range = this._normalAngle(range | 0);
+                this.range = normalinzeRad(range | 0);
             },
             // 開始角度(ラジアン)
             angleStart: {
                 get: function () {
-                    return this._normalAngle(this.angle - this.range * 0.5);
+                    return normalinzeRad(this.angle - this.range * 0.5);
                 }
             },
             // 終了角度(ラジアン)
             angleEnd: {
                 get: function () {
-                    return this._normalAngle(this.angle + this.range * 0.5);
+                    return normalinzeRad(this.angle + this.range * 0.5);
                 }
             },
             // 指定した座標が円弧内に入っているかどうか
@@ -1911,8 +1925,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Arc.hitTest is not implemented');
-
-                return false;
             },
             // 指定した四角形と重なっているならtrue
             // @param {Rectangle} [rect] 四角形
@@ -1924,7 +1936,7 @@ var exte =
                 //var center2 = rect.center;
                 //if (distance < center1.getDistance(center2)) return false;
 
-                //var direction = this._normalAngle(Math.atan((center1.y - center2.y) / (center1.x - center2.x)) - Math.PI * 0.5);
+                //var direction = normalinzeRad(Math.atan((center1.y - center2.y) / (center1.x - center2.x)) - Math.PI * 0.5);
                 //if (this.angleStart < this.angleEnd) {
                 //    return this.angleStart < direction && direction < this.angleEnd;
                 //} else {
@@ -1933,8 +1945,6 @@ var exte =
 
                 // 未実装。arc_within.jsを使うならそちらをどうぞ
                 throw new Error('Arc.intersectRect is not implemented');
-
-                return false;
             },
             // 指定した線と重なっているならtrue
             // @param {Line} [line] 線
@@ -1947,8 +1957,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Arc.intersectLine is not implemented');
-
-                return false;
             },
             // 指定した円と重なっているならtrue
             // @param {Circle} [circle] 円
@@ -1963,7 +1971,6 @@ var exte =
 
                 // 未実装
                 throw new Error('Arc.intersectCircle is not implemented');
-                return false;
             },
             // 指定した座標を円弧内に収める
             // @param {object} [pos] 位置{x,y}
@@ -2547,6 +2554,8 @@ var exte =
         toKanji2: toKanji2,
         degToRad: degToRad,
         radToDeg: radToDeg,
+        normalinzeRad: normalinzeRad,
+        normalinzeDeg: normalinzeDeg,
         makeValues: makeValues,
         Geolocation: Geolocation,
         collision2Sprites: collision2Sprites,
