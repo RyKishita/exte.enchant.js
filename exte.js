@@ -1052,7 +1052,7 @@ var exte =
     // @param {整数} [baseColumnNo] ユニットの現在位置の列番号
     // @param {整数} [cost] ユニットの移動力
     // @param {Function} [func] 処理関数。func(row, column, rest)。コストが足りれば基準地点も呼ばれます。
-    var findWorkForEach = function (map, baseRowNo, baseColumnNo, cost, func) {
+    var findWalkForEach = function (map, baseRowNo, baseColumnNo, cost, func) {
         var rowNum = map.length;
         var columnNum = map[0].length;
 
@@ -2644,7 +2644,7 @@ var exte =
         arrayQueryIf: arrayQueryIf,
         arrayEraseIf: arrayEraseIf,
         samePartsForEach: samePartsForEach,
-        findWorkForEach: findWorkForEach,
+        findWalkForEach: findWalkForEach,
         Figure: Figure
     };
 })();

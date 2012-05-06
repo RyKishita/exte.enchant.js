@@ -711,7 +711,7 @@ function CreatePlayScene5(gameData) {
     //------------------------------------------
     var mainGroup = new Group();
     (function () {
-        var label = new Label('exte.findWorkForEach(row5column5cost10) push"a"→update');
+        var label = new Label('exte.findWalkForEach(row5column5cost10) push"a"→update');
         label.x = 0;
         label.y = 10;
         mainGroup.addChild(label);
@@ -788,7 +788,7 @@ function CreatePlayScene5(gameData) {
             }
         }
 
-        exte.findWorkForEach(costMap, 5, 5, 10, function (row, column, rest) {
+        exte.findWalkForEach(costMap, 5, 5, 10, function (row, column, rest) {
             labelMap[row][column].color = 'red';
         });
     }
