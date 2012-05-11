@@ -850,10 +850,11 @@ var exte =
     var base = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
     // ランダム文字列
-    // @param {String} [len] 文字数
+    // @param {String} [len] 文字数。省略時は1文字
     // @return {String} 結果
     var randomString = function (len) {
         var result = "";
+        len = len || 1;
         for (var i = 0; i < len; i++) {
             result += base.charAt(Math.floor(Math.random() * base.length));
         }
@@ -1114,6 +1115,226 @@ var exte =
             func(point.row, point.column, point.rest);
         }
     };
+
+    // 単純なenchant.Mapの作成
+    // @param {String} [assetName] アセット名
+    // @param {整数} [tileSize] 1マスの縦横幅
+    // @param {整数} [rowNum] 行数
+    // @param {整数} [columnNum] 列数
+    // @param {整数} [no] 中央マップチップNo
+    // @param {整数} [tlNo] 左上マップチップNo 省略時はnoと同じ
+    // @param {整数} [tNo] 上マップチップNo 省略時はnoと同じ
+    // @param {整数} [trNo] 右上マップチップNo 省略時はnoと同じ
+    // @param {整数} [lNo] 左マップチップNo 省略時はnoと同じ
+    // @param {整数} [rNo] 右マップチップNo 省略時はnoと同じ
+    // @param {整数} [blNo] 左下マップチップNo 省略時はnoと同じ
+    // @param {整数} [bNo] 下マップチップNo 省略時はnoと同じ
+    // @param {整数} [brNo] 右下マップチップNo 省略時はnoと同じ
+    var createSimpleMap = function (assetName, tileSize, rowNum, columnNum, no, tlNo, tNo, trNo, lNo, rNo, blNo, bNo, brNo) {
+        tlNo = tlNo || no;
+        tNo = tNo || no;
+        trNo = trNo || no;
+        lNo = lNo || no;
+        rNo = rNo || no;
+        blNo = blNo || no;
+        bNo = bNo || no;
+        brNo = brNo || no;
+
+        var data = [];
+        for (var row = 0; row < rowNum; row++) {
+            var rowData;
+            if (row == 0) {
+                rowData = makeValues(tNo, columnNum);
+                rowData[0] = tlNo;
+                rowData[columnNum - 1] = trNo;
+            } else if (row + 1 < rowNum) {
+                rowData = makeValues(no, columnNum);
+                rowData[0] = lNo;
+                rowData[columnNum - 1] = rNo;
+            } else {
+                rowData = makeValues(bNo, columnNum);
+                rowData[0] = blNo;
+                rowData[columnNum - 1] = brNo;
+            }
+            data.push(rowData);
+        }
+
+        var map = new Map(tileSize, tileSize);
+        map.image = enchant.Game.instance.assets[assetName];
+        map.loadData(data);
+        return map;
+
+    };
+
+    // "enchant.js/images/map1.gif"を使った、単純なenchant.Mapを作成
+    // @param {整数} [typeNo] タイプ 0～
+    // @param {整数} [rowNum] 行数
+    // @param {整数} [columnNum] 列数
+    var createSampleMap = function (typeNo, rowNum, columnNum) {
+        var assetName = 'map1.gif';
+        switch (typeNo) {
+            case 0: return createSimpleMap(assetName, 16, rowNum, columnNum, 33);
+            case 1: return createSimpleMap(assetName, 16, rowNum, columnNum, 36);
+            case 2: return createSimpleMap(assetName, 16, rowNum, columnNum, 6);
+            case 3: return createSimpleMap(assetName, 16, rowNum, columnNum, 7);
+            case 4: return createSimpleMap(assetName, 16, rowNum, columnNum, 97);
+            case 5: return createSimpleMap(assetName, 16, rowNum, columnNum, 100);
+            case 6: return createSimpleMap(assetName, 16, rowNum, columnNum, 161);
+            case 7: return createSimpleMap(assetName, 16, rowNum, columnNum, 164);
+            case 8: return createSimpleMap(assetName, 16, rowNum, columnNum, 225);
+            case 9: return createSimpleMap(assetName, 16, rowNum, columnNum, 228);
+            case 10: return createSimpleMap(assetName, 16, rowNum, columnNum, 33, 16, 17, 18, 32, 34, 48, 49, 50);
+            case 11: return createSimpleMap(assetName, 16, rowNum, columnNum, 100, 83, 84, 85, 99, 101, 115, 116, 117);
+            case 12: return createSimpleMap(assetName, 16, rowNum, columnNum, 161, 144, 145, 146, 160, 162, 176, 177, 178);
+            case 13: return createSimpleMap(assetName, 16, rowNum, columnNum, 164, 147, 148, 149, 163, 165, 179, 180, 181);
+            case 14: return createSimpleMap(assetName, 16, rowNum, columnNum, 228, 211, 212, 213, 227, 229, 243, 244, 245);
+        }
+        return createSimpleMap(assetName, 16, rowNum, columnNum, 0);
+    };
+
+    // ログのように流れるメッセージを表示
+    var logWindow = enchant.Class.create(enchant.Group, {
+        // @param {整数} [x] X座標
+        // @param {整数} [y] Y座標
+        // @param {整数} [width] 幅
+        // @param {整数} [height] 高さ
+        initialize: function (x, y, width, height) {
+            enchant.Group.call(this);
+
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+
+            // 文字列追加時の透過率変化量/フレーム
+            this.fadeIn = 0.1;
+
+            // 文字列削除時の透過率変化量/フレーム
+            this.fadeOut = 0.1;
+
+            // 行高さ
+            this.lineHeight = 10;
+
+            // デフォルトカラー
+            this.color = null;
+
+            // デフォルトフォント
+            this.font = null;
+
+            //// 改行モード。「normal」「break-all」「keep-all」のどれか
+            //this.wordbreak = 'break-all';
+
+            this._labels = [];
+            this._texts = [];
+            this._currentWork = 0; //0:check, 1:textout, 2:scroll, 3:textin
+            this._fadeInIndex = -1;
+            this._fadeOutIndex = -1;
+            this._scrollNum = 0;
+
+            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+                switch (this._currentWork) {
+                    case 0:
+                        if (0 < this._texts.length) {
+                            var t = this._texts.shift();
+
+                            this._fadeInIndex = null;
+                            for (var i = 0; i < this._labels.length; i++) {
+                                if (!this._labels[i].visible) {
+                                    this._fadeInIndex = i;
+                                    break;
+                                }
+                            }
+                            var label;
+                            if (this._fadeInIndex) {
+                                label = this._labels[this._fadeInIndex];
+                                label.text = t.text;
+                            } else {
+                                label = new enchant.Label(t.text);
+                                label.width = this.width;
+                                label.opacity = 0;
+                                label.visible = false;
+                                //if (this.wordbreak) {
+                                //    label._style.wordBreak = this.wordbreak;
+                                //}
+                                this.addChild(label);
+
+                                this._fadeInIndex = this._labels.length;
+                                this._labels.push(label);
+                            }
+                            if (t.font) {
+                                label.font = t.font;
+                            }
+                            if (t.color) {
+                                label.color = t.color;
+                            }
+
+                            this._scrollNum = this.lineHeight;
+
+                            var bottom = 0;
+                            for (var i in this._labels) {
+                                var l = this._labels[i];
+                                if (!l.visible) continue;
+                                var b = l.y + l.height + 10;
+                                if (bottom < b) {
+                                    bottom = b;
+                                    this._fadeOutIndex = i;
+                                }
+                            }
+                            if (this.height < (bottom + label.height)) {
+                                this._currentWork = 1;
+                            } else {
+                                this._currentWork = 2;
+                            }
+                        }
+                        break;
+                    case 1:
+                        var fadeOutLabel = this._labels[this._fadeOutIndex];
+                        if (fadeOutLabel.opacity < this.fadeOut) {
+                            fadeOutLabel.opacity = 0;
+                            fadeOutLabel.visible = false;
+                            this._currentWork = 2;
+                        } else {
+                            fadeOutLabel.opacity -= this.fadeOut;
+                        }
+                        break;
+                    case 2:
+                        if (0 < this._scrollNum) {
+                            for (var i in this._labels) {
+                                var l = this._labels[i];
+                                if (l.visible) {
+                                    l.y += 1;
+                                }
+                            }
+                            this._scrollNum--;
+                        } else {
+                            this._currentWork = 3;
+                            this._labels[this._fadeInIndex].visible = true;
+                        }
+                        break;
+                    case 3:
+                        var fadeInLabel = this._labels[this._fadeInIndex];
+                        if ((1.0 - this.fadeIn) < fadeInLabel.opacity) {
+                            fadeInLabel.opacity = 1;
+                            this._currentWork = 0;
+                        } else {
+                            fadeInLabel.opacity += this.fadeIn;
+                        }
+                        break;
+                }
+            });
+        },
+        // ログ追加
+        // @param {文字列} [text] 表示するテキスト
+        // @param {文字列} [color] このテキストのみの文字色。省略時はデフォルト
+        // @param {文字列} [font] このテキストのみのフォント。省略時はデフォルト
+        addLog: function (text, color, font) {
+            this._texts.push({
+                text: text,
+                color: color || this.color,
+                font: font || this.font
+            });
+        }
+    });
 
     // 超多数オブジェクト管理
     //var ManySpritesManager = enchant.Class.create({
@@ -2645,6 +2866,9 @@ var exte =
         arrayEraseIf: arrayEraseIf,
         samePartsForEach: samePartsForEach,
         findWalkForEach: findWalkForEach,
+        createSimpleMap: createSimpleMap,
+        createSampleMap: createSampleMap,
+        logWindow: logWindow,
         Figure: Figure
     };
 })();

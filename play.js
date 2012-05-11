@@ -716,7 +716,7 @@ function CreatePlayScene5(gameData) {
         label.y = 10;
         mainGroup.addChild(label);
 
-        var nextLabel = new Label('push"B"→top');
+        var nextLabel = new Label('push"B"→next');
         nextLabel.x = 220;
         nextLabel.y = 240;
         mainGroup.addChild(nextLabel);
@@ -770,7 +770,7 @@ function CreatePlayScene5(gameData) {
 
             if (row == 5 && column == 5) {
                 var rs = exte.Figure.createRectangleSprite(15, 15, 'black');
-                rs.x = label.x-5;
+                rs.x = label.x - 5;
                 rs.y = label.y;
                 mainGroup.addChild(rs);
             }
@@ -814,6 +814,105 @@ function CreatePlayScene5(gameData) {
             makeMap();
         }
         if (game.input.b) {
+            scene.moveSceneTo('6');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlayScene6(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('6');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+    var mainGroup = new Group();
+    (function () {
+        var label1 = new Label('exte.createSimpleMap');
+        label1.x = 10;
+        label1.y = 0;
+        mainGroup.addChild(label1);
+
+        var backMap = exte.createSimpleMap(gameData.mapAssetName, 16, 8, 6, 135, 114, 115, 116, 134, 136, 154, 155, 156);
+        backMap.x = 15;
+        backMap.y = 25;
+        mainGroup.addChild(backMap);
+
+        var label = new Label('exte.logWindow push"a"→addLog');
+        label.x = 10;
+        label.y = 10;
+        mainGroup.addChild(label);
+
+        var nextLabel = new Label('push"B"→top');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        mainGroup.addChild(nextLabel);
+    })();
+    scene.addChild(mainGroup);
+
+    //------------------------------------------
+    var logWindow = new exte.logWindow(30, 30, 100, 110);
+    logWindow.color = 'white';
+    scene.addChild(logWindow);
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+        ;
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        // game.end(scoreLabel.score, scoreLabel.score + '点');
+
+        if (game.input.up) {
+        }
+        if (game.input.down) {
+        }
+        if (game.input.left) {
+        }
+        if (game.input.right) {
+        }
+        if (game.input.a) {
+            logWindow.addLog(exte.randomString(10));
+        }
+        if (game.input.b) {
             scene.moveSceneTo('1');
         }
     });
@@ -827,4 +926,5 @@ function CreatePlayScene(gameData) {
     CreatePlayScene3(gameData);
     CreatePlayScene4(gameData);
     CreatePlayScene5(gameData);
+    CreatePlayScene6(gameData);
 }
