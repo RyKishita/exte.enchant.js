@@ -1221,8 +1221,11 @@ var exte =
             // デフォルトフォント
             this.font = null;
 
-            //// 改行モード。「normal」「break-all」「keep-all」のどれか
-            //this.wordbreak = 'break-all';
+            // デフォルトフォントサイズ
+            this.fontSize = null;
+
+            // 「normal」「break-all」「keep-all」のどれか
+            this.wordBreak = 'break-all';
 
             this._labels = [];
             this._texts = [];
@@ -1247,34 +1250,36 @@ var exte =
                             var label;
                             if (this._fadeInIndex) {
                                 label = this._labels[this._fadeInIndex];
+                                label.x = 0;
+                                label.y = 0;
                                 label.text = t.text;
                             } else {
                                 label = new enchant.Label(t.text);
                                 label.width = this.width;
                                 label.opacity = 0;
                                 label.visible = false;
-                                //if (this.wordbreak) {
-                                //    label._style.wordBreak = this.wordbreak;
-                                //}
+                                if (this.font) {
+                                    label.font = this.font;
+                                }
+                                if (this.wordBreak) {
+                                    label._style.wordBreak = this.wordBreak;
+                                }
                                 this.addChild(label);
 
                                 this._fadeInIndex = this._labels.length;
                                 this._labels.push(label);
                             }
-                            if (t.font) {
-                                label.font = t.font;
-                            }
-                            if (t.color) {
-                                label.color = t.color;
-                            }
+                            label._style.fontSize = t.fontSize ? t.fontSize : "";
+                            label.color = t.color ? t.color : "";
+                            label.height = t.lineHeight;
 
-                            this._scrollNum = this.lineHeight;
+                            this._scrollNum = t.lineHeight;
 
                             var bottom = 0;
                             for (var i in this._labels) {
                                 var l = this._labels[i];
                                 if (!l.visible) continue;
-                                var b = l.y + l.height + 10;
+                                var b = l.y + l.height;
                                 if (bottom < b) {
                                     bottom = b;
                                     this._fadeOutIndex = i;
@@ -1326,12 +1331,14 @@ var exte =
         // ログ追加
         // @param {文字列} [text] 表示するテキスト
         // @param {文字列} [color] このテキストのみの文字色。省略時はデフォルト
-        // @param {文字列} [font] このテキストのみのフォント。省略時はデフォルト
-        addLog: function (text, color, font) {
+        // @param {文字列} [fontSize] このテキストのみのフォントサイズ。省略時はデフォルト
+        // @param {数値} [lineWidth] このテキストのみの行高さ。省略時はデフォルト
+        addLog: function (text, color, fontSize, lineHeight) {
             this._texts.push({
                 text: text,
                 color: color || this.color,
-                font: font || this.font
+                fontSize: fontSize || this.fontSize,
+                lineHeight: lineHeight || this.lineHeight
             });
         }
     });

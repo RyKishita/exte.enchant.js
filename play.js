@@ -859,7 +859,7 @@ function CreatePlayScene6(gameData) {
     scene.addChild(mainGroup);
 
     //------------------------------------------
-    var logWindow = new exte.logWindow(30, 30, 100, 110);
+    var logWindow = new exte.logWindow(30, 30, 100, 118);
     logWindow.color = 'white';
     scene.addChild(logWindow);
 
@@ -910,7 +910,9 @@ function CreatePlayScene6(gameData) {
         if (game.input.right) {
         }
         if (game.input.a) {
-            logWindow.addLog(exte.randomString(10));
+            var size = 10 + rand(10);
+            var fontSize = size + 'px';
+            logWindow.addLog(fontSize, null, fontSize, size);
         }
         if (game.input.b) {
             scene.moveSceneTo('1');
