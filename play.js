@@ -846,7 +846,7 @@ function CreatePlayScene6(gameData) {
         backMap.y = 25;
         mainGroup.addChild(backMap);
 
-        var label = new Label('exte.logWindow push"a"→addLog');
+        var label = new Label('exte.logList push"a"→addLog');
         label.x = 10;
         label.y = 10;
         mainGroup.addChild(label);
@@ -859,9 +859,9 @@ function CreatePlayScene6(gameData) {
     scene.addChild(mainGroup);
 
     //------------------------------------------
-    var logWindow = new exte.logWindow(30, 30, 100, 118);
-    logWindow.color = 'white';
-    scene.addChild(logWindow);
+    var logList = new exte.LogList(30, 30, 100, 118);
+    logList.color = 'white';
+    scene.addChild(logList);
 
     //------------------------------------------
     var uiGroup = new Group();
@@ -912,7 +912,7 @@ function CreatePlayScene6(gameData) {
         if (game.input.a) {
             var size = 10 + rand(10);
             var fontSize = size + 'px';
-            logWindow.addLog(fontSize, null, fontSize, size);
+            logList.addLog(fontSize, null, fontSize, size);
         }
         if (game.input.b) {
             scene.moveSceneTo('1');

@@ -369,27 +369,33 @@ var exte =
     };
 
     // 色文字列の作成
+    // 引数なし:透明
     // 引数1つ:RGB同値
     // 引数2つ:RGB同値, alpha
     // 引数3つ:red, green, blue
     // 引数4つ:red, green, blue, alpha
     // @return {String} 色
     function toRGBString() {
-        if (arguments.length == 0) throw new Error('toRGBString: invalid arguments.');
 
-        var r, g, b, a = 1.0;
+        var r, g, b, a;
         if (3 <= arguments.length) {
             r = arguments[0];
             g = arguments[1];
             b = arguments[2];
             if (4 <= arguments.length) {
                 a = arguments[3];
+            } else {
+                a = 1.0;
             }
-        } else {
+        } else if (1 <= arguments.length) {
             r = g = b = arguments[0];
             if (2 <= arguments.length) {
                 a = arguments[1];
+            } else {
+                a = 1.0;
             }
+        } else {
+            r = g = b = a = 0;
         }
 
         return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
@@ -1193,7 +1199,7 @@ var exte =
     };
 
     // ログのように流れるメッセージを表示
-    var logWindow = enchant.Class.create(enchant.Group, {
+    var LogList = enchant.Class.create(enchant.Group, {
         // @param {整数} [x] X座標
         // @param {整数} [y] Y座標
         // @param {整数} [width] 幅
@@ -1212,6 +1218,9 @@ var exte =
             // 文字列削除時の透過率変化量/フレーム
             this.fadeOut = 0.1;
 
+            // 流れるメッセージのスクロール量/フレーム
+            this.scrollPx = 2;
+
             // 行高さ
             this.lineHeight = 10;
 
@@ -1224,8 +1233,14 @@ var exte =
             // デフォルトフォントサイズ
             this.fontSize = null;
 
-            // 「normal」「break-all」「keep-all」のどれか
+            // 折り返し。「normal」「break-all」「keep-all」のどれか
             this.wordBreak = 'break-all';
+
+            // この数までログが溜まった時は、アニメーションを無効化して一気に表示
+            // 0の時は制限しない
+            this.stackLimit = 0;
+
+            //--------------------------------------------------------
 
             this._labels = [];
             this._texts = [];
@@ -1233,10 +1248,20 @@ var exte =
             this._fadeInIndex = -1;
             this._fadeOutIndex = -1;
             this._scrollNum = 0;
+            this._outAllLog = false;
 
             this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                 switch (this._currentWork) {
                     case 0:
+                        if (this._outAllLog) {
+                            if (this._texts.length == 0) {
+                                this._outAllLog = false;
+                            }
+                        } else {
+                            if (0 < this.stackLimit && this.stackLimit <= this._texts.length) {
+                                this._outAllLog = true;
+                            }
+                        }
                         if (0 < this._texts.length) {
                             var t = this._texts.shift();
 
@@ -1256,7 +1281,6 @@ var exte =
                             } else {
                                 label = new enchant.Label(t.text);
                                 label.width = this.width;
-                                label.opacity = 0;
                                 label.visible = false;
                                 if (this.font) {
                                     label.font = this.font;
@@ -1294,7 +1318,7 @@ var exte =
                         break;
                     case 1:
                         var fadeOutLabel = this._labels[this._fadeOutIndex];
-                        if (fadeOutLabel.opacity < this.fadeOut) {
+                        if (this._outAllLog || fadeOutLabel.opacity < this.fadeOut) {
                             fadeOutLabel.opacity = 0;
                             fadeOutLabel.visible = false;
                             this._currentWork = 2;
@@ -1304,21 +1328,23 @@ var exte =
                         break;
                     case 2:
                         if (0 < this._scrollNum) {
+                            var px = this._outAllLog ? this._scrollNum : this.scrollPx;
                             for (var i in this._labels) {
                                 var l = this._labels[i];
                                 if (l.visible) {
-                                    l.y += 1;
+                                    l.y += px;
                                 }
                             }
-                            this._scrollNum--;
-                        } else {
+                            this._scrollNum -= px;
+                        }
+                        if (this._scrollNum <= 0) {
                             this._currentWork = 3;
                             this._labels[this._fadeInIndex].visible = true;
                         }
                         break;
                     case 3:
                         var fadeInLabel = this._labels[this._fadeInIndex];
-                        if ((1.0 - this.fadeIn) < fadeInLabel.opacity) {
+                        if (this._outAllLog || (1.0 - this.fadeIn) < fadeInLabel.opacity) {
                             fadeInLabel.opacity = 1;
                             this._currentWork = 0;
                         } else {
@@ -1340,6 +1366,10 @@ var exte =
                 fontSize: fontSize || this.fontSize,
                 lineHeight: lineHeight || this.lineHeight
             });
+        },
+        // 溜まっているログを、アニメーションを無効化して一気に出力
+        outAllLog: function () {
+            this._outAllLog = true;
         }
     });
 
@@ -2875,7 +2905,7 @@ var exte =
         findWalkForEach: findWalkForEach,
         createSimpleMap: createSimpleMap,
         createSampleMap: createSampleMap,
-        logWindow: logWindow,
+        LogList: LogList,
         Figure: Figure
     };
 })();
