@@ -1249,25 +1249,21 @@ var exte =
             this._fadeOutIndex = -1;
             this._scrollNum = 0;
             this._outAllLog = false;
+            this._visible = true;
 
             this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                 switch (this._currentWork) {
                     case 0:
-                        if (this._outAllLog) {
-                            if (this._texts.length == 0) {
-                                this._outAllLog = false;
-                            }
-                        } else {
-                            if (0 < this.stackLimit && this.stackLimit <= this._texts.length) {
-                                this._outAllLog = true;
-                            }
-                        }
                         if (0 < this._texts.length) {
+                            this._outAllLog = this._outAllLog
+                                            ? 0 < this._texts.length
+                                            : 0 < this.stackLimit && this.stackLimit <= this._texts.length;
+
                             var t = this._texts.shift();
 
                             this._fadeInIndex = null;
                             for (var i = 0; i < this._labels.length; i++) {
-                                if (!this._labels[i].visible) {
+                                if (!this._labels[i].valid) {
                                     this._fadeInIndex = i;
                                     break;
                                 }
@@ -1282,6 +1278,7 @@ var exte =
                                 label = new enchant.Label(t.text);
                                 label.width = this.width;
                                 label.visible = false;
+                                label.valid = false;
                                 if (this.font) {
                                     label.font = this.font;
                                 }
@@ -1302,7 +1299,7 @@ var exte =
                             var bottom = 0;
                             for (var i in this._labels) {
                                 var l = this._labels[i];
-                                if (!l.visible) continue;
+                                if (!l.valid) continue;
                                 var b = l.y + l.height;
                                 if (bottom < b) {
                                     bottom = b;
@@ -1321,6 +1318,7 @@ var exte =
                         if (this._outAllLog || fadeOutLabel.opacity < this.fadeOut) {
                             fadeOutLabel.opacity = 0;
                             fadeOutLabel.visible = false;
+                            fadeOutLabel.valid = false;
                             this._currentWork = 2;
                         } else {
                             fadeOutLabel.opacity -= this.fadeOut;
@@ -1328,7 +1326,9 @@ var exte =
                         break;
                     case 2:
                         if (0 < this._scrollNum) {
-                            var px = this._outAllLog ? this._scrollNum : this.scrollPx;
+                            var px = (this._outAllLog || this._scrollNum <= this.scrollPx)
+                                        ? this._scrollNum
+                                        : this.scrollPx;
                             for (var i in this._labels) {
                                 var l = this._labels[i];
                                 if (l.visible) {
@@ -1339,7 +1339,9 @@ var exte =
                         }
                         if (this._scrollNum <= 0) {
                             this._currentWork = 3;
-                            this._labels[this._fadeInIndex].visible = true;
+                            var l = this._labels[this._fadeInIndex];
+                            l.visible = true;
+                            l.valid = true;
                         }
                         break;
                     case 3:
@@ -1353,6 +1355,18 @@ var exte =
                         break;
                 }
             });
+        },
+        // 表示/非表示
+        visible: {
+            get: function () { return this._visible; },
+            set: function (v) {
+                if (this._visible == v) return;
+                this._visible = v;
+                for (var i in this._labels) {
+                    var l = this._labels[i];
+                    l.visible = v && l.valid;
+                }
+            }
         },
         // ログ追加
         // @param {文字列} [text] 表示するテキスト
