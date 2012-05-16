@@ -1054,23 +1054,42 @@ var exte =
     };
 
     // シミュレーションゲームなどのユニット移動判定。移動可能マス毎にfuncを呼ぶ
-    // @param {Array<Array>} [map] 2次元配列。各マスの移動コスト(0やマイナスも可)を設定。各行の列数は全て同じであることを期待します
+    // @param {Array<Array<整数>>} [map] 2次元配列。
+    //      各マスの移動コスト(0やマイナスも可)を設定します。
+    //      移動できないマスには大きな数字を入れてください。
+    //      各行の列数は全て同じであることを期待します。
     // @param {整数} [baseRowNo] ユニットの現在位置の行番号
     // @param {整数} [baseColumnNo] ユニットの現在位置の列番号
     // @param {整数} [cost] ユニットの移動力
-    // @param {Function} [func] 処理関数。func(row, column, rest)。コストが足りれば基準地点も呼ばれます。
-    var findWalkForEach = function (map, baseRowNo, baseColumnNo, cost, func) {
+    // @param {Function} [func] 処理関数。
+    //      func(row, column, rest, routes)
+    //      restは残り移動力です。
+    //      routesは、このマスへ行くための道順です。
+    //      型はArray<Array<{row,column}>>で、複数のルートになることがあるので配列の配列になっています。
+    //      コストが足りれば開始地点も呼ばれます。
+    var findRoutesForEach = function (map, baseRowNo, baseColumnNo, cost, func) {
         var rowNum = map.length;
         var columnNum = map[0].length;
 
         var points = [];
-        points.push({ row: baseRowNo, column: baseColumnNo, rest: cost, valid: true });
+        points.push({
+            row: baseRowNo,
+            column: baseColumnNo,
+            rest: cost,
+            valid: true,
+            routes: [[]]
+        });
         var firstPos = true;
 
-        function AddPoint(row, column, rest) {
+        function AddPoint(row, column, rest, routes) {
             var r = map[row][column];
             if (rest < r) return;
             rest -= r;
+
+            var newRoutes = [];
+            for (var i in routes) {
+                newRoutes.push(routes[i].concat([{ row: row, column: column}]));
+            }
 
             for (var i in points) {
                 var point = points[i];
@@ -1078,12 +1097,18 @@ var exte =
 
                 if (point.rest < rest) {
                     point.rest = rest;
+                    point.routes = newRoutes;
+                    point.valid = true;
+                } else if (point.rest == rest) {
+                    for (var j in newRoutes) {
+                        point.routes.push(newRoutes[j]);
+                    }
                     point.valid = true;
                 }
                 return;
             }
 
-            points.push({ row: row, column: column, rest: rest, valid: true });
+            points.push({ row: row, column: column, rest: rest, valid: true, routes: newRoutes });
         }
 
         while (true) {
@@ -1098,27 +1123,29 @@ var exte =
             point.valid = false;
 
             if (0 < point.row) {
-                AddPoint(point.row - 1, point.column, point.rest);
+                AddPoint(point.row - 1, point.column, point.rest, point.routes);
             }
             if (0 < point.column) {
-                AddPoint(point.row, point.column - 1, point.rest);
+                AddPoint(point.row, point.column - 1, point.rest, point.routes);
             }
             if ((point.row + 1) < rowNum) {
-                AddPoint(point.row + 1, point.column, point.rest);
+                AddPoint(point.row + 1, point.column, point.rest, point.routes);
             }
             if ((point.column + 1) < columnNum) {
-                AddPoint(point.row, point.column + 1, point.rest);
+                AddPoint(point.row, point.column + 1, point.rest, point.routes);
             }
 
             if (firstPos) {
                 firstPos = false;
-                point.rest = 0;
+                point.rest = -1;
             }
         }
 
         for (var i in points) {
             var point = points[i];
-            func(point.row, point.column, point.rest);
+            if (0 <= point.rest) {
+                func(point.row, point.column, point.rest, point.routes);
+            }
         }
     };
 
@@ -1290,11 +1317,12 @@ var exte =
                                 this._fadeInIndex = this._labels.length;
                                 this._labels.push(label);
                             }
-                            label._style.fontSize = t.fontSize ? t.fontSize : "";
-                            label.color = t.color ? t.color : "";
-                            label.height = t.lineHeight;
+                            label._style.fontSize = t.fontSize || "";
+                            label.color = t.color || "";
+                            label.height = t.lineHeight || 10;
+                            label.opacity = 0;
 
-                            this._scrollNum = t.lineHeight;
+                            this._scrollNum = label.height;
 
                             var bottom = 0;
                             for (var i in this._labels) {
@@ -2916,7 +2944,7 @@ var exte =
         arrayQueryIf: arrayQueryIf,
         arrayEraseIf: arrayEraseIf,
         samePartsForEach: samePartsForEach,
-        findWalkForEach: findWalkForEach,
+        findRoutesForEach: findRoutesForEach,
         createSimpleMap: createSimpleMap,
         createSampleMap: createSampleMap,
         LogList: LogList,

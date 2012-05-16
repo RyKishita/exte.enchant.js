@@ -767,17 +767,33 @@ function CreatePlayScene5(gameData) {
             label.y = row * 15 + 40;
             mainGroup.addChild(label);
             labels.push(label);
-
-            if (row == 5 && column == 5) {
-                var rs = exte.Figure.createRectangleSprite(15, 15, 'black');
-                rs.x = label.x - 5;
-                rs.y = label.y;
-                mainGroup.addChild(rs);
-            }
         }
         costMap.push(rows);
         labelMap.push(labels);
     }
+
+    var rs = exte.Figure.createRectangleSprite(15, 15, 'black');
+    mainGroup.addChild(rs);
+
+    var routesLabel = new Label('routes');
+    routesLabel.x = 0;
+    routesLabel.y = 200;
+    mainGroup.addChild(routesLabel);
+
+    var cursorRow = 5;
+    var cursorColumn = 5;
+    function updateCursorPos() {
+        if (cursorRow < 0) cursorRow = 0;
+        if (rowNum <= cursorRow) cursorRow = rowNum - 1;
+        if (cursorColumn < 0) cursorColumn = 0;
+        if (columnNum <= cursorColumn) cursorColumn = columnNum - 1;
+
+        var l = labelMap[cursorRow][cursorColumn];
+        rs.x = l.x - 5;
+        rs.y = l.y;
+        routesLabel.text = l.routesText;
+    }
+
     function makeMap() {
         for (var row = 0; row < rowNum; row++) {
             for (var column = 0; column < columnNum; column++) {
@@ -788,13 +804,25 @@ function CreatePlayScene5(gameData) {
             }
         }
 
-        exte.findWalkForEach(costMap, 5, 5, 10, function (row, column, rest) {
-            labelMap[row][column].color = 'red';
+        exte.findRoutesForEach(costMap, 5, 5, 10, function (row, column, rest, routes) {
+            var l = labelMap[row][column];
+            l.color = 'red';
+
+            var routesText = 'rest=' + rest + ' routes=';
+            for (var i in routes) {
+                routesText += '[ ';
+                for (var j in routes[i]) {
+                    routesText += '{ ' + routes[i][j].row + ' , ' + routes[i][j].column + ' }';
+                }
+                routesText += ' ]';
+            }
+            l.routesText = routesText;
         });
     }
 
     scene.addEventListener(exte.Event_SceneExStarting, function (e) {
         makeMap();
+        updateCursorPos();
     });
 
     scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
@@ -803,12 +831,20 @@ function CreatePlayScene5(gameData) {
         // game.end(scoreLabel.score, scoreLabel.score + '点');
 
         if (game.input.up) {
+            cursorRow--;
+            updateCursorPos();
         }
         if (game.input.down) {
+            cursorRow++;
+            updateCursorPos();
         }
         if (game.input.left) {
+            cursorColumn--;
+            updateCursorPos();
         }
         if (game.input.right) {
+            cursorColumn++;
+            updateCursorPos();
         }
         if (game.input.a) {
             makeMap();
@@ -859,7 +895,7 @@ function CreatePlayScene6(gameData) {
     scene.addChild(mainGroup);
 
     //------------------------------------------
-    var logList = new exte.LogList(30, 30, 100, 118);
+    var logList = new exte.LogList(30, 30, 100, 100);
     logList.color = 'white';
     scene.addChild(logList);
 
