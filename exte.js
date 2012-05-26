@@ -2883,6 +2883,131 @@ var exte =
             }
         });
 
+        // 波紋
+        var Ripple = enchant.Class.create(enchant.Sprite, {
+            // @param {整数} [width] 幅 省略時はゲーム画面幅
+            // @param {整数} [height] 高さ 省略時はゲーム画面高さ
+            initialize: function (width, height) {
+                var game = enchant.Game.instance;
+                width = width || game.width;
+                height = height || game.height;
+
+                enchant.Sprite.call(this, width, height);
+
+                // 波紋の速度(フレーム毎の半径増加量)
+                this.speed = 1;
+
+                //-----------------------------
+
+                this._active = false;
+                this._radius = 0;
+                this._radiusMax = 0;
+                this._radiusLimit = 0;
+
+                this.image = new enchant.Surface(width, height);
+
+                var c = this.image.context;
+                c.fillStyle = 'rgba(0,0,0,0.5)';
+
+                this._draw = function () {
+                    c.beginPath();
+                    c.arc(this._center.x, this._center.y, this._radius, 0, Math.PI * 2, false);
+                    c.closePath();
+
+                    c.fill();
+                    if (0 == this._radiusLimit || this._radius < this._radiusLimit) {
+                        c.stroke();
+                    }
+                };
+
+                this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+                    if (!this._active) return;
+
+                    this._radius += this.speed;
+                    if (this._radius < this._radiusMax) {
+                        this._draw();
+                    } else {
+                        this.stop();
+                    }
+                });
+            },
+            // 線色
+            lineColor: {
+                get: function () {
+                    return this.image.context.strokeStyle;
+                },
+                set: function (c) {
+                    this.image.context.strokeStyle = c;
+                }
+            },
+            // 線幅
+            lineWidth: {
+                get: function () {
+                    return this.image.context.lineWidth;
+                },
+                set: function (l) {
+                    this.image.context.lineWidth = l;
+                }
+            },
+            // 現在表示している波紋の半径
+            radius: {
+                get: function () {
+                    return this._radius;
+                }
+            },
+            // 半径の制限。0だと描画範囲を越えるまで実行
+            radiusLimit: {
+                get: function () {
+                    return this._radiusLimit;
+                },
+                set: function (r) {
+                    this._radiusLimit = r;
+                    if (0 < this._radiusMax) {
+                        this._radiusMax = Math.min(this._radiusMax, r);
+                    }
+                }
+            },
+            // 表示開始
+            // @param {整数} [x] 開始地点 X座標
+            // @param {整数} [y] 開始地点 X座標
+            start: function (x, y) {
+                this._center = new Point(x, y);
+                this._active = true;
+                this._radius = 0;
+
+                this._radiusMax = this._center.getDistance(
+                                new Point(
+                                    this.width / 2 < x ? 0 : this.width,
+                                    this.height / 2 < y ? 0 : this.height
+                                ));
+                if (0 < this._radiusLimit) {
+                    this._radiusMax = Math.min(rmax, this._radiusLimit);
+                }
+
+                //透過部分が外に出るまでの猶予
+                this._radiusMax += this.lineWidth * 10;
+
+                this.image.clear();
+            },
+            // 停止/再開
+            active: {
+                get: function () {
+                    return this._active;
+                },
+                set: function (a) {
+                    if (this._active == a) return;
+                    if (a && this._radiusMax == 0) return;
+                    this._active = a;
+                }
+            },
+            // 表示終了
+            stop: function () {
+                this._active = false;
+                this._radiusMax = 0;
+                this.image.clear();
+            }
+        });
+
         //-----------------------------
 
         return {
@@ -2898,7 +3023,8 @@ var exte =
             Rectangle: Rectangle,
             Circle: Circle,
             Ellipse: Ellipse,
-            Arc: Arc
+            Arc: Arc,
+            Ripple: Ripple
         };
     })();
 
