@@ -8,6 +8,11 @@ var exte =
 (function () {
     "use strict";
 
+    // 現在デバッグモードかどうか
+    var isDebug = function () {
+        return enchant.Game.instance._debug;
+    };
+
     // デバッグ用。引数の内容をコンソールに出力
     var trace = function () {
         if (arguments.length == 0) return;
@@ -2894,15 +2899,14 @@ var exte =
 
                 enchant.Sprite.call(this, width, height);
 
-                // 波紋の速度(フレーム毎の半径増加量)
-                this.speed = 1;
-
                 //-----------------------------
 
                 this._active = false;
+                this._lineColor = 'black';
                 this._radius = 0;
                 this._radiusMax = 0;
                 this._radiusLimit = 0;
+                this._speed = 1;
 
                 this.image = new enchant.Surface(width, height);
 
@@ -2910,20 +2914,22 @@ var exte =
                 c.fillStyle = 'rgba(0,0,0,0.5)';
 
                 this._draw = function () {
+                    c.strokeStyle = this._radiusLimit == 0 || this._radius < this._radiusLimit
+                        ? this._lineColor
+                        : c.fillStyle;
+
                     c.beginPath();
                     c.arc(this._center.x, this._center.y, this._radius, 0, Math.PI * 2, false);
                     c.closePath();
 
                     c.fill();
-                    if (0 == this._radiusLimit || this._radius < this._radiusLimit) {
-                        c.stroke();
-                    }
+                    c.stroke();
                 };
 
                 this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                     if (!this._active) return;
 
-                    this._radius += this.speed;
+                    this._radius += this._speed;
                     if (this._radius < this._radiusMax) {
                         this._draw();
                     } else {
@@ -2934,10 +2940,10 @@ var exte =
             // 線色
             lineColor: {
                 get: function () {
-                    return this.image.context.strokeStyle;
+                    return this._lineColor;
                 },
                 set: function (c) {
-                    this.image.context.strokeStyle = c;
+                    this._lineColor = c;
                 }
             },
             // 線幅
@@ -2949,10 +2955,25 @@ var exte =
                     this.image.context.lineWidth = l;
                 }
             },
+            // 波紋の速度(フレーム毎の半径増加量)
+            speed: {
+                get: function () {
+                    return this._speed;
+                },
+                set: function (s) {
+                    this._speed = s;
+                }
+            },
             // 現在表示している波紋の半径
             radius: {
                 get: function () {
                     return this._radius;
+                }
+            },
+            // 波紋の最大半径。startで指定した位置から、一番遠い四隅までの距離
+            radiusMax: {
+                get: function () {
+                    return this._radiusMax;
                 }
             },
             // 半径の制限。0だと描画範囲を越えるまで実行
@@ -2962,9 +2983,6 @@ var exte =
                 },
                 set: function (r) {
                     this._radiusLimit = r;
-                    if (0 < this._radiusMax) {
-                        this._radiusMax = Math.min(this._radiusMax, r);
-                    }
                 }
             },
             // 表示開始
@@ -2975,17 +2993,15 @@ var exte =
                 this._active = true;
                 this._radius = 0;
 
-                this._radiusMax = this._center.getDistance(
+                if (0 < this._radiusLimit) {
+                    this._radiusMax = this._radiusLimit;
+                } else {
+                    this._radiusMax = this._center.getDistance(
                                 new Point(
                                     this.width / 2 < x ? 0 : this.width,
                                     this.height / 2 < y ? 0 : this.height
                                 ));
-                if (0 < this._radiusLimit) {
-                    this._radiusMax = Math.min(rmax, this._radiusLimit);
                 }
-
-                //透過部分が外に出るまでの猶予
-                this._radiusMax += this.lineWidth * 10;
 
                 this.image.clear();
             },
@@ -3031,6 +3047,7 @@ var exte =
     //-----------------------------
 
     return {
+        isDebug: isDebug,
         trace: trace,
         makeSpace: makeSpace,
         playSound: playSound,
