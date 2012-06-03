@@ -783,11 +783,22 @@ var exte =
             }
         }
 
+        var rowStart = 1;
+        var columnStart = 1;
+        var rowLimit = rowNum;
+        var columnLimit = columnNum;
+        if (addframe) {
+            rowStart++;
+            columnStart++;
+            rowLimit--;
+            columnLimit--;
+        }
+
         var range = 4;
         var dx = [1, 0, -1, 0];
         var dy = [0, 1, 0, -1];
-        for (var row = (addframe ? 2 : 1); row < rowNum; row += 2) {
-            for (var column = (addframe ? 2 : 1); column < columnNum; column += 2) {
+        for (var row = rowStart; row < rowLimit; row += 2) {
+            for (var column = columnStart; column < columnLimit; column += 2) {
                 maze[row][column] = 1;
 
                 //指定した方向の通路を壁で埋める
