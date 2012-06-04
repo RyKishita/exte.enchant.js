@@ -2900,6 +2900,7 @@ var exte =
         });
 
         // 波紋
+        // ※Chromeでうまくいかない。Firefoxでは大丈夫
         var Ripple = enchant.Class.create(enchant.Sprite, {
             // @param {整数} [width] 幅 省略時はゲーム画面幅
             // @param {整数} [height] 高さ 省略時はゲーム画面高さ
@@ -2913,7 +2914,7 @@ var exte =
                 //-----------------------------
 
                 this._active = false;
-                this._lineColor = 'black';
+                //this._lineColor = 'black';
                 this._radius = 0;
                 this._radiusMax = 0;
                 this._radiusLimit = 0;
@@ -2922,18 +2923,19 @@ var exte =
                 this.image = new enchant.Surface(width, height);
 
                 var c = this.image.context;
-                c.fillStyle = 'rgba(0,0,0,0.5)';
+                c.fillStyle = 'transparent';
 
                 this._draw = function () {
-                    c.strokeStyle = this._radiusLimit == 0 || this._radius < this._radiusLimit
-                        ? this._lineColor
-                        : c.fillStyle;
+                    this.image.clear();
+                    //c.strokeStyle = this._radiusLimit == 0 || this._radius < this._radiusLimit
+                    //    ? this._lineColor
+                    //    : c.fillStyle;
 
                     c.beginPath();
                     c.arc(this._center.x, this._center.y, this._radius, 0, Math.PI * 2, false);
                     c.closePath();
 
-                    c.fill();
+                    //c.fill();
                     c.stroke();
                 };
 
@@ -2951,10 +2953,11 @@ var exte =
             // 線色
             lineColor: {
                 get: function () {
-                    return this._lineColor;
+                    return this.image.context.strokeStyle; // this._lineColor;
                 },
                 set: function (c) {
-                    this._lineColor = c;
+                    //this._lineColor = c;
+                    this.image.context.strokeStyle = c;
                 }
             },
             // 線幅
