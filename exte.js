@@ -8,6 +8,69 @@ var exte =
 (function () {
     "use strict";
 
+    // 実行端末取得
+    var getUserAgent = function () {
+        var ua = navigator.userAgent;
+        if ((ua.indexOf('iPhone') > 0 && ua.indexOf('iPad') == -1) ||
+            ua.indexOf('iPod') > 0) {
+            return "iOS";
+        } else if (ua.indexOf('Android') > 0) {
+            return "Android";
+        } else if (ua.indexOf('Chrome') > 0) {
+            return "Chrome";
+        } else if (ua.indexOf('Firefox') > 0) {
+            return "Firefox";
+        } else if (ua.indexOf('Opera') > 0) {
+            return "Opera";
+        }
+        return "Other";//IE?
+    };
+
+    // アイコンSurface作成
+    // @param {整数} [index] アイコンイメージ内のインデックス
+    // @param {整数} [count] index~index+count-1をイメージに含める(同じ行内)。初期値は1
+    // @param {String} [assetName] アイコンイメージファイル(アセット名)。初期値は'icon0.gif'
+    // @param {整数} [width] アイコン1つ分の幅。初期値は16
+    // @param {整数} [height] アイコン1つ分の高さ。初期値は16 
+    // @param {整数} [columnNum] assetName内の一行にあるアイコン数。初期値は16('icon0.gif'を想定)
+    // @return {Surface} 結果
+    var createIconSurface = function (index, count, assetName, width, height, columnNum) {
+        count = count || 1;
+        assetName = assetName || 'icon0.gif';
+        width = width || 16;
+        height = height || 16;
+        columnNum = columnNum || 16;
+
+        var x = (index % columnNum) * width;
+        var y = Math.floor(index / columnNum) * height;
+
+        var image = new Surface(width * count, height);
+        image.draw(
+            enchant.Game.instance.assets[assetName],
+            x, y, width * count, height,
+            0, 0, width * count, height);
+        return image;
+    };
+
+    // アイコンSprite作成
+    // @param {整数} [index] アイコンイメージ内のインデックス
+    // @param {整数} [count] index~index+count-1をイメージに含める(同じ行内)。初期値は1
+    // @param {String} [assetName] アイコンイメージファイル(アセット名)。初期値は'icon0.gif'
+    // @param {整数} [width] アイコン1つ分の幅。初期値は16
+    // @param {整数} [height] アイコン1つ分の高さ。初期値は16 
+    // @param {整数} [columnNum] assetName内の一行にあるアイコン数。初期値は16('icon0.gif'を想定)
+    // @return {Sprite} 結果
+    var createIconSprite = function (index, count, assetName, width, height, columnNum) {
+        var image = createIconSurface(index, count, assetName, width, height, columnNum);
+
+        width = width || image.width;
+        height = height || image.height;
+
+        var sprite = new Sprite(width, height);
+        sprite.image = image;
+        return sprite
+    };
+
     // 現在デバッグモードかどうか
     var isDebug = function () {
         return enchant.Game.instance._debug;
@@ -22,17 +85,25 @@ var exte =
         }
     };
 
+    // 繰り返し文字列の作成
+    // @param {String} [text] 文字列
+    // @param {整数} [n] 空白文字数 省略時は一回(=textのまま)
+    // @return {String} 結果
+    var makeRepeatString = function (text, n) {
+        var s = text;
+        if (n) {
+            for (var i = 1; i < n; i++) {
+                s += text;
+            }
+        }
+        return s;
+    };
+
     // 空白の作成
     // @param {整数} [n] 空白文字数 省略時は１文字
     // @return {String} 結果
     var makeSpace = function (n) {
-        var s = '&nbsp;';
-        if (n) {
-            for (var i = 1; i < n; i++) {
-                s += '&nbsp;';
-            }
-        }
-        return s;
+        return makeRepeatString('&nbsp;', n);
     };
 
     // 音の再生
@@ -1440,7 +1511,7 @@ var exte =
     //    }
     //});
 
-    //-----------------------------
+    // 図形に関する機能群
     var Figure = (function () {
 
         // 単純な四角形のSurface作成
@@ -3061,8 +3132,12 @@ var exte =
     //-----------------------------
 
     return {
+        getUserAgent: getUserAgent,
+        createIconSurface: createIconSurface,
+        createIconSprite: createIconSprite,
         isDebug: isDebug,
         trace: trace,
+        makeRepeatString: makeRepeatString,
         makeSpace: makeSpace,
         playSound: playSound,
         RepeatSoundPlayer: RepeatSoundPlayer,

@@ -206,7 +206,7 @@ function CreatePlayScene2(gameData) {
         label.y = 60;
         mainGroup.addChild(label);
         
-        hadouSprite = gameData.createIconSprite(54);
+        hadouSprite = exte.createIconSprite(54);
         hadouSprite.visible = false;
         hadouSprite.x = 120;
         hadouSprite.y = 60;
@@ -435,7 +435,7 @@ function CreatePlayScene3(gameData) {
         label7.y = 75;
         mainGroup.addChild(label7);
 
-        moveSprite = gameData.createIconSprite(44);
+        moveSprite = exte.createIconSprite(44);
         moveSprite.x = 140;
         moveSprite.y = 90;
         mainGroup.addChild(moveSprite);
@@ -951,6 +951,170 @@ function CreatePlayScene6(gameData) {
             logList.addLog(fontSize, null, fontSize, size);
         }
         if (game.input.b) {
+            scene.moveSceneTo('7');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlayScene7(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('7');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+    var mainGroup = new Group();
+    (function () {
+        var label = new Label('getUserAgent=' + exte.getUserAgent());
+        label.x = 10;
+        label.y = 10;
+        mainGroup.addChild(label);
+
+    })();
+    scene.addChild(mainGroup);
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→top');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+        ;
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        if (game.input.up) {
+        }
+        if (game.input.down) {
+        }
+        if (game.input.left) {
+        }
+        if (game.input.right) {
+        }
+        if (game.input.a) {
+        }
+        if (game.input.b) {
+            scene.moveSceneTo('1');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlaySceneTemplate(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+    var mainGroup = new Group();
+    (function () {
+        var label = new Label('');
+        label.x = 10;
+        label.y = 10;
+        mainGroup.addChild(label);
+
+    })();
+    scene.addChild(mainGroup);
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→top');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+        ;
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        if (game.input.up) {
+        }
+        if (game.input.down) {
+        }
+        if (game.input.left) {
+        }
+        if (game.input.right) {
+        }
+        if (game.input.a) {
+        }
+        if (game.input.b) {
             scene.moveSceneTo('1');
         }
     });
@@ -965,4 +1129,5 @@ function CreatePlayScene(gameData) {
     CreatePlayScene4(gameData);
     CreatePlayScene5(gameData);
     CreatePlayScene6(gameData);
+    CreatePlayScene7(gameData);
 }
