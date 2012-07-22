@@ -247,14 +247,9 @@ var exte =
                 var s = (fadeInSec == undefined) ? 0.5 : fadeInSec;
                 if (0 < s) {
                     this._fadeInStep = 1.0 / (s * fps);
-                    this.addEventListener(enchant.Event.ENTER, function (e) {
+                    this.addEventListener(Event_SceneExStarting, function (e) {
                         this._setFadeIn = true;
                         this.opacity = 0;
-                    });
-                } else {
-                    this.addEventListener(enchant.Event.ENTER, function (e) {
-                        this._setFadeIn = false;
-                        this.opacity = 1;
                     });
                 }
 
@@ -1697,6 +1692,12 @@ var exte =
                 var dx = point.x - this.x;
                 var dy = point.y - this.y;
                 return Math.sqrt(dx * dx + dy * dy);
+            },
+            // 指定した点と自分が同じ位置かどうか
+            // @param {object} [point] 点{x,y}
+            // @return {boolen} 同じならtrue
+            isEqual: function (point) {
+                return point.x == this.x && point.y == this.y;
             },
             // 複製
             // @return {Point} 新しいインスタンス
