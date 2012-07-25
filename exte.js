@@ -1231,6 +1231,51 @@ var exte =
         }
     };
 
+    // 指定した位置に行くのに必要な最小コストとその道順を計算(上記 findRoutesForEach の逆)
+    // @param {Array<Array<整数>>} [map] 2次元配列。
+    //      各マスの移動コスト(0やマイナスも可)を設定します。
+    //      移動できないマスには大きな数字を入れてください。
+    //      各行の列数は全て同じであることを期待します。
+    // @param {整数} [fromRowNo] 現在位置の行番号
+    // @param {整数} [fromColumnNo] 現在位置の列番号
+    // @param {整数} [toRowNo] 目的の地点の行番号
+    // @param {整数} [toColumnNo] 目的の地点の列番号
+    // @return {{[cost:整数],[routes:Array<Array<{row,column}>>]}} 結果
+    //      複数の道順が見つかることがあるので配列の配列になっています。
+    var calcMoveCost = function (map, fromRowNo, fromColumnNo, toRowNo, toColumnNo) {
+        // まっすぐ目的地に行った時のコストを計算
+        var cost = 0;
+
+        if (fromColumnNo != toColumnNo) {
+            var cMin = Math.min(fromColumnNo, toColumnNo);
+            var cMax = Math.max(fromColumnNo, toColumnNo);
+            for (var c = cMin + 1; c < cMax; c++) {
+                cost += map[fromRowNo][c];
+            }
+            cost += map[fromRowNo][toColumnNo];
+        }
+
+        if (fromRowNo != toRowNo) {
+            var rMin = Math.min(fromRowNo, toRowNo);
+            var rMax = Math.max(fromRowNo, toRowNo);
+            for (var r = rMin + 1; r < rMax; r++) {
+                cost += map[r][toColumnNo];
+            }
+            cost += map[toRowNo][toColumnNo];
+        }
+
+        // そのコストで行ける所全てを取得して、目的の位置が来たら記録
+        var resultRoutes;
+        findRoutesForEach(map, fromRowNo, fromColumnNo, cost, function (row, column, rest, routes) {
+            if (row == toRowNo && column == toColumnNo) {
+                cost = rest;
+                resultRoutes = routes;
+            }
+        });
+
+        return { cost: cost, routes: resultRoutes };
+    };
+
     // 単純なenchant.Mapの作成
     // @param {String} [assetName] アセット名
     // @param {整数} [tileSize] 1マスの縦横幅
@@ -3178,6 +3223,7 @@ var exte =
         arrayEraseIf: arrayEraseIf,
         samePartsForEach: samePartsForEach,
         findRoutesForEach: findRoutesForEach,
+        calcMoveCost: calcMoveCost,
         createSimpleMap: createSimpleMap,
         createSampleMap: createSampleMap,
         LogList: LogList,
