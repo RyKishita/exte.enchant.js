@@ -1268,10 +1268,16 @@ var exte =
         var resultRoutes;
         findRoutesForEach(map, fromRowNo, fromColumnNo, cost, function (row, column, rest, routes) {
             if (row == toRowNo && column == toColumnNo) {
-                cost = rest;
                 resultRoutes = routes;
             }
         });
+
+        // 見つけた道順でコストを再計算
+        cost = 0;
+        for (var i in resultRoutes[0]) {
+            var rt = resultRoutes[0][i];
+            cost += map[rt.row][rt.column];
+        }
 
         return { cost: cost, routes: resultRoutes };
     };
