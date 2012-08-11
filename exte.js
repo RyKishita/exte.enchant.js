@@ -1408,8 +1408,8 @@ var exte =
             this._labels = [];
             this._texts = [];
             this._currentWork = 0; //0:check, 1:textout, 2:scroll, 3:textin
-            this._fadeInIndex = -1;
-            this._fadeOutIndex = -1;
+            this._fadeInLabel = null;
+            this._fadeOutLabel = null;
             this._scrollNum = 0;
             this._outAllLog = false;
             this._visible = true;
@@ -1424,16 +1424,14 @@ var exte =
 
                             var t = this._texts.shift();
 
-                            this._fadeInIndex = null;
+                            var label = null;
                             for (var i = 0; i < this._labels.length; i++) {
                                 if (!this._labels[i].valid) {
-                                    this._fadeInIndex = i;
+                                    label = this._labels[i];
                                     break;
                                 }
                             }
-                            var label;
-                            if (this._fadeInIndex) {
-                                label = this._labels[this._fadeInIndex];
+                            if (label) {
                                 label.x = 0;
                                 label.y = 0;
                                 label.text = t.text;
@@ -1450,7 +1448,6 @@ var exte =
                                 }
                                 this.addChild(label);
 
-                                this._fadeInIndex = this._labels.length;
                                 this._labels.push(label);
                             }
                             label._style.fontSize = t.fontSize || "";
@@ -1459,6 +1456,7 @@ var exte =
                             label.opacity = 0;
                             label.textAlign = t.textAlign || 'left';
 
+                            this._fadeInLabel = label;
                             this._scrollNum = label.height;
 
                             var bottom = 0;
@@ -1468,7 +1466,7 @@ var exte =
                                 var b = l.y + l.height;
                                 if (bottom < b) {
                                     bottom = b;
-                                    this._fadeOutIndex = i;
+                                    this._fadeOutLabel = l;
                                 }
                             }
                             if (this.height < (bottom + label.height)) {
@@ -1479,14 +1477,13 @@ var exte =
                         }
                         break;
                     case 1:
-                        var fadeOutLabel = this._labels[this._fadeOutIndex];
-                        if (this._outAllLog || fadeOutLabel.opacity < this.fadeOut) {
-                            fadeOutLabel.opacity = 0;
-                            fadeOutLabel.visible = false;
-                            fadeOutLabel.valid = false;
+                        if (this._outAllLog || this._fadeOutLabel.opacity < this.fadeOut) {
+                            this._fadeOutLabel.opacity = 0;
+                            this._fadeOutLabel.visible = false;
+                            this._fadeOutLabel.valid = false;
                             this._currentWork = 2;
                         } else {
-                            fadeOutLabel.opacity -= this.fadeOut;
+                            this._fadeOutLabel.opacity -= this.fadeOut;
                         }
                         break;
                     case 2:
@@ -1504,18 +1501,16 @@ var exte =
                         }
                         if (this._scrollNum <= 0) {
                             this._currentWork = 3;
-                            var l = this._labels[this._fadeInIndex];
-                            l.visible = true;
-                            l.valid = true;
+                            this._fadeInLabel.visible = true;
+                            this._fadeInLabel.valid = true;
                         }
                         break;
                     case 3:
-                        var fadeInLabel = this._labels[this._fadeInIndex];
-                        if (this._outAllLog || (1.0 - this.fadeIn) < fadeInLabel.opacity) {
-                            fadeInLabel.opacity = 1;
+                        if (this._outAllLog || (1.0 - this.fadeIn) < this._fadeInLabel.opacity) {
+                            this._fadeInLabel.opacity = 1;
                             this._currentWork = 0;
                         } else {
-                            fadeInLabel.opacity += this.fadeIn;
+                            this._fadeInLabel.opacity += this.fadeIn;
                         }
                         break;
                 }
@@ -1556,7 +1551,8 @@ var exte =
         clear: function () {
             this._texts.length = 0;
             for (var i in this._labels) {
-                this._labels[i].visible = false;
+                var l = this._labels[i];
+                l.visible = l.valid = false;
             }
             this._currentWork = 0;
         }
