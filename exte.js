@@ -1394,7 +1394,10 @@ var exte =
             this.fontSize = null;
 
             // 折り返し。「normal」「break-all」「keep-all」のどれか
-            this.wordBreak = 'break-all';
+            this.wordBreak = null;
+
+            // 文字位置。「left」「center」「right」など
+            this.textAlign = null;
 
             // この数までログが溜まった時は、アニメーションを無効化して一気に表示
             // 0の時は制限しない
@@ -1454,6 +1457,7 @@ var exte =
                             label.color = t.color || "";
                             label.height = t.lineHeight || 10;
                             label.opacity = 0;
+                            label.textAlign = t.textAlign || 'left';
 
                             this._scrollNum = label.height;
 
@@ -1534,17 +1538,27 @@ var exte =
         // @param {文字列} [color] このテキストのみの文字色。省略時はデフォルト
         // @param {文字列} [fontSize] このテキストのみのフォントサイズ。省略時はデフォルト
         // @param {数値} [lineWidth] このテキストのみの行高さ。省略時はデフォルト
-        addLog: function (text, color, fontSize, lineHeight) {
+        // @param {数値} [textAlign] このテキストのみの文字位置。省略時はデフォルト
+        addLog: function (text, color, fontSize, lineHeight, textAlign) {
             this._texts.push({
                 text: text,
                 color: color || this.color,
                 fontSize: fontSize || this.fontSize,
-                lineHeight: lineHeight || this.lineHeight
+                lineHeight: lineHeight || this.lineHeight,
+                textAlign: textAlign || this.textAlign
             });
         },
         // 溜まっているログを、アニメーションを無効化して一気に出力
         outAllLog: function () {
             this._outAllLog = true;
+        },
+        // 全削除
+        clear: function () {
+            this._texts.length = 0;
+            for (var i in this._labels) {
+                this._labels[i].visible = false;
+            }
+            this._currentWork = 0;
         }
     });
 
