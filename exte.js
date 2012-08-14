@@ -113,28 +113,20 @@ var exte =
     };
 
     // 主にBGM用。曲の終わりをフェードアウトして曲の頭につなげる
+    // ※enchant.SceneのEvent.ENTER_FRAMEでenterFrameを呼ぶ
+    // ※特定のenchant.Sceneで流すなら、addChildでも良い
     var RepeatSoundPlayer = enchant.Class.create(enchant.Node, {
         // @param {文字列} [assetName] アセット名
         // @param {実数} [fadeSec] 残り何秒からフェードアウトを開始するか。省略時は5秒
-        // @param {実数} [volume] フェードアウト後に戻す音量。省略時は1.0(最大)
+        // @param {実数} [volume] 音量。省略時は1.0(最大)
         initialize: function (assetName, fadeSec, volume) {
             enchant.Node.call(this);
 
-            this._sound = enchant.Game.instance.assets[assetName];
+            this._sound = enchant.Sound.load(assetName);
             this._fadeSec = fadeSec || 5.0;
             this._volume = volume || 1.0;
 
-            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
-                if (this._fadeSec < (this._sound.duration - this._sound.currentTime)) {
-                    return;
-                }
-
-                this._sound.volume = (this._sound.duration - this._sound.currentTime) / this._fadeSec;
-                if (this._sound.volume < 0.01) {
-                    this._sound.currentTime = 0;
-                    this.play();
-                }
-            });
+            this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         },
         // 再生開始
         play: function () {
@@ -148,6 +140,18 @@ var exte =
         // 停止
         stop: function () {
             this._sound.stop();
+        },
+        // enchant.Event.ENTER_FRAMEで実行
+        enterFrame: function () {
+            if (this._fadeSec < (this._sound.duration - this._sound.currentTime)) {
+                return;
+            }
+
+            this._sound.volume = this._volume * (this._sound.duration - this._sound.currentTime) / this._fadeSec;
+            if (this._sound.volume < 0.01) {
+                this._sound.currentTime = 0;
+                this.play();
+            }
         }
     });
 
