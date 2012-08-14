@@ -186,7 +186,7 @@ function CreatePlayScene2(gameData) {
         mainGroup.addChild(label2);
 
         kLabel = new Label('');
-        kLabel.x = 120;
+        kLabel.x = 140;
         kLabel.y = 10;
         mainGroup.addChild(kLabel);
 
@@ -196,7 +196,7 @@ function CreatePlayScene2(gameData) {
         mainGroup.addChild(label3);
 
         kLabel2 = new Label('');
-        kLabel2.x = 120;
+        kLabel2.x = 140;
         kLabel2.y = 25;
         mainGroup.addChild(kLabel2);
 
@@ -379,22 +379,13 @@ function CreatePlayScene3(gameData) {
     scene.addChild(backGroup);
 
     //------------------------------------------
-    var rlabel;
-    var moveSprite;
-    var alabel;
-
-    function update_isOutOfScreen() {
-        alabel.text = 'exte.isOutOfScreen=' + exte.isOutOfScreen(moveSprite);
-    }
 
     var mainGroup = new Group();
     (function () {
-        var suffles = exte.shuffleArray([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
-
-        var label1 = new Label('exte.shuffleArray[' + suffles.join(',') + ']');
-        label1.x = 10;
-        label1.y = 10;
-        mainGroup.addChild(label1);
+        var label2 = new Label('exte.setMazeData');
+        label2.x = 10;
+        label2.y = 10;
+        mainGroup.addChild(label2);
 
         var map = new Map(16, 16);
         map.image = game.assets[gameData.mapAssetName];
@@ -402,11 +393,6 @@ function CreatePlayScene3(gameData) {
         map.y = 30;
         exte.setMazeData(map, 7, 7, 322, 520);
         mainGroup.addChild(map);
-
-        var label2 = new Label('exte.setMazeData');
-        label2.x = 10;
-        label2.y = 150;
-        mainGroup.addChild(label2);
 
         var targetRow = rand(7);
         var targetColumn = rand(7);
@@ -416,47 +402,15 @@ function CreatePlayScene3(gameData) {
         });
 
         var label20 = new Label('exte.samePartsForEach(' + targetRow + ','+targetColumn+ ')');
-        label20.x = 10;
-        label20.y = 170;
+        label20.x = 130;
+        label20.y = 10;
         mainGroup.addChild(label20);
 
         var label21 = new Label(''+samepoints);
-        label21.x = 10;
-        label21.y = 185;
+        label21.x = 160;
+        label21.y = 30;
+        label21.width = 160;
         mainGroup.addChild(label21);
-
-        rlabel = new Label('exte.randomString' + exte.makeSpace() + 'push"A"');
-        rlabel.x = 140;
-        rlabel.y = 40;
-        mainGroup.addChild(rlabel);
-
-        var label7 = new Label('↓Press arrow key.Try out screen');
-        label7.x = 140;
-        label7.y = 75;
-        mainGroup.addChild(label7);
-
-        moveSprite = exte.createIconSprite(44);
-        moveSprite.x = 140;
-        moveSprite.y = 90;
-        mainGroup.addChild(moveSprite);
-
-        alabel = new Label('');
-        alabel.x = 140;
-        alabel.y = 120;
-        mainGroup.addChild(alabel);
-
-        var str5 = 'あいうえお';
-        var label5 = new Label(str5 + '→' + exte.toKatakanaCase(str5));
-        label5.x = 140;
-        label5.y = 140;
-        mainGroup.addChild(label5);
-
-        var str6 = 'ガギグゲゴ';
-        var label6 = new Label(str6 + '→' + exte.toHirakanaCase(str6));
-        label6.x = 140;
-        label6.y = 155;
-        mainGroup.addChild(label6);
-
 
         var nextLabel = new Label('push"B"→next');
         nextLabel.x = 220;
@@ -496,7 +450,7 @@ function CreatePlayScene3(gameData) {
     //------------------------------------------
 
     scene.addEventListener(exte.Event_SceneExStarting, function (e) {
-        update_isOutOfScreen();
+        ;
     });
 
     scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
@@ -583,58 +537,29 @@ function CreatePlayScene4(gameData) {
         mainGroup.addChild(clabel[3]);
 
         clabel[4] = new Label('');
-        clabel[4].x = 100;
-        clabel[4].y = 60;
+        clabel[4].x = 10;
+        clabel[4].y = 105;
         mainGroup.addChild(clabel[4]);
 
         var label2 = new Label('exte.paddingLeft');
         label2.x = 10;
-        label2.y = 115;
+        label2.y = 150;
         mainGroup.addChild(label2);
 
         var label3 = new Label(exte.paddingLeft(999, 5));
-        label3.x = 100;
-        label3.y = 115;
+        label3.x = 140;
+        label3.y = 150;
         mainGroup.addChild(label3);
 
         var label4 = new Label('exte.paddingRight');
         label4.x = 10;
-        label4.y = 130;
+        label4.y = 170;
         mainGroup.addChild(label4);
 
         var label5 = new Label(exte.paddingRight(999, 5));
-        label5.x = 100;
-        label5.y = 130;
+        label5.x = 140;
+        label5.y = 170;
         mainGroup.addChild(label5);
-
-        var label6 = new Label('var' + exte.makeSpace() + 'color={r:128, g:0, b:255}');
-        label6.x = 10;
-        label6.y = 150;
-        mainGroup.addChild(label6);
-
-        var color = { r: 128, g: 0, b: 255 };
-        var label7 = new Label('exte.formatString("rgb({r}, {g}, {b})", color)→' + exte.formatString('rgb({r}, {g}, {b})', color));
-        label7.x = 10;
-        label7.y = 165;
-        mainGroup.addChild(label7);
-
-        var ary = [1,2,3,4,5,6,7,8,9];
-
-        var label8 = new Label('exte.arrayQueryIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + exte.arrayQueryIf(ary, function(elm, index, ar) { return elm %3 == 0}));
-        label8.x = 10;
-        label8.y = 185;
-        mainGroup.addChild(label8);
-
-        exte.arrayEraseIf(ary, function (elm, index, ar) { return elm % 3 == 0 });
-        var label8 = new Label('exte.arrayEraseIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + ary);
-        label8.x = 10;
-        label8.y = 200;
-        mainGroup.addChild(label8);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
@@ -711,15 +636,10 @@ function CreatePlayScene5(gameData) {
     //------------------------------------------
     var mainGroup = new Group();
     (function () {
-        var label = new Label('exte.findWalkForEach(row5column5cost10) push"a"→update');
+        var label = new Label('exte.findWalkForEach(row5 column5 cost10) push"a"→update');
         label.x = 0;
         label.y = 10;
         mainGroup.addChild(label);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
@@ -747,6 +667,11 @@ function CreatePlayScene5(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
@@ -764,7 +689,7 @@ function CreatePlayScene5(gameData) {
 
             var label = new Label('0');
             label.x = column * 15 + 10;
-            label.y = row * 15 + 40;
+            label.y = row * 15 + 50;
             mainGroup.addChild(label);
             labels.push(label);
         }
@@ -776,8 +701,9 @@ function CreatePlayScene5(gameData) {
     mainGroup.addChild(rs);
 
     var routesLabel = new Label('routes');
-    routesLabel.x = 0;
-    routesLabel.y = 200;
+    routesLabel.x = 200;
+    routesLabel.y = 50;
+    routesLabel.width = 120;
     mainGroup.addChild(routesLabel);
 
     var cursorRow = 5;
@@ -808,11 +734,11 @@ function CreatePlayScene5(gameData) {
             var l = labelMap[row][column];
             l.color = 'red';
 
-            var routesText = 'rest=' + rest + ' routes=';
+            var routesText = 'rest=' + rest + '<br />routes=';
             for (var i in routes) {
-                routesText += '[ ';
+                routesText += '[<br />';
                 for (var j in routes[i]) {
-                    routesText += '{ ' + routes[i][j].row + ' , ' + routes[i][j].column + ' }';
+                    routesText += '{ ' + routes[i][j].row + ' , ' + routes[i][j].column + ' }<br />';
                 }
                 routesText += ' ]';
             }
@@ -879,23 +805,18 @@ function CreatePlayScene6(gameData) {
 
         var backMap = exte.createSimpleMap(gameData.mapAssetName, 16, 8, 6, 135, 114, 115, 116, 134, 136, 154, 155, 156);
         backMap.x = 15;
-        backMap.y = 25;
+        backMap.y = 50;
         mainGroup.addChild(backMap);
 
         var label = new Label('exte.logList push"a"→addLog');
         label.x = 10;
-        label.y = 10;
+        label.y = 30;
         mainGroup.addChild(label);
-
-        var nextLabel = new Label('push"B"→top');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
     //------------------------------------------
-    var logList = new exte.LogList(30, 30, 100, 100);
+    var logList = new exte.LogList(30, 50, 100, 100);
     logList.color = 'white';
     scene.addChild(logList);
 
@@ -923,6 +844,11 @@ function CreatePlayScene6(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→top');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
@@ -964,6 +890,250 @@ function CreatePlayScene7(gameData) {
     var game = enchant.Game.instance;
 
     var scene = new exte.SceneEx('7');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+    var rlabel;
+    var moveSprite;
+    var alabel;
+
+    function update_isOutOfScreen() {
+        alabel.text = 'exte.isOutOfScreen=' + exte.isOutOfScreen(moveSprite);
+    }
+
+    var mainGroup = new Group();
+    (function () {
+        var ary = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var label0 = new Label('ary = [' + ary.join(',') + ']');
+        label0.x = 10;
+        label0.y = 10;
+        mainGroup.addChild(label0);
+
+        var suffles = exte.shuffleArray(ary);
+
+        var label1 = new Label('exte.shuffleArray → [' + suffles.join(',') + ']');
+        label1.x = 10;
+        label1.y = 25;
+        mainGroup.addChild(label1);
+
+        rlabel = new Label('exte.randomString' + exte.makeSpace() + 'push"A"');
+        rlabel.x = 10;
+        rlabel.y = 50;
+        mainGroup.addChild(rlabel);
+
+        var label7 = new Label('↓Press arrow key.Try out screen');
+        label7.x = 10;
+        label7.y = 80;
+        mainGroup.addChild(label7);
+
+        moveSprite = exte.createIconSprite(44);
+        moveSprite.x = 10;
+        moveSprite.y = 95;
+        mainGroup.addChild(moveSprite);
+
+        alabel = new Label('');
+        alabel.x = 10;
+        alabel.y = 135;
+        mainGroup.addChild(alabel);
+
+        var str5 = 'あいうえお';
+        var label5 = new Label(str5 + '→' + exte.toKatakanaCase(str5));
+        label5.x = 10;
+        label5.y = 160;
+        mainGroup.addChild(label5);
+
+        var str6 = 'ガギグゲゴ';
+        var label6 = new Label(str6 + '→' + exte.toHirakanaCase(str6));
+        label6.x = 10;
+        label6.y = 180;
+        mainGroup.addChild(label6);
+    })();
+    scene.addChild(mainGroup);
+
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+        update_isOutOfScreen();
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        // game.end(scoreLabel.score, scoreLabel.score + '点');
+
+        if (game.input.up) {
+            moveSprite.y -= 3;
+            update_isOutOfScreen();
+        }
+        if (game.input.down) {
+            moveSprite.y += 3;
+            update_isOutOfScreen();
+        }
+        if (game.input.left) {
+            moveSprite.x -= 3;
+            update_isOutOfScreen();
+        }
+        if (game.input.right) {
+            moveSprite.x += 3;
+            update_isOutOfScreen();
+        }
+        if (game.input.a) {
+            rlabel.text = exte.randomString(10);
+        }
+        if (game.input.b) {
+            scene.moveSceneTo('8');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlayScene8(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('8');
+
+    //------------------------------------------
+    var backGroup = new Group();
+    backGroup.addChild(new Wallpaper(game.assets[gameData.playAssetName]));
+    scene.addChild(backGroup);
+
+    //------------------------------------------
+
+    var mainGroup = new Group();
+    (function () {
+        var label6 = new Label('var' + exte.makeSpace() + 'color={r:128, g:0, b:255}');
+        label6.x = 10;
+        label6.y = 10;
+        mainGroup.addChild(label6);
+
+        var color = { r: 128, g: 0, b: 255 };
+        var label7 = new Label('exte.formatString("rgb({r}, {g}, {b})", color)<br />→' + exte.formatString('rgb({r}, {g}, {b})', color));
+        label7.x = 10;
+        label7.y = 30;
+        mainGroup.addChild(label7);
+
+        var ary = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+        var label8 = new Label('exte.arrayQueryIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + exte.arrayQueryIf(ary, function (elm, index, ar) { return elm % 3 == 0 }));
+        label8.x = 10;
+        label8.y = 80;
+        mainGroup.addChild(label8);
+
+        exte.arrayEraseIf(ary, function (elm, index, ar) { return elm % 3 == 0 });
+        var label8 = new Label('exte.arrayEraseIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + ary);
+        label8.x = 10;
+        label8.y = 130;
+        mainGroup.addChild(label8);
+    })();
+    scene.addChild(mainGroup);
+
+
+    //------------------------------------------
+    var uiGroup = new Group();
+    (function () {
+        var pad = new Pad();
+        pad.x = 0;
+        pad.y = 220;
+        uiGroup.addChild(pad);
+
+
+        var margin = 10;
+
+        var buttonASprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonASprite.x = game.width - gameData.buttonWidth * 2 - margin * 2;
+        buttonASprite.y = game.height - gameData.buttonHeight - margin;
+        buttonASprite.image = game.assets[gameData.buttonAAssetName];
+        buttonASprite.buttonMode = "a";
+        uiGroup.addChild(buttonASprite);
+
+        var buttonBSprite = new Sprite(gameData.buttonWidth, gameData.buttonHeight);
+        buttonBSprite.x = game.width - gameData.buttonWidth - margin;
+        buttonBSprite.y = game.height - gameData.buttonHeight - margin;
+        buttonBSprite.image = game.assets[gameData.buttonBAssetName];
+        buttonBSprite.buttonMode = "b";
+        uiGroup.addChild(buttonBSprite);
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        uiGroup.addChild(nextLabel);
+    })();
+    scene.addChild(uiGroup);
+
+    //------------------------------------------
+
+    scene.addEventListener(exte.Event_SceneExStarting, function (e) {
+    });
+
+    scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+        if (scene.fadeProsessing) return;
+
+        // game.end(scoreLabel.score, scoreLabel.score + '点');
+
+        if (game.input.up) {
+        }
+        if (game.input.down) {
+        }
+        if (game.input.left) {
+        }
+        if (game.input.right) {
+        }
+        if (game.input.a) {
+        }
+        if (game.input.b) {
+            scene.moveSceneTo('9');
+        }
+    });
+
+    return scene;
+}
+
+function CreatePlayScene9(gameData) {
+    "use strict";
+
+    var game = enchant.Game.instance;
+
+    var scene = new exte.SceneEx('9');
 
     //------------------------------------------
     var backGroup = new Group();
@@ -1130,4 +1300,6 @@ function CreatePlayScene(gameData) {
     CreatePlayScene5(gameData);
     CreatePlayScene6(gameData);
     CreatePlayScene7(gameData);
+    CreatePlayScene8(gameData);
+    CreatePlayScene9(gameData);
 }
