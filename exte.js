@@ -907,6 +907,47 @@ var exte =
         map.collisionData = collisionData;
     };
 
+    // 迷路作成(棒倒し法)
+    // ※上記setMazeDataと同様の見た目になるようにSpriteで作成する。
+    // ※後で区別できるよう、各SpriteにrowNo,columnNo,imageNo変数を追加
+    // @param {enchant.Group} [group] 作成したSpriteの追加先。派生先のScene・RGroup・CanvasGroup等も可
+    // @param {整数} [rowNum] 行数。必ず奇数にすること
+    // @param {整数} [columnNum] 列数。必ず奇数にすること
+    // @param {整数} [floorNo] 床にするイメージNo。背景に使用
+    // @param {整数} [wallNo] 壁にするイメージNo。
+    // @param {Boolen} [addframe] 外枠を壁にするかどうか。省略時はfalse(壁にしない)
+    // @param {String} [assetName] アセット名。初期値は'map1.gif'
+    // @param {整数} [partsWidth] マップパーツ1つ分の幅。初期値は16
+    // @param {整数} [partsHeight] マップパーツ1つ分の高さ。初期値は16 
+    // @param {整数} [partsColumnNum] assetName内の一行にあるアイコン数。初期値は20('map1.gif'を想定)
+    var setMazeSprites = function (group, rowNum, columnNum, floorNo, wallNo, addframe, assetName, partsWidth, partsHeight, partsColumnNum) {
+        var collisionData = createMaze(rowNum, columnNum, addframe);
+        assetName = assetName || 'map1.gif';
+        partsWidth = partsWidth || 16;
+        partsHeight = partsHeight || 16;
+        partsColumnNum = partsColumnNum || 20;
+
+        function createSprite(r, c, index) {
+            var s = createIconSprite(index, 1, assetName, partsWidth, partsHeight, partsColumnNum);
+            s.x = c * partsWidth;
+            s.y = r * partsHeight;
+            s.rowNo = r;
+            s.columnNo = c;
+            s.imageNo = index;
+            group.addChild(s);
+        }
+
+        for (var r = 0; r < rowNum; r++) {
+            for (var c = 0; c < columnNum; c++) {
+                createSprite(r, c, floorNo);
+
+                if (collisionData[r][c]) {
+                    createSprite(r, c, wallNo);
+                }
+            }
+        }
+    };
+
     // 文字列の幅(全角だと正確ではない)
     // @param {enchant.Surface} [surface] 描画先
     // @param {String} [str] 文字列
@@ -3228,6 +3269,7 @@ var exte =
         collision2Sprites: collision2Sprites,
         createMaze: createMaze,
         setMazeData: setMazeData,
+        setMazeSprites: setMazeSprites,
         stringWidth: stringWidth,
         toKatakanaCase: toKatakanaCase,
         toHirakanaCase: toHirakanaCase,
