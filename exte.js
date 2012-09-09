@@ -211,7 +211,7 @@ var exte =
         // @param {整数} [num] 0～num-1を発生させる
         // @return {整数} 乱数
         rand: function (num) {
-            if (num <= 0) return 0;
+            if (num <= 1) return 0;
             return Math.floor(Math.random() * num);
         }
     });
@@ -995,14 +995,16 @@ var exte =
     };
 
     // スクリーン外に出たかどうか
-    // @param {Object} [obj] 対象の要素{x,y,width,height}。例えばenchant.Sprite,Figure.Rectangle
+    // @param {Object} [obj] 対象の要素{x,y,width,height}。例えばenchant.Sprite
+    // @param {整数} [padding] 内側への余白。指定しない場合は0(要素が見えなくなった時に戻り値がtrueになる)
     // @return {Boolen} 出たならtrue
-    var isOutOfScreen = function (obj) {
+    var isOutOfScreen = function (obj, padding) {
         var game = enchant.Game.instance;
-        return obj.x + obj.width < 0 ||
-                obj.y + obj.height < 0 ||
-                game.width < obj.x ||
-                game.height < obj.y;
+        padding = padding | 0;
+        return obj.x + obj.width < padding ||
+                obj.y + obj.height < padding ||
+                game.width - padding < obj.x ||
+                game.height - padding < obj.y;
     }
 
     // 四捨五入
