@@ -624,6 +624,23 @@ var exte =
         return d;
     };
 
+    // 方向キー入力(またはui.Padの入力)をラジアンに変換
+    // @return {実数} 結果。0～Math.PI*2(右が0)。入力していないときはNumber.NaN
+    var inputToRad = function () {
+        var input = enchant.Game.instance.input;
+
+        if (input.down && input.right) return Math.PI * 0.25;
+        if (input.down && input.left) return Math.PI * 0.75;
+        if (input.up && input.left) return Math.PI * 1.25;
+        if (input.up && input.right) return Math.PI * 1.75;
+        if (input.right) return 0.0;
+        if (input.down) return Math.PI * 0.5;
+        if (input.up) return Math.PI * 1.5;
+        if (input.left) return Math.PI;
+
+        return Number.NaN;
+    };
+
     // 例えば全て1をセットしたArrayなどを作る
     // @param {なんでも} [value] 値
     // @param {整数} [count] 個数 省略時は1
@@ -3266,6 +3283,7 @@ var exte =
         radToDeg: radToDeg,
         normalinzeRad: normalinzeRad,
         normalinzeDeg: normalinzeDeg,
+        inputToRad: inputToRad,
         makeValues: makeValues,
         Geolocation: Geolocation,
         collision2Sprites: collision2Sprites,
