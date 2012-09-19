@@ -61,13 +61,19 @@ var exte =
     // @param {整数} [columnNum] assetName内の一行にあるアイコン数。初期値は16('icon0.gif'を想定)
     // @return {Sprite} 結果
     var createIconSprite = function (index, count, assetName, width, height, columnNum) {
-        var image = createIconSurface(index, count, assetName, width, height, columnNum);
-
-        width = width || image.width;
-        height = height || image.height;
+        count = count || 1;
+        assetName = assetName || 'icon0.gif';
+        width = width || 16;
+        height = height || 16;
 
         var sprite = new Sprite(width, height);
-        sprite.image = image;
+        if (count == 1) {
+            sprite.image = enchant.Game.instance.assets[assetName];
+            sprite.frame = index;
+        } else {
+            sprite.image = createIconSurface(index, count, assetName, width, height, columnNum);
+            sprite.frame = 0;
+        }
         return sprite
     };
 
