@@ -281,10 +281,12 @@ var exte =
                             enchant.Game.instance.replaceScene(nextScene);
                         }
                     }
-                    for (var i in this.inputPatterns) {
-                        var p = this.inputPatterns[i];
-                        if (p.active) {
-                            p.frame++;
+                    if (0 < this.inputPatterns.length) {
+                        for (var i in this.inputPatterns) {
+                            var p = this.inputPatterns[i];
+                            if (p.active) {
+                                p.frame++;
+                            }
                         }
                     }
                 });
@@ -309,6 +311,7 @@ var exte =
                  enchant.Event.B_BUTTON_DOWN,
                  enchant.Event.B_BUTTON_UP].forEach(function (type) {
                      this.addEventListener(type, function (e) {
+                         if (0 == this.inputPatterns.length) return;
                          for (var i in this.inputPatterns) {
                              var p = this.inputPatterns[i];
 
