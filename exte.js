@@ -86,7 +86,7 @@ var exte =
     var trace = function () {
         if (arguments.length == 0) return;
         var args = Array.prototype.slice.call(arguments, 0);
-        for (var i in args) {
+        for (var i = 0; i < args.length; i++) {
             console.log(args[i]);
         }
     };
@@ -281,12 +281,10 @@ var exte =
                             enchant.Game.instance.replaceScene(nextScene);
                         }
                     }
-                    if (0 < this.inputPatterns.length) {
-                        for (var i in this.inputPatterns) {
-                            var p = this.inputPatterns[i];
-                            if (p.active) {
-                                p.frame++;
-                            }
+                    for (var i = 0; i < this.inputPatterns.length; i++) {
+                        var p = this.inputPatterns[i];
+                        if (p.active) {
+                            p.frame++;
                         }
                     }
                 });
@@ -311,8 +309,7 @@ var exte =
                  enchant.Event.B_BUTTON_DOWN,
                  enchant.Event.B_BUTTON_UP].forEach(function (type) {
                      this.addEventListener(type, function (e) {
-                         if (0 == this.inputPatterns.length) return;
-                         for (var i in this.inputPatterns) {
+                         for (var i = 0; i < this.inputPatterns.length; i++) {
                              var p = this.inputPatterns[i];
 
                              if (p.pattern[p.index] != e.type) {
@@ -370,7 +367,7 @@ var exte =
                 // 内部用 透過率設定再帰
                 this._setOpacityChilds = function (me, opct) {
                     if (me.childNodes === undefined) return;
-                    for (var i in me.childNodes) {
+                    for (var i = 0; i < me.childNodes.length; i++) {
                         var node = me.childNodes[i];
                         if (node.opacity !== undefined) node.opacity = opct;
                         this._setOpacityChilds(node, opct);
@@ -807,23 +804,23 @@ var exte =
         b[8] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height / 2 };
 
         //スプライトの中心を原点に平行移動
-        for (var i in a) {
+        for (var i = 0; i < a.length; i++) {
             a[i].X -= (sprite1.x + sprite1.width / 2);
             a[i].Y -= (sprite1.y + sprite1.height / 2);
         }
-        for (var i in b) {
+        for (var i = 0; i < b.length; i++) {
             b[i].X -= (sprite2.x + sprite2.width / 2);
             b[i].Y -= (sprite2.y + sprite2.height / 2);
         }
 
         //スプライトを回転させる
-        for (var i in a) {
+        for (var i = 0; i < a.length; i++) {
             var tmpX = a[i].X;
             var tmpY = a[i].Y;
             a[i].X = tmpX * Math.cos(sprite1.rotation * Math.PI / 180) - tmpY * Math.sin(sprite1.rotation * Math.PI / 180);
             a[i].Y = tmpX * Math.sin(sprite1.rotation * Math.PI / 180) + tmpY * Math.cos(sprite1.rotation * Math.PI / 180);
         }
-        for (var i in b) {
+        for (var i = 0; i < b.length; i++) {
             var tmpX = b[i].X;
             var tmpY = b[i].Y;
             b[i].X = tmpX * Math.cos(sprite2.rotation * Math.PI / 180) - tmpY * Math.sin(sprite2.rotation * Math.PI / 180);
@@ -831,11 +828,11 @@ var exte =
         }
 
         //元の位置に平行移動
-        for (var i in a) {
+        for (var i = 0; i < a.length; i++) {
             a[i].X += (sprite1.x + sprite1.width / 2);
             a[i].Y += (sprite1.y + sprite1.height / 2);
         }
-        for (var i in b) {
+        for (var i = 0; i < b.length; i++) {
             b[i].X += (sprite2.x + sprite2.width / 2);
             b[i].Y += (sprite2.y + sprite2.height / 2);
         }
@@ -1160,7 +1157,7 @@ var exte =
 
         var points = [];
         function AddPoint(row, column) {
-            for (var i in points) {
+            for (var i = 0; i < points.length; i++) {
                 var point = points[i];
                 if (point.row == row && point.column == column) return;
             }
@@ -1184,7 +1181,7 @@ var exte =
 
         while (true) {
             var point = null;
-            for (var i in points) {
+            for (var i = 0; i < points.length; i++) {
                 if (points[i].valid) {
                     point = points[i];
                     break;
@@ -1242,11 +1239,11 @@ var exte =
             rest -= r;
 
             var newRoutes = [];
-            for (var i in routes) {
+            for (var i = 0; i < routes.length; i++) {
                 newRoutes.push(routes[i].concat([{ row: row, column: column}]));
             }
 
-            for (var i in points) {
+            for (var i = 0; i < points.length; i++) {
                 var point = points[i];
                 if (point.row != row || point.column != column) continue;
 
@@ -1255,7 +1252,7 @@ var exte =
                     point.routes = newRoutes;
                     point.valid = true;
                 } else if (point.rest == rest) {
-                    for (var j in newRoutes) {
+                    for (var j = 0; j < newRoutes.length; j++) {
                         point.routes.push(newRoutes[j]);
                     }
                     point.valid = true;
@@ -1268,7 +1265,7 @@ var exte =
 
         while (true) {
             var point = null;
-            for (var i in points) {
+            for (var i = 0; i < points.length; i++) {
                 if (points[i].valid) {
                     point = points[i];
                     break;
@@ -1296,7 +1293,7 @@ var exte =
             }
         }
 
-        for (var i in points) {
+        for (var i = 0; i < points.length; i++) {
             var point = points[i];
             if (0 <= point.rest) {
                 func(point.row, point.column, point.rest, point.routes);
@@ -1347,7 +1344,7 @@ var exte =
 
         // 見つけた道順でコストを再計算
         cost = 0;
-        for (var i in resultRoutes[0]) {
+        for (var i = 0; i < resultRoutes[0].length; i++) {
             var rt = resultRoutes[0][i];
             cost += map[rt.row][rt.column];
         }
@@ -1533,7 +1530,7 @@ var exte =
                             this._scrollNum = label.height;
 
                             var bottom = 0;
-                            for (var i in this._labels) {
+                            for (var i = 0; i < this._labels.length; i++) {
                                 var l = this._labels[i];
                                 if (!l.valid) continue;
                                 var b = l.y + l.height;
@@ -1564,7 +1561,7 @@ var exte =
                             var px = (this._outAllLog || this._scrollNum <= this.scrollPx)
                                         ? this._scrollNum
                                         : this.scrollPx;
-                            for (var i in this._labels) {
+                            for (var i = 0; i < this._labels.length; i++) {
                                 var l = this._labels[i];
                                 if (l.visible) {
                                     l.y += px;
@@ -1595,7 +1592,7 @@ var exte =
             set: function (v) {
                 if (this._visible == v) return;
                 this._visible = v;
-                for (var i in this._labels) {
+                for (var i = 0; i < this._labels.length; i++) {
                     var l = this._labels[i];
                     l.visible = v && l.valid;
                 }
@@ -1623,7 +1620,7 @@ var exte =
         // 全削除
         clear: function () {
             this._texts.length = 0;
-            for (var i in this._labels) {
+            for (var i = 0; i < this._labels.length; i++) {
                 var l = this._labels[i];
                 l.visible = l.valid = false;
             }
