@@ -22,13 +22,13 @@ function CreatePlayScene1(gameData) {
     (function () {
 
         // 線
-        var line1 = new exte.Line(10, 10, 60, 60);
+        var line1 = new exte.Figure.Line(10, 10, 60, 60);
         mainGroup.addChild(line1.createSprite(exte.toRGBString(100, 0, 0)));
 
-        var line2 = new exte.Line(10, 60, 60, 10);
+        var line2 = new exte.Figure.Line(10, 60, 60, 10);
         mainGroup.addChild(line2.createSprite(exte.toRGBString(0, 0, 100)));
 
-        var lLabel = new Label('exte.Line.isCrossLine=' + line1.isCross(line2).toString());
+        var lLabel = new Label('exte.Figure.Line.isCrossLine=' + line1.isCrossLine(line2).toString());
         lLabel.x = 0;
         lLabel.y = 60;
         mainGroup.addChild(lLabel);
@@ -38,13 +38,13 @@ function CreatePlayScene1(gameData) {
         xLabel.y = 25;
         mainGroup.addChild(xLabel);
 
-        var rect1 = new exte.Rectangle(170, 20, 50, 50);
+        var rect1 = new exte.Figure.Rectangle(170, 20, 50, 50);
 
         sp1 = rect1.createSprite(exte.toRGBString(100, 0, 0, 0.8));
         sp1.rotation = 45;
         mainGroup.addChild(sp1);
 
-        var rect2 = new exte.Rectangle(240, 25, 20, 50);
+        var rect2 = new exte.Figure.Rectangle(240, 25, 20, 50);
 
         sp2 = rect2.createSprite(exte.toRGBString(0, 0, 100, 0.8));
         sp2.rotation = 0;
@@ -56,36 +56,41 @@ function CreatePlayScene1(gameData) {
         mainGroup.addChild(label2);
 
         // 四角形
-        var rect = new exte.Rectangle(10, 100, 100, 50);
+        var rect = new exte.Figure.Rectangle(10, 100, 100, 50);
         mainGroup.addChild(rect.createSprite(exte.toRGBString(100), false));
 
         // 四角形内にランダム配置
         for (var i = 0; i < 20; i++) {
-            var r = new exte.Rectangle();
+            var r = new exte.Figure.Rectangle();
             r.diagonal = 10;
             r.center = rect.getRandomPos();
             mainGroup.addChild(r.createSprite(exte.toRGBString(100), false));
         }
 
         // 円
-        var circle = new exte.Circle(60, 190, 30);
+        var circle = new exte.Figure.Circle(60, 190, 30);
         mainGroup.addChild(circle.createSprite(exte.toRGBString(100), false));
 
         // 円内にランダム配置
         for (var i = 0; i < 20; i++) {
-            var c = new exte.Circle();
+            var c = new exte.Figure.Circle();
             c.radius = 5;
             c.center = circle.getRandomPos();
             mainGroup.addChild(c.createSprite(exte.toRGBString(100), false));
         }
 
         // 楕円
-        var ellipse = new exte.Ellipse(200, 200, 100, 50);
+        var ellipse = new exte.Figure.Ellipse(200, 200, 100, 50);
         mainGroup.addChild(ellipse.createSprite(exte.toRGBString(100), false));
 
         // 円弧
-        var arc = new exte.Arc(160, 130, 50, exte.degToRad(0), exte.degToRad(60));
+        var arc = new exte.Figure.Arc(160, 130, 50, exte.degToRad(0), exte.degToRad(60));
         mainGroup.addChild(arc.createSprite(exte.toRGBString(100), false));
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
@@ -112,11 +117,6 @@ function CreatePlayScene1(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
@@ -233,7 +233,7 @@ function CreatePlayScene2(gameData) {
 
         var str = 'ABCDE';
 
-        var rect = new exte.Rectangle(10, 120, 50, 20);
+        var rect = new exte.Figure.Rectangle(10, 120, 50, 20);
         var rp = rect.createSprite(exte.toRGBString(200), true);
         mainGroup.addChild(rp);
 
@@ -247,10 +247,16 @@ function CreatePlayScene2(gameData) {
         label14.y = rect.top;
         mainGroup.addChild(label14);
 
+
         tLabel = new Label('timer');
         tLabel.x = 10;
         tLabel.y = 150;
         mainGroup.addChild(tLabel);
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
@@ -285,25 +291,20 @@ function CreatePlayScene2(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
     //------------------------------------------
 
-    scene.regist(0,
+    scene.registInputPattern(0,
         [enchant.Event.DOWN_BUTTON_DOWN,
          enchant.Event.RIGHT_BUTTON_DOWN,
          enchant.Event.DOWN_BUTTON_UP,
          enchant.Event.A_BUTTON_DOWN]);
-    scene.regist(1, [enchant.Event.A_BUTTON_DOWN], 1.0, true);
-    scene.regist(2, [enchant.Event.UP_BUTTON_DOWN]);
-    scene.regist(3, [enchant.Event.LEFT_BUTTON_DOWN]);
-    scene.addEventListener(exte.Event_SceneInput, function (e) {
+    scene.registInputPattern(1, [enchant.Event.A_BUTTON_DOWN], 1.0, true);
+    scene.registInputPattern(2, [enchant.Event.UP_BUTTON_DOWN]);
+    scene.registInputPattern(3, [enchant.Event.LEFT_BUTTON_DOWN]);
+    scene.addEventListener(exte.Event_SceneExInput, function (e) {
         switch (e.eventID) {
             case 0:
                 hadouSprite.x = 120;
@@ -390,36 +391,31 @@ function CreatePlayScene3(gameData) {
         map.image = game.assets[gameData.mapAssetName];
         map.x = 10;
         map.y = 30;
-        map.collisionData = exte.createMaze(7, 7);
         exte.setMazeData(map, 7, 7, 322, 520);
         mainGroup.addChild(map);
 
         var targetRow = rand(7);
         var targetColumn = rand(7);
+        var samepoints = [];
+        exte.samePartsForEach(map.collisionData, targetRow, targetColumn, function(row, column){
+        	samepoints.push('('+row+','+column+')');
+        });
 
-        var mapPointSeacher = new exte.MapPointSeacher(map.collisionData);
-        var samepoints = mapPointSeacher.getSamePoints(targetRow, targetColumn);
-
-        var samepointTexts = [];
-        samepoints.forEach(function (value) {
-            samepointTexts.push('(' + value.row + ',' + value.column + ')');
-        }, this);
-
-        var label20_ = new Label('exte.MapPointSeacher.getSamePoints');
-        label20_.x = 130;
-        label20_.y = 10;
-        mainGroup.addChild(label20_);
-
-        var label20 = new Label('basePoint=(' + targetRow + ',' + targetColumn + ')');
+        var label20 = new Label('exte.samePartsForEach(' + targetRow + ','+targetColumn+ ')');
         label20.x = 130;
-        label20.y = 30;
+        label20.y = 10;
         mainGroup.addChild(label20);
 
-        var label21 = new Label('' + samepointTexts);
+        var label21 = new Label(''+samepoints);
         label21.x = 160;
-        label21.y = 50;
+        label21.y = 30;
         label21.width = 160;
         mainGroup.addChild(label21);
+
+        var nextLabel = new Label('push"B"→next');
+        nextLabel.x = 220;
+        nextLabel.y = 240;
+        mainGroup.addChild(nextLabel);
     })();
     scene.addChild(mainGroup);
 
@@ -448,11 +444,6 @@ function CreatePlayScene3(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
@@ -468,15 +459,23 @@ function CreatePlayScene3(gameData) {
         // game.end(scoreLabel.score, scoreLabel.score + '点');
 
         if (game.input.up) {
+            moveSprite.y-=3;
+            update_isOutOfScreen();
         }
         if (game.input.down) {
+            moveSprite.y+=3;
+            update_isOutOfScreen();
         }
         if (game.input.left) {
+            moveSprite.x-=3;
+            update_isOutOfScreen();
         }
         if (game.input.right) {
+            moveSprite.x+=3;
+            update_isOutOfScreen();
         }
         if (game.input.a) {
-
+            rlabel.text = exte.randomString(10);
         }
         if (game.input.b) {
             scene.moveSceneTo('4');
@@ -589,11 +588,6 @@ function CreatePlayScene4(gameData) {
         buttonBSprite.image = game.assets[gameData.buttonBAssetName];
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
-
-        var nextLabel = new Label('push"B"→next');
-        nextLabel.x = 220;
-        nextLabel.y = 240;
-        uiGroup.addChild(nextLabel);
     })();
     scene.addChild(uiGroup);
 
@@ -642,10 +636,9 @@ function CreatePlayScene5(gameData) {
     //------------------------------------------
     var mainGroup = new Group();
     (function () {
-        var label = new Label('exte.MapPointSeacher.getRoute(row5 column5 cost10) push"a"→update');
+        var label = new Label('exte.findWalkForEach(row5 column5 cost10) push"a"→update');
         label.x = 0;
         label.y = 10;
-        label.width = game.width;
         mainGroup.addChild(label);
     })();
     scene.addChild(mainGroup);
@@ -704,7 +697,7 @@ function CreatePlayScene5(gameData) {
         labelMap.push(labels);
     }
 
-    var rs = exte.createRectangleSprite(15, 15, 'black');
+    var rs = exte.Figure.createRectangleSprite(15, 15, 'black');
     mainGroup.addChild(rs);
 
     var routesLabel = new Label('routes');
@@ -737,23 +730,20 @@ function CreatePlayScene5(gameData) {
             }
         }
 
-        var mapPointSeacher = new exte.MapPointSeacher(costMap);
-        var routes = mapPointSeacher.getRoute(5, 5, 10);
-
-        routes.forEach(function (data) {
-            var l = labelMap[data.row][data.column];
+        exte.findRoutesForEach(costMap, 5, 5, 10, function (row, column, rest, routes) {
+            var l = labelMap[row][column];
             l.color = 'red';
 
-            var routesText = 'rest=' + data.rest + '<br />routes=';
-            for (var i in data.routes) {
+            var routesText = 'rest=' + rest + '<br />routes=';
+            for (var i in routes) {
                 routesText += '[<br />';
-                for (var j in data.routes[i]) {
-                    routesText += '{ ' + data.routes[i][j].row + ' , ' + data.routes[i][j].column + ' }<br />';
+                for (var j in routes[i]) {
+                    routesText += '{ ' + routes[i][j].row + ' , ' + routes[i][j].column + ' }<br />';
                 }
                 routesText += ' ]';
             }
             l.routesText = routesText;
-        }, this);
+        });
     }
 
     scene.addEventListener(exte.Event_SceneExStarting, function (e) {
@@ -818,7 +808,7 @@ function CreatePlayScene6(gameData) {
         backMap.y = 50;
         mainGroup.addChild(backMap);
 
-        var label = new Label('exte.LogList push"a"→regist');
+        var label = new Label('exte.logList push"a"→addLog');
         label.x = 10;
         label.y = 30;
         mainGroup.addChild(label);
@@ -826,7 +816,7 @@ function CreatePlayScene6(gameData) {
     scene.addChild(mainGroup);
 
     //------------------------------------------
-    var logList = new exte.LogList(30, 50, 96, 128);
+    var logList = new exte.LogList(30, 50, 100, 100);
     logList.color = 'white';
     scene.addChild(logList);
 
@@ -855,7 +845,7 @@ function CreatePlayScene6(gameData) {
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
 
-        var nextLabel = new Label('push"B"→next');
+        var nextLabel = new Label('push"B"→top');
         nextLabel.x = 220;
         nextLabel.y = 240;
         uiGroup.addChild(nextLabel);
@@ -884,7 +874,7 @@ function CreatePlayScene6(gameData) {
         if (game.input.a) {
             var size = 10 + rand(10);
             var fontSize = size + 'px';
-            logList.regist(fontSize, null, fontSize, size);
+            logList.addLog(fontSize, null, fontSize, size);
         }
         if (game.input.b) {
             scene.moveSceneTo('7');
@@ -1064,6 +1054,11 @@ function CreatePlayScene8(gameData) {
 
         var ary = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+        var label8 = new Label('exte.arrayQueryIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + exte.arrayQueryIf(ary, function (elm, index, ar) { return elm % 3 == 0 }));
+        label8.x = 10;
+        label8.y = 80;
+        mainGroup.addChild(label8);
+
         exte.arrayEraseIf(ary, function (elm, index, ar) { return elm % 3 == 0 });
         var label8 = new Label('exte.arrayEraseIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)→' + ary);
         label8.x = 10;
@@ -1181,7 +1176,7 @@ function CreatePlayScene9(gameData) {
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
 
-        var nextLabel = new Label('push"B"→next');
+        var nextLabel = new Label('push"B"→top');
         nextLabel.x = 220;
         nextLabel.y = 240;
         uiGroup.addChild(nextLabel);
@@ -1263,7 +1258,7 @@ function CreatePlaySceneTemplate(gameData) {
         buttonBSprite.buttonMode = "b";
         uiGroup.addChild(buttonBSprite);
 
-        var nextLabel = new Label('push"B"→next');
+        var nextLabel = new Label('push"B"→top');
         nextLabel.x = 220;
         nextLabel.y = 240;
         uiGroup.addChild(nextLabel);
