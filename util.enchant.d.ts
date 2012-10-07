@@ -6,4 +6,7 @@ module enchant.util {
         text: string;
         fedingValue: number;
     }
+    declare class Wallpaper extends Sprite {
+        constructor (backgroundimage: Surface);
+    }
 }

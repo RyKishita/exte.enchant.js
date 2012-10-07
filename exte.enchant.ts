@@ -7,7 +7,7 @@
 
 module exte {
     // 色
-    interface IColor {
+    export interface IColor {
         r: number;
         g: number;
         b: number;
@@ -66,7 +66,7 @@ module exte {
     // 空白の作成
     // @param {整数} [n] 空白文字数 省略時は１文字
     // @return {String} 結果
-    export function makeSpace(n: number): string {
+    export function makeSpace(n?: number): string {
         return makeRepeatString('&nbsp;', n);
     }
 
@@ -129,7 +129,7 @@ module exte {
     // 引数3つ:red, green, blue
     // 引数4つ:red, green, blue, alpha
     // @return {String} 色
-    export function toRGBString(): string {
+    export function toRGBString(...argArray: number[]): string {
 
         var r, g, b, a;
         if (3 <= arguments.length) {
@@ -330,7 +330,7 @@ module exte {
     // @param {整数} [columnNum] 列数。必ず奇数にすること
     // @param {Boolen} [addframe] 外枠を壁にするかどうか。省略時はfalse(壁にしない)
     // @return {Array.<Array.<Number>>} 結果
-    export function createMaze(rowNum: number, columnNum: number, addframe: bool): number[][] {
+    export function createMaze(rowNum: number, columnNum: number, addframe?: bool): number[][] {
         if (rowNum % 2 == 0 || columnNum % 2 == 0) throw new Error('arguments error');
 
         var maze = [];
@@ -791,7 +791,7 @@ module exte {
     // @param {整数} [height] アイコン1つ分の高さ。初期値は16 
     // @param {整数} [columnNum] assetName内の一行にあるアイコン数。初期値は16('icon0.png'を想定)
     // @return {Sprite} 結果
-    export function createIconSprite(index: number, count: number, assetName: string, width: number, height: number, columnNum: number) {
+    export function createIconSprite(index: number, count?: number, assetName?: string, width?: number, height?: number, columnNum?: number) {
         count = count || 1;
         assetName = assetName || 'icon0.png';
         width = width || 16;
@@ -826,7 +826,7 @@ module exte {
         // @param {文字列} [assetName] アセット名
         // @param {実数} [fadeSec] 残り何秒からフェードアウトを開始するか。省略時は5秒
         // @param {実数} [volume] 音量。省略時は1.0(最大)
-        constructor (assetName: string, fadeSec: number, volume: number) {
+        constructor (assetName: string, fadeSec?: number, volume?: number) {
             super();
 
             this._sound = enchant.Sound.load(assetName);
@@ -1018,7 +1018,7 @@ module exte {
         private _fadeOutStep: number;
         private static _scenes: enchant.Scene[] = [];
 
-        constructor (name: string, fadeInSec: number, fadeOutSec: number) {
+        constructor (name: string, fadeInSec?: number, fadeOutSec?: number) {
             super();
 
             this.name = name;
@@ -1289,7 +1289,7 @@ module exte {
     // @param {整数} [floorNo] 床にするイメージNo。背景に使用
     // @param {整数} [wallNo] 壁にするイメージNo。
     // @param {Boolen} [addframe] 外枠を壁にするかどうか。省略時はfalse(壁にしない)
-    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe: bool) {
+    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe?: bool) {
         var mapData1 = [];
         var mapData2 = [];
         var collisionData = map.collisionData;
@@ -1318,7 +1318,7 @@ module exte {
     // @param {Object} [obj] 対象の要素{x,y,width,height}。例えばenchant.Sprite
     // @param {整数} [padding] 内側への余白。指定しない場合は0(要素が見えなくなった時に戻り値がtrueになる)
     // @return {Boolen} 出たならtrue
-    export function isOutOfScreen(obj: enchant.IArea, padding: number) {
+    export function isOutOfScreen(obj: enchant.IArea, padding?: number) {
         var game = enchant.Game.instance;
         padding = padding | 0;
         return obj.x + obj.width < padding ||
@@ -1872,7 +1872,7 @@ module exte {
         // 指定した線と交差しているかどうか
         // @param {Line} [line] 線
         // @return {Boolen} 交差しているならtrue
-        public isCross(line: Line) {
+        public isCross(line: Line): bool {
             // 線分Aのベクトル。
             var vax = this.dx;
             var vay = this.dy;

@@ -6,11 +6,9 @@
 
 update 2012/10/7
 TypeScriptによる書き換え
+以前のデータ
 	exte.js → 変わらず
 	index.html → index.old.html
 	play.js → play.old.js
-	new
-		→exte.enchant.ts/js
-		→ja.exte.enchant.js
-		→enchant.d.ts
-		→build/buildTS.cmd
+	manager.js → manager.old.js
+	game.js → game.old.js

@@ -1,16 +1,22 @@
 module exte {
+    export interface IColor {
+        r: number;
+        g: number;
+        b: number;
+        a: number;
+    }
     export function rand(num: number): number;
     export function getUserAgent(): string;
     export function trace(): void;
     export function makeRepeatString(text: string, n?: number): string;
-    export function makeSpace(n: number): string;
+    export function makeSpace(n?: number): string;
     export class AverageRandamizer {
         constructor (range: number);
         private _table: any[];
         public next : number;
         public range : number;
     }
-    export function toRGBString(): string;
+    export function toRGBString(...argArray: number[]): string;
     export function shuffleArray(src: any[]): any[];
     export function makeKanji(value: number, chars: string, ketas: string): string;
     export function degToRad(d: number): number;
@@ -23,7 +29,7 @@ module exte {
     export function getDistance(point1: enchant.IPoint, point2: enchant.IPoint): number;
     export function getAngle(from: enchant.IPoint, to: enchant.IPoint): number;
     export function makeValues(value: any, count: number): any[];
-    export function createMaze(rowNum: number, columnNum: number, addframe: bool): number[][];
+    export function createMaze(rowNum: number, columnNum: number, addframe?: bool): number[][];
     export function randomString(len: number, pattern?: string): string;
     export function round(num: number, figure?: number): number;
     export function ceil(num: number, figure?: number): number;
@@ -61,11 +67,11 @@ module exte {
         public calcMoveCost(map: number[][], fromRowNo: number, fromColumnNo: number, toRowNo: number, toColumnNo: number): ResultMoveCost;
     }
     export function createIconSurface(index: number, count: number, assetName: string, width: number, height: number, columnNum: number): enchant.Surface;
-    export function createIconSprite(index: number, count: number, assetName: string, width: number, height: number, columnNum: number): enchant.Sprite;
+    export function createIconSprite(index: number, count?: number, assetName?: string, width?: number, height?: number, columnNum?: number): enchant.Sprite;
     export function isDebug(): bool;
     export function playSound(assetName: string): void;
     export class RepeatSoundPlayer extends enchant.Node {
-        constructor (assetName: string, fadeSec: number, volume: number);
+        constructor (assetName: string, fadeSec?: number, volume?: number);
         private _sound;
         private _fadeSec;
         private _volume;
@@ -107,7 +113,7 @@ module exte {
         private _fadeInStep: number;
         private _fadeOutStep: number;
         static _scenes;
-        constructor (name: string, fadeInSec: number, fadeOutSec: number);
+        constructor (name: string, fadeInSec?: number, fadeOutSec?: number);
         private enterFrame(e): void;
         private sceneNext(): void;
         private _fadeIn(): bool;
@@ -130,9 +136,9 @@ module exte {
     }
     export function inputToRad(): number;
     export function collision2Sprites(sprite1: enchant.Sprite, sprite2: enchant.Sprite): bool;
-    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe: bool): void;
+    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe?: bool): void;
     export function stringWidth(surface: enchant.Surface, str: string): number;
-    export function isOutOfScreen(obj: enchant.IArea, padding: number): bool;
+    export function isOutOfScreen(obj: enchant.IArea, padding?: number): bool;
     export function createSimpleMap(assetName: string, tileSize: number, rowNum: number, columnNum: number, no: number, tlNo?: number, tNo?: number, trNo?: number, lNo?: number, rNo?: number, blNo?: number, bNo?: number, brNo?: number): enchant.Map;
     export function createSampleMap(typeNo: number, rowNum: number, columnNum: number): enchant.Map;
     export class LogList extends enchant.Group {
@@ -212,7 +218,7 @@ module exte {
         public scale(sx: number, sy?: number): void;
         public updateFrom(sprite: enchant.Sprite): void;
         public setTo(sprite: enchant.Sprite, updateSize?: bool): void;
-        public getPixels(surface: enchant.Surface);
+        public getPixels(surface: enchant.Surface): IColor[];
         public clone(): Area;
     }
     export class Rectangle extends Area {

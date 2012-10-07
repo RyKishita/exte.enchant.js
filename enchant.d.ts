@@ -73,6 +73,7 @@ module enchant {
         rootScene: Scene;
         loadingScene: Scene;
         input: Input;
+        onload: () =>void;
         preload(...argArray: any[]): void;
         load(src: string, callback: Function): void;
         start(): void;
@@ -234,3 +235,5 @@ module enchant {
         height: number;
     }
 }
+
+//declare function enchant(): void;

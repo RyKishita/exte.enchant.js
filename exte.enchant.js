@@ -107,6 +107,10 @@ var exte;
     })();
     exte.AverageRandamizer = AverageRandamizer;    
     function toRGBString() {
+        var argArray = [];
+        for (var _i = 0; _i < (arguments.length - 0); _i++) {
+            argArray[_i] = arguments[_i + 0];
+        }
         var r;
         var g;
         var b;

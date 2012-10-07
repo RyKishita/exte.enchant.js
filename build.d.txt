@@ -1,0 +1,4 @@
+enchant.d.ts
+ui.enchant.d.ts
+util.enchant.d.ts
+ja.exte.enchant.d.ts
