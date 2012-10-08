@@ -37,10 +37,14 @@ var exte;
     }
     exte.getUserAgent = getUserAgent;
     function trace() {
-        if(arguments.length == 0) {
+        var argArray = [];
+        for (var _i = 0; _i < (arguments.length - 0); _i++) {
+            argArray[_i] = arguments[_i + 0];
+        }
+        if(argArray.length == 0) {
             return;
         }
-        var args = Array.prototype.slice.call(arguments, 0);
+        var args = Array.prototype.slice.call(argArray, 0);
         for(var i = 0; i < args.length; i++) {
             console.log(args[i]);
         }
@@ -116,20 +120,20 @@ var exte;
         var b;
         var a;
 
-        if(3 <= arguments.length) {
-            r = arguments[0];
-            g = arguments[1];
-            b = arguments[2];
-            if(4 <= arguments.length) {
-                a = arguments[3];
+        if(3 <= argArray.length) {
+            r = argArray[0];
+            g = argArray[1];
+            b = argArray[2];
+            if(4 <= argArray.length) {
+                a = argArray[3];
             } else {
                 a = 1;
             }
         } else {
-            if(1 <= arguments.length) {
-                r = g = b = arguments[0];
-                if(2 <= arguments.length) {
-                    a = arguments[1];
+            if(1 <= argArray.length) {
+                r = g = b = argArray[0];
+                if(2 <= argArray.length) {
+                    a = argArray[1];
                 } else {
                     a = 1;
                 }
@@ -195,10 +199,10 @@ var exte;
     exte.radToDeg = radToDeg;
     function normalinzeRad(r) {
         if(r < 0) {
-            return this.normalinzeRad(r + Math.PI * 2);
+            return normalinzeRad(r + Math.PI * 2);
         }
         if(Math.PI * 2 <= r) {
-            return this.normalinzeRad(r - Math.PI * 2);
+            return normalinzeRad(r - Math.PI * 2);
         }
         return r;
     }

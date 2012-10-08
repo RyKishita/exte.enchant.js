@@ -118,7 +118,7 @@ module enchant {
         visible: bool;
         touchEnabled: bool;
         intersect(other: IArea): bool;
-        within(other: IArea, distance: number): bool;
+        within(other: IArea, distance?: number): bool;
         scale(x: number, y: number): void;
         rotate(deg: number): void;
         scaleX: number;

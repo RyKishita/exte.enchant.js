@@ -7,7 +7,7 @@ module exte {
     }
     export function rand(num: number): number;
     export function getUserAgent(): string;
-    export function trace(): void;
+    export function trace(...argArray: any[]): void;
     export function makeRepeatString(text: string, n?: number): string;
     export function makeSpace(n?: number): string;
     export class AverageRandamizer {
