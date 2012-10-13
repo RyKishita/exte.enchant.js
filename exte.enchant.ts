@@ -1,4 +1,4 @@
-ï»¿// enchant.jsæ‹¡å¼µãƒ©ã‚¤ãƒ–ãƒ©ãƒª
+// enchant.jsŠg’£ƒ‰ƒCƒuƒ‰ƒŠ
 // The MIT License
 // Copyright (c) 2012 Ryuuma Kishita
 
@@ -6,7 +6,7 @@
 /// <reference path="util.enchant.d.ts"/>
 
 module exte {
-    // è‰²
+    // F
     export interface IColor {
         r: number;
         g: number;
@@ -14,15 +14,15 @@ module exte {
         a: number;
     }
 
-    // æ­£æ•°ã®ä¹±æ•°
-    // @param {number} [num] 0ï½num-1ã‚’ç™ºç”Ÿã•ã›ã‚‹
-    // @return {number} ä¹±æ•°
+    // ³”‚Ì—”
+    // @param {number} [num] 0`num-1‚ğ”­¶‚³‚¹‚é
+    // @return {number} —”
     export function rand(num: number): number {
         if (num <= 1) return 0;
         return Math.floor(Math.random() * num);
     }
 
-    // å®Ÿè¡Œç«¯æœ«å–å¾—
+    // Às’[––æ“¾
     export function getUserAgent(): string {
         var ua = navigator.userAgent;
         if ((ua.indexOf('iPhone') > 0 && ua.indexOf('iPad') == -1) ||
@@ -40,7 +40,7 @@ module exte {
         return "Other";//IE?
     }
 
-    // ãƒ‡ãƒãƒƒã‚°ç”¨ã€‚å¼•æ•°ã®å†…å®¹ã‚’ã‚³ãƒ³ã‚½ãƒ¼ãƒ«ã«å‡ºåŠ›
+    // ƒfƒoƒbƒO—pBˆø”‚Ì“à—e‚ğƒRƒ“ƒ\[ƒ‹‚Éo—Í
     export function trace(...argArray: any[]): void {
         if (argArray.length == 0) return;
         var args = Array.prototype.slice.call(argArray, 0);
@@ -49,10 +49,10 @@ module exte {
         }
     }
 
-    // ç¹°ã‚Šè¿”ã—æ–‡å­—åˆ—ã®ä½œæˆ
-    // @param {String} [text] æ–‡å­—åˆ—
-    // @param {æ•´æ•°} [n] ç©ºç™½æ–‡å­—æ•° çœç•¥æ™‚ã¯ä¸€å›(=textã®ã¾ã¾)
-    // @return {String} çµæœ
+    // ŒJ‚è•Ô‚µ•¶š—ñ‚Ìì¬
+    // @param {String} [text] •¶š—ñ
+    // @param {®”} [n] ‹ó”’•¶š” È—ª‚Íˆê‰ñ(=text‚Ì‚Ü‚Ü)
+    // @return {String} Œ‹‰Ê
     export function makeRepeatString(text: string, n?: number): string {
         var s = text;
         if (n) {
@@ -63,27 +63,27 @@ module exte {
         return s;
     }
 
-    // ç©ºç™½ã®ä½œæˆ
-    // @param {æ•´æ•°} [n] ç©ºç™½æ–‡å­—æ•° çœç•¥æ™‚ã¯ï¼‘æ–‡å­—
-    // @return {String} çµæœ
+    // ‹ó”’‚Ìì¬
+    // @param {®”} [n] ‹ó”’•¶š” È—ª‚Í‚P•¶š
+    // @return {String} Œ‹‰Ê
     export function makeSpace(n?: number): string {
         return makeRepeatString('&nbsp;', n);
     }
 
-    // æ­£æ•°ã®ä¹±æ•°ã‚’ç”Ÿæˆ
-    // Math.randomã¨æ¯”ã¹ã¦ã€ç™ºç”Ÿã—ãŸå€¤ãŒæ¬¡ã®ç™ºç”Ÿä»¥é™ã«å‡ºã«ãããªã‚Šã¾ã™ã€‚
-    // å€¤ã®åã‚ŠãŒé˜²ãŒã‚Œã‚‹ã“ã¨ã§é‹ã«å·¦å³ã•ã‚Œã¥ã‚‰ããªã‚Šã¾ã™ãŒã€
-    // äº‹æ•…ãŒèµ·ããªã„ã®ã§é¢ç™½ããªã„ä¹±æ•°ã¨ã‚‚è¨€ãˆã¾ã™ã€‚
+    // ³”‚Ì—”‚ğ¶¬
+    // Math.random‚Æ”ä‚×‚ÄA”­¶‚µ‚½’l‚ªŸ‚Ì”­¶ˆÈ~‚Éo‚É‚­‚­‚È‚è‚Ü‚·B
+    // ’l‚Ì•Î‚è‚ª–h‚ª‚ê‚é‚±‚Æ‚Å‰^‚É¶‰E‚³‚ê‚Ã‚ç‚­‚È‚è‚Ü‚·‚ªA
+    // –ŒÌ‚ª‹N‚«‚È‚¢‚Ì‚Å–Ê”’‚­‚È‚¢—”‚Æ‚àŒ¾‚¦‚Ü‚·B
     export class AverageRandamizer {
-        // @param {æ•´æ•°} [range] 0ï½range-1ã‚’ç™ºç”Ÿã•ã›ã‚‹
+        // @param {®”} [range] 0`range-1‚ğ”­¶‚³‚¹‚é
         constructor (range: number) {
             this.range = range;
         }
 
         private _table = [];
 
-        // ä¹±æ•°ã®å–å¾—
-        // @return {æ•´æ•°} ä¹±æ•°
+        // —”‚Ìæ“¾
+        // @return {®”} —”
         public get next(): number {
             var matchs = [];
             this._table.forEach((value, index) =>{
@@ -105,15 +105,15 @@ module exte {
             return result;
         }
 
-        // ä¹±æ•°ç¯„å›²ã®å–å¾—
+        // —””ÍˆÍ‚Ìæ“¾
         public get range(): number {
             return this._table.length;
         }
 
-        // ä¹±æ•°ç¯„å›²ã®è¨­å®š
+        // —””ÍˆÍ‚Ìİ’è
         public set range(r: number) {
             if (r < this.range) {
-                // ã‚µã‚¤ã‚ºãŒæ¸›ã‚‹å ´åˆã¯ãƒªã‚»ãƒƒãƒˆ
+                // ƒTƒCƒY‚ªŒ¸‚éê‡‚ÍƒŠƒZƒbƒg
                 this._table.length = 0;
             }
             for (var i = this.range; i < r; i++) {
@@ -122,13 +122,13 @@ module exte {
         }
     }
 
-    // è‰²æ–‡å­—åˆ—ã®ä½œæˆ
-    // å¼•æ•°ãªã—:é€æ˜
-    // å¼•æ•°1ã¤:RGBåŒå€¤
-    // å¼•æ•°2ã¤:RGBåŒå€¤, alpha
-    // å¼•æ•°3ã¤:red, green, blue
-    // å¼•æ•°4ã¤:red, green, blue, alpha
-    // @return {String} è‰²
+    // F•¶š—ñ‚Ìì¬
+    // ˆø”‚È‚µ:“§–¾
+    // ˆø”1‚Â:RGB“¯’l
+    // ˆø”2‚Â:RGB“¯’l, alpha
+    // ˆø”3‚Â:red, green, blue
+    // ˆø”4‚Â:red, green, blue, alpha
+    // @return {String} F
     export function toRGBString(...argArray: number[]): string {
 
         var r, g, b, a;
@@ -155,9 +155,9 @@ module exte {
         return 'rgba(' + r + ',' + g + ',' + b + ',' + a + ')';
     }
 
-    // é…åˆ—ã®ãƒ©ãƒ³ãƒ€ãƒ ä¸¦ã¹æ›¿ãˆ
-    // @param {Array}[src] å…ƒãƒ‡ãƒ¼ã‚¿
-    // @return {Array} çµæœ
+    // ”z—ñ‚Ìƒ‰ƒ“ƒ_ƒ€•À‚×‘Ö‚¦
+    // @param {Array}[src] Œ³ƒf[ƒ^
+    // @return {Array} Œ‹‰Ê
     export function shuffleArray(src: any[]): any[] {
         var dst = [];
         while (0 < src.length) {
@@ -168,11 +168,11 @@ module exte {
         return dst;
     }
 
-    // æ•°å€¤ã®æ–‡å­—åˆ—åŒ–
-    // @param {number}[value] æ•°å€¤
-    // @param {string}[chars]å¤‰æ›ãƒ†ãƒ¼ãƒ–ãƒ«
-    // @param {string}[ketas]æ¡ã®å¤‰æ›ãƒ†ãƒ¼ãƒ–ãƒ«
-    // @return {Array} çµæœ
+    // ”’l‚Ì•¶š—ñ‰»
+    // @param {number}[value] ”’l
+    // @param {string}[chars]•ÏŠ·ƒe[ƒuƒ‹
+    // @param {string}[ketas]Œ…‚Ì•ÏŠ·ƒe[ƒuƒ‹
+    // @return {Array} Œ‹‰Ê
     export function makeKanji(value: number, chars: string, ketas: string): string {
         value = Math.floor(value);
         if (value == 0) return chars[0];
@@ -182,7 +182,7 @@ module exte {
         while (0 < value) {
             nums.push(value % 10);
             if (ketas.length + 1 < nums.length) {
-                //ã‚ªãƒ¼ãƒãƒ¼ã—ãŸã®ã§æœ€å¤§å€¤ã§æ­¢ã‚ã‚‹
+                //ƒI[ƒo[‚µ‚½‚Ì‚ÅÅ‘å’l‚Å~‚ß‚é
                 nums.length = ketas.length;
                 for (var i = 0; i < ketas.length; i++) {
                     nums[i] = 9;
@@ -201,14 +201,14 @@ module exte {
                 keta = ketas[nums.length - 1];
             }
 
-            // 0ã¯è¿½åŠ ã—ãªã„
-            // 1ã¯å…ˆé ­ã¨æœ€å¾Œã®1ã®å ´åˆã¯è¿½åŠ ï¼ˆä¸€åƒã¨å‘¼ã¶æ™‚ã‚‚ã‚ã‚‹ã‚ˆã†ãªï¼‰
-            // ãã‚Œä»¥å¤–ã¯è¿½åŠ 
+            // 0‚Í’Ç‰Á‚µ‚È‚¢
+            // 1‚Íæ“ª‚ÆÅŒã‚Ì1‚Ìê‡‚Í’Ç‰Áiˆêç‚ÆŒÄ‚Ô‚à‚ ‚é‚æ‚¤‚Èj
+            // ‚»‚êˆÈŠO‚Í’Ç‰Á
             if (v != 0 && (v != 1 || nums.length == ketaMax || nums.length == 0)) {
                 result += chars[v];
             }
 
-            // æ¡è¿½åŠ 
+            // Œ…’Ç‰Á
             if (0 < v) {
                 result += keta;
             }
@@ -216,47 +216,47 @@ module exte {
         return result;
     }
 
-    // åº¦ â†’ ãƒ©ã‚¸ã‚¢ãƒ³
-    // @param {number} [d] åº¦
-    // @return {number} ãƒ©ã‚¸ã‚¢ãƒ³
+    // “x ¨ ƒ‰ƒWƒAƒ“
+    // @param {number} [d] “x
+    // @return {number} ƒ‰ƒWƒAƒ“
     export function degToRad(d: number): number {
         return d * Math.PI / 180.0;
     }
 
-    // ãƒ©ã‚¸ã‚¢ãƒ³ â†’ åº¦
-    // @param {number} [r] ãƒ©ã‚¸ã‚¢ãƒ³
-    // @return {number} åº¦
+    // ƒ‰ƒWƒAƒ“ ¨ “x
+    // @param {number} [r] ƒ‰ƒWƒAƒ“
+    // @return {number} “x
     export function radToDeg(r: number): number {
         return r * 180.0 / Math.PI;
     }
 
-    // ãƒ©ã‚¸ã‚¢ãƒ³ã‚’0ï½Math.PI * 2.0æœªæº€ã®ç¯„å›²ã«è£œæ­£
-    // @param {number} [r] ãƒ©ã‚¸ã‚¢ãƒ³
-    // @return {number} çµæœ
+    // ƒ‰ƒWƒAƒ“‚ğ0`Math.PI * 2.0–¢–‚Ì”ÍˆÍ‚É•â³
+    // @param {number} [r] ƒ‰ƒWƒAƒ“
+    // @return {number} Œ‹‰Ê
     export function normalinzeRad(r: number): number {
         if (r < 0.0) {
-            return normalinzeRad(r + Math.PI * 2.0); //å†å¸°
+            return normalinzeRad(r + Math.PI * 2.0); //Ä‹A
         }
         if (Math.PI * 2.0 <= r) {
-            return normalinzeRad(r - Math.PI * 2.0); //å†å¸°
+            return normalinzeRad(r - Math.PI * 2.0); //Ä‹A
         }
         return r;
     }
 
-    // åº¦ã‚’0ï½360æœªæº€ã®ç¯„å›²ã«è£œæ­£
-    // @param {number} [d] åº¦
-    // @return {number} çµæœ
+    // “x‚ğ0`360–¢–‚Ì”ÍˆÍ‚É•â³
+    // @param {number} [d] “x
+    // @return {number} Œ‹‰Ê
     export function normalinzeDeg(d: number): number {
         if (d < 0.0) {
-            return this.normalinzeDeg(d + 360.0); //å†å¸°
+            return this.normalinzeDeg(d + 360.0); //Ä‹A
         }
         if (360.0 <= d) {
-            return this.normalinzeDeg(d - 360.0); //å†å¸°
+            return this.normalinzeDeg(d - 360.0); //Ä‹A
         }
         return d;
     }
 
-    // è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)ã‚’ã‚­ãƒ£ãƒ©ã‚¯ã‚¿æ–¹å‘å€¤ã«å¤‰æ›
+    // Šp“x(ƒ‰ƒWƒAƒ“)‚ğƒLƒƒƒ‰ƒNƒ^•ûŒü’l‚É•ÏŠ·
     export function angleToDirection(angle: number): number {
         angle = normalinzeRad(angle);
         if (angle < Math.PI * 0.25) {
@@ -272,7 +272,7 @@ module exte {
         }
     }
 
-    // ã‚­ãƒ£ãƒ©ã‚¯ã‚¿æ–¹å‘å€¤ã‚’è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)ã«å¤‰æ›
+    // ƒLƒƒƒ‰ƒNƒ^•ûŒü’l‚ğŠp“x(ƒ‰ƒWƒAƒ“)‚É•ÏŠ·
     export function directionToAngle(direction: number): number {
         switch (direction) {
             case 0: return Math.PI * 0.5;
@@ -282,10 +282,10 @@ module exte {
         }
     }
 
-    // 2ã¤ã®è§’åº¦ã®ç‹­è§’ã€‚ä¾‹ãˆã°ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ã®å‘ã„ã¦ã„ã‚‹æ–¹å‘ã¨æ•µã®æ–¹å‘ãŒåŒã˜ã§ã‚ã‚‹ã»ã©0.0ã«è¿‘ããªã‚‹
-    // @param {number} [angle1] è§’åº¦1(ãƒ©ã‚¸ã‚¢ãƒ³)
-    // @param {number} [angle2] è§’åº¦2(ãƒ©ã‚¸ã‚¢ãƒ³)
-    // @return {number} çµæœ
+    // 2‚Â‚ÌŠp“x‚Ì‹·ŠpB—á‚¦‚ÎƒLƒƒƒ‰ƒNƒ^‚ÌŒü‚¢‚Ä‚¢‚é•ûŒü‚Æ“G‚Ì•ûŒü‚ª“¯‚¶‚Å‚ ‚é‚Ù‚Ç0.0‚É‹ß‚­‚È‚é
+    // @param {number} [angle1] Šp“x1(ƒ‰ƒWƒAƒ“)
+    // @param {number} [angle2] Šp“x2(ƒ‰ƒWƒAƒ“)
+    // @return {number} Œ‹‰Ê
     export function getNarrowAngle(angle1: number, angle2: number): number {
         angle1 = normalinzeRad(angle1);
         angle2 = normalinzeRad(angle2);
@@ -299,24 +299,24 @@ module exte {
         return agl;
     }
 
-    // 2ç‚¹é–“ã®è·é›¢
+    // 2“_ŠÔ‚Ì‹——£
     export function getDistance(point1: enchant.IPoint, point2: enchant.IPoint): number {
         var dx = point1.x - point2.x;
         var dy = point1.y - point2.y;
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    // è§’åº¦ã®è¨ˆç®—ã€‚å³ãŒ0ã§ã€æ™‚è¨ˆå›ã‚Šæ–¹å‘ãŒ+ã€é€†ãŒ-ã€‚ã¤ã¾ã‚Š-Ï€ï½0ï½Ï€ã®å€¤ã‚’å–ã‚‹
+    // Šp“x‚ÌŒvZB‰E‚ª0‚ÅAŒv‰ñ‚è•ûŒü‚ª+A‹t‚ª-B‚Â‚Ü‚è-ƒÎ`0`ƒÎ‚Ì’l‚ğæ‚é
     export function getAngle(from: enchant.IPoint, to: enchant.IPoint): number {
         var dx = to.x - from.x;
         var dy = to.y - from.y;
         return Math.atan2(dy, dx);
     }
 
-    // ä¾‹ãˆã°å…¨ã¦1ã‚’ã‚»ãƒƒãƒˆã—ãŸArrayãªã©ã‚’ä½œã‚‹
-    // @param {ãªã‚“ã§ã‚‚} [value] å€¤
-    // @param {æ•´æ•°} [count] å€‹æ•° çœç•¥æ™‚ã¯1
-    // @return {Array} çµæœ
+    // —á‚¦‚Î‘S‚Ä1‚ğƒZƒbƒg‚µ‚½Array‚È‚Ç‚ğì‚é
+    // @param {‚È‚ñ‚Å‚à} [value] ’l
+    // @param {®”} [count] ŒÂ” È—ª‚Í1
+    // @return {Array} Œ‹‰Ê
     export function makeValues(value: any, count: number): any[] {
         var values = [];
         for (var i = 0; i < count; i++) {
@@ -325,11 +325,11 @@ module exte {
         return values;
     }
 
-    // è¿·è·¯ä½œæˆ(æ£’å€’ã—æ³•) enchant.Mapã®collisionDataã¨åŒã˜å½¢å¼ã§è¿”ã™ï¼ˆå£ã¯1ã€é€šè·¯ã¯0ï¼‰
-    // @param {æ•´æ•°} [rowNum] è¡Œæ•°ã€‚å¿…ãšå¥‡æ•°ã«ã™ã‚‹ã“ã¨
-    // @param {æ•´æ•°} [columnNum] åˆ—æ•°ã€‚å¿…ãšå¥‡æ•°ã«ã™ã‚‹ã“ã¨
-    // @param {Boolen} [addframe] å¤–æ ã‚’å£ã«ã™ã‚‹ã‹ã©ã†ã‹ã€‚çœç•¥æ™‚ã¯false(å£ã«ã—ãªã„)
-    // @return {Array.<Array.<Number>>} çµæœ
+    // –À˜Hì¬(–_“|‚µ–@) enchant.Map‚ÌcollisionData‚Æ“¯‚¶Œ`®‚Å•Ô‚·i•Ç‚Í1A’Ê˜H‚Í0j
+    // @param {®”} [rowNum] s”B•K‚¸Šï”‚É‚·‚é‚±‚Æ
+    // @param {®”} [columnNum] —ñ”B•K‚¸Šï”‚É‚·‚é‚±‚Æ
+    // @param {Boolen} [addframe] ŠO˜g‚ğ•Ç‚É‚·‚é‚©‚Ç‚¤‚©BÈ—ª‚Ífalse(•Ç‚É‚µ‚È‚¢)
+    // @return {Array.<Array.<Number>>} Œ‹‰Ê
     export function createMaze(rowNum: number, columnNum: number, addframe?: bool): number[][] {
         if (rowNum % 2 == 0 || columnNum % 2 == 0) throw new Error('arguments error');
 
@@ -370,11 +370,11 @@ module exte {
             for (var column = columnStart; column < columnLimit; column += 2) {
                 maze[row][column] = 1;
 
-                //æŒ‡å®šã—ãŸæ–¹å‘ã®é€šè·¯ã‚’å£ã§åŸ‹ã‚ã‚‹
+                //w’è‚µ‚½•ûŒü‚Ì’Ê˜H‚ğ•Ç‚Å–„‚ß‚é
                 var r = rand(range);
                 maze[row + dy[r]][column + dx[r]] = 1;
             }
-            //ä¸Šæ–¹å‘ã¯ä¸€ç•ªæœ€åˆã®è¡Œã®ã¿
+            //ã•ûŒü‚Íˆê”ÔÅ‰‚Ìs‚Ì‚İ
             if (range == 4) range = 3;
         }
 
@@ -383,10 +383,10 @@ module exte {
 
     var base = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
-    // ãƒ©ãƒ³ãƒ€ãƒ æ–‡å­—åˆ—
-    // @param {Number} [len] æ–‡å­—æ•°ã€‚çœç•¥æ™‚ã¯1æ–‡å­—
-    // @param {string} [pattern] ä½¿ã†æ–‡å­—ã€‚çœç•¥æ™‚ã¯ã‚¢ãƒ«ãƒ•ã‚¡ãƒ™ãƒƒãƒˆå¤§å°æ–‡å­—
-    // @return {String} çµæœ
+    // ƒ‰ƒ“ƒ_ƒ€•¶š—ñ
+    // @param {Number} [len] •¶š”BÈ—ª‚Í1•¶š
+    // @param {string} [pattern] g‚¤•¶šBÈ—ª‚ÍƒAƒ‹ƒtƒ@ƒxƒbƒg‘å¬•¶š
+    // @return {String} Œ‹‰Ê
     export function randomString(len: number, pattern?: string): string {
         if (!pattern) pattern = base;
 
@@ -398,10 +398,10 @@ module exte {
         return result;
     }
 
-    // å››æ¨äº”å…¥
-    // @param {å®Ÿæ•°} [num] æ•°å€¤
-    // @param {æ•´æ•°} [figure] å°æ•°ç‚¹ä»¥ä¸‹æ¡ã€‚çœç•¥æ™‚ã¯0(Math.roundã¨åŒã˜)
-    // @return {å®Ÿæ•°} çµæœ
+    // lÌŒÜ“ü
+    // @param {À”} [num] ”’l
+    // @param {®”} [figure] ¬”“_ˆÈ‰ºŒ…BÈ—ª‚Í0(Math.round‚Æ“¯‚¶)
+    // @return {À”} Œ‹‰Ê
     export function round(num: number, figure?: number): number {
         if (figure) {
             var base = Math.pow(10, figure);
@@ -411,10 +411,10 @@ module exte {
         }
     }
 
-    // åˆ‡ã‚Šä¸Šã’
-    // @param {å®Ÿæ•°} [num] æ•°å€¤
-    // @param {æ•´æ•°} [figure] å°æ•°ç‚¹ä»¥ä¸‹æ¡ã€‚çœç•¥æ™‚ã¯0(Math.ceilã¨åŒã˜)
-    // @return {å®Ÿæ•°} çµæœ
+    // Ø‚èã‚°
+    // @param {À”} [num] ”’l
+    // @param {®”} [figure] ¬”“_ˆÈ‰ºŒ…BÈ—ª‚Í0(Math.ceil‚Æ“¯‚¶)
+    // @return {À”} Œ‹‰Ê
     export function ceil(num: number, figure?: number): number {
         if (figure) {
             var base = Math.pow(10, figure);
@@ -424,10 +424,10 @@ module exte {
         }
     }
 
-    // åˆ‡ã‚Šæ¨ã¦
-    // @param {å®Ÿæ•°} [num] æ•°å€¤
-    // @param {æ•´æ•°} [figure] å°æ•°ç‚¹ä»¥ä¸‹æ¡ã€‚çœç•¥æ™‚ã¯0(Math.floorã¨åŒã˜)
-    // @return {å®Ÿæ•°} çµæœ
+    // Ø‚èÌ‚Ä
+    // @param {À”} [num] ”’l
+    // @param {®”} [figure] ¬”“_ˆÈ‰ºŒ…BÈ—ª‚Í0(Math.floor‚Æ“¯‚¶)
+    // @return {À”} Œ‹‰Ê
     export function floor(num: number, figure?: number): number {
         if (figure) {
             var base = Math.pow(10, figure);
@@ -437,11 +437,11 @@ module exte {
         }
     }
 
-    // æŒ‡å®šã—ãŸæ¡ã«é”ã—ã¦ã„ãªã„æ•°å€¤ã®å…ˆé ­ã«æ–‡å­—ã‚’åŸ‹ã‚ã¦è¿”ã™ã€‚å³å¯„ã›
-    // @param {æ•´æ•°} [num] æ•°å€¤
-    // @param {æ•´æ•°} [len] æ¡æ•°
-    // @param {String} [ch] æ–‡å­—ã€‚çœç•¥æ™‚ã¯'0'ã€‚ç©ºç™½ã‚’å…¥ã‚Œã‚‹ã¨ãã¯'&nbsp;'(Label)ã‹' '(MutableText)
-    // @return {String} æ–‡å­—åˆ—
+    // w’è‚µ‚½Œ…‚É’B‚µ‚Ä‚¢‚È‚¢”’l‚Ìæ“ª‚É•¶š‚ğ–„‚ß‚Ä•Ô‚·B‰EŠñ‚¹
+    // @param {®”} [num] ”’l
+    // @param {®”} [len] Œ…”
+    // @param {String} [ch] •¶šBÈ—ª‚Í'0'B‹ó”’‚ğ“ü‚ê‚é‚Æ‚«‚Í'&nbsp;'(Label)‚©' '(MutableText)
+    // @return {String} •¶š—ñ
     export function paddingLeft(num: number, len: number, ch?: string): string {
         ch = ch || '0';
 
@@ -452,11 +452,11 @@ module exte {
         return str;
     }
 
-    // æŒ‡å®šã—ãŸæ¡ã«é”ã—ã¦ã„ãªã„æ•°å€¤ã®æœ«å°¾ã«æ–‡å­—ã‚’åŸ‹ã‚ã¦è¿”ã™ã€‚å·¦å¯„ã›
-    // @param {æ•´æ•°} [num] æ•°å€¤
-    // @param {æ•´æ•°} [len] æ¡æ•°
-    // @param {æ•´æ•°} [ch] æ–‡å­—ã€‚çœç•¥æ™‚ã¯'0'ã€‚ç©ºç™½ã‚’å…¥ã‚Œã‚‹ã¨ãã¯'&nbsp;'(Label)ã‹' '(MutableText)
-    // @return {String} æ–‡å­—åˆ—
+    // w’è‚µ‚½Œ…‚É’B‚µ‚Ä‚¢‚È‚¢”’l‚Ì––”ö‚É•¶š‚ğ–„‚ß‚Ä•Ô‚·B¶Šñ‚¹
+    // @param {®”} [num] ”’l
+    // @param {®”} [len] Œ…”
+    // @param {®”} [ch] •¶šBÈ—ª‚Í'0'B‹ó”’‚ğ“ü‚ê‚é‚Æ‚«‚Í'&nbsp;'(Label)‚©' '(MutableText)
+    // @return {String} •¶š—ñ
     export function paddingRight(num: number, len: number, ch?: string): string {
         ch = ch || '0';
 
@@ -467,24 +467,24 @@ module exte {
         return str;
     }
 
-    // æ–‡å­—åˆ—ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
-    // ä¾‹1ï¼šformatString("rgb({r}, {g}, {b})", color)
-    //      â†’ colorãŒ{r:128, g:0, b:255}ã§ã‚ã‚‹ã¨ãã€"rgb(128, 0, 255)"
-    // ä¾‹2ï¼šformatString("{0} + {1} = {2}", 5, 10, 5+10)
-    //      â†’ "5 + 10 = 15"
-    // @param {æ–‡å­—åˆ—} [format] ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
-    // @param {object or arguments} [arg] å€¤
-    // @return {String} æ–‡å­—åˆ—
+    // •¶š—ñƒtƒH[ƒ}ƒbƒg
+    // —á1FformatString("rgb({r}, {g}, {b})", color)
+    //      ¨ color‚ª{r:128, g:0, b:255}‚Å‚ ‚é‚Æ‚«A"rgb(128, 0, 255)"
+    // —á2FformatString("{0} + {1} = {2}", 5, 10, 5+10)
+    //      ¨ "5 + 10 = 15"
+    // @param {•¶š—ñ} [format] ƒtƒH[ƒ}ƒbƒg
+    // @param {object or arguments} [arg] ’l
+    // @return {String} •¶š—ñ
     export function formatString(format: string, ...argArray: any[]): string {
-        // ç½®æ›ãƒ•ã‚¡ãƒ³ã‚¯
+        // ’uŠ·ƒtƒ@ƒ“ƒN
         var rep_fn = undefined;
 
-        // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®å ´åˆ
+        // ƒIƒuƒWƒFƒNƒg‚Ìê‡
         if (argArray.length == 1 && typeof argArray[0] == "object") {
             /** @ignore */
             rep_fn = function (m, k) { return argArray[0][k]; }
         }
-            // è¤‡æ•°å¼•æ•°ã ã£ãŸå ´åˆ
+            // •¡”ˆø”‚¾‚Á‚½ê‡
         else {
             /** @ignore */
             rep_fn = function (m, k) { return argArray[parseInt(k) + 1]; }
@@ -493,11 +493,11 @@ module exte {
         return format.replace(/\{(\w+)\}/g, rep_fn);
     }
 
-    // é…åˆ—å†…ã«ã‚ã‚‹ã€æ¡ä»¶ã«åˆã†è¦ç´ ã®å‰Šé™¤
-    // @param {Array} [ary] é…åˆ—
-    // @param {Function} [fn] æ¡ä»¶åˆ¤å®šé–¢æ•°ã€‚function(é…åˆ—å†…ã®è¦ç´ ã€é…åˆ—å†…ã®é †ç•ªã€é…åˆ—è‡ªä½“)ã€‚å‰Šé™¤ã™ã‚‹ãªã‚‰trueã‚’è¿”ã™
+    // ”z—ñ“à‚É‚ ‚éAğŒ‚É‡‚¤—v‘f‚Ìíœ
+    // @param {Array} [ary] ”z—ñ
+    // @param {Function} [fn] ğŒ”»’èŠÖ”Bfunction(”z—ñ“à‚Ì—v‘fA”z—ñ“à‚Ì‡”ÔA”z—ñ©‘Ì)Bíœ‚·‚é‚È‚çtrue‚ğ•Ô‚·
     export function arrayEraseIf(ary: any[], fn: (element: any, index: number, array: any[]) =>bool) {
-        for (var i = ary.length - 1; i >= 0; i--) {// é€†é †
+        for (var i = ary.length - 1; i >= 0; i--) {// ‹t‡
             if (fn(ary[i], i, ary)) { ary.splice(i, 1); }
         }
     }
@@ -511,7 +511,7 @@ module exte {
         column: number;
     }
 
-    // MapPointSeacher.getRoute ã®çµæœãƒ‡ãƒ¼ã‚¿
+    // MapPointSeacher.getRoute ‚ÌŒ‹‰Êƒf[ƒ^
     export class ResultRoute extends MapPoint {
         constructor (row: number, column: number, rest: number, route: MapPoint[][]) {
             super(row, column);
@@ -521,26 +521,26 @@ module exte {
             this.routes = route;
         }
 
-        //æ®‹ã‚Šç§»å‹•åŠ›
+        //c‚èˆÚ“®—Í
         rest: number;
 
-        //ã“ã®ãƒã‚¹ã¸è¡ŒããŸã‚ã®é“é †
-        //è¤‡æ•°ã®ãƒ«ãƒ¼ãƒˆã«ãªã‚‹ã“ã¨ãŒã‚ã‚‹ã®ã§é…åˆ—ã®é…åˆ—ã«ãªã£ã¦ã„ã‚‹
+        //‚±‚Ìƒ}ƒX‚Ös‚­‚½‚ß‚Ì“¹‡
+        //•¡”‚Ìƒ‹[ƒg‚É‚È‚é‚±‚Æ‚ª‚ ‚é‚Ì‚Å”z—ñ‚Ì”z—ñ‚É‚È‚Á‚Ä‚¢‚é
         routes: MapPoint[][];
 
-        //ä½œæ¥­ç”¨
+        //ì‹Æ—p
         valid: bool = true;
     }
 
-    // calcMoveCost ã®çµæœãƒ‡ãƒ¼ã‚¿
+    // calcMoveCost ‚ÌŒ‹‰Êƒf[ƒ^
     export class ResultMoveCost {
         cost: number;
         routes: number[][];
     }
 
-    // ãƒãƒƒãƒ—ä¸Šã®åœ°ç‚¹æ¤œç´¢
+    // ƒ}ƒbƒvã‚Ì’n“_ŒŸõ
     export class MapPointSeacher {
-        // @param {number[][]} [map] å„åœ°ç‚¹ã®ç§»å‹•ã‚³ã‚¹ãƒˆã€‚ã¾ãŸã¯ãƒãƒƒãƒ—ç¨®é¡åˆ¥ã®å€¤
+        // @param {number[][]} [map] Še’n“_‚ÌˆÚ“®ƒRƒXƒgB‚Ü‚½‚Íƒ}ƒbƒví—Ş•Ê‚Ì’l
         constructor (map: number[][]) {
             this.map = map;
             this.rowNum = map.length;
@@ -555,17 +555,17 @@ module exte {
         private rowNum: number;
         private columnNum: number;
 
-        // ãƒãƒƒãƒ—å†…ã®ç‰¹å®šã®ç¯„å›²ã«é™å®šã—ã¦æ¤œç´¢ã™ã‚‹æ™‚ã«æŒ‡å®š
+        // ƒ}ƒbƒv“à‚Ì“Á’è‚Ì”ÍˆÍ‚ÉŒÀ’è‚µ‚ÄŒŸõ‚·‚é‚Éw’è
         public limitLeft: number;
         public limitRight: number;
         public limitTop: number;
         public limitBottom: number;
 
-        // æŒ‡å®šã—ãŸåœ°ç‚¹ã¨åŒã˜å€¤ãŒç¶šãåœ°ç‚¹ã‚’è¿”ã™ã€‚ãŠçµµã‹ãã‚½ãƒ•ãƒˆã®å¡—ã‚Šã¤ã¶ã—ã®ã‚¤ãƒ¡ãƒ¼ã‚¸
-        // @param {æ•´æ•°} [baseRowNo] åŸºæº–åœ°ç‚¹ã®è¡Œç•ªå·
-        // @param {æ•´æ•°} [baseColumnNo] åŸºæº–åœ°ç‚¹ã®åˆ—ç•ªå·
-        // @param {Function} [matchFunc] å€¤æ¯”è¼ƒé–¢æ•°ã€‚matchFunc(value1, value2)æˆ»ã‚Šå€¤Boolen çœç•¥æ™‚ã¯'=='ã§æ¯”è¼ƒ 
-        // @return {MapPoint[]} çµæœã€‚åŸºæº–åœ°ç‚¹ã‚‚å«ã‚€
+        // w’è‚µ‚½’n“_‚Æ“¯‚¶’l‚ª‘±‚­’n“_‚ğ•Ô‚·B‚¨ŠG‚©‚«ƒ\ƒtƒg‚Ì“h‚è‚Â‚Ô‚µ‚ÌƒCƒ[ƒW
+        // @param {®”} [baseRowNo] Šî€’n“_‚Ìs”Ô†
+        // @param {®”} [baseColumnNo] Šî€’n“_‚Ì—ñ”Ô†
+        // @param {Function} [matchFunc] ’l”äŠrŠÖ”BmatchFunc(value1, value2)–ß‚è’lBoolen È—ª‚Í'=='‚Å”äŠr 
+        // @return {MapPoint[]} Œ‹‰ÊBŠî€’n“_‚àŠÜ‚Ş
         public getSamePoints(baseRowNo: number, baseColumnNo: number, matchFunc?: (value1: number, value2: number) =>bool): MapPoint[] {
             var baseValue = this.map[baseRowNo][baseColumnNo];
 
@@ -620,15 +620,15 @@ module exte {
             return results;
         }
 
-        // ã‚·ãƒŸãƒ¥ãƒ¬ãƒ¼ã‚·ãƒ§ãƒ³ã‚²ãƒ¼ãƒ ãªã©ã®ãƒ¦ãƒ‹ãƒƒãƒˆç§»å‹•åˆ¤å®š
-        // @param {Array<Array<æ•´æ•°>>} [map] 2æ¬¡å…ƒé…åˆ—ã€‚
-        //      å„ãƒã‚¹ã®ç§»å‹•ã‚³ã‚¹ãƒˆ(0ã‚„ãƒã‚¤ãƒŠã‚¹ã‚‚å¯)ã‚’è¨­å®šã—ã¾ã™ã€‚
-        //      ç§»å‹•ã§ããªã„ãƒã‚¹ã«ã¯å¤§ããªæ•°å­—ã‚’å…¥ã‚Œã¦ãã ã•ã„ã€‚
-        //      å„è¡Œã®åˆ—æ•°ã¯å…¨ã¦åŒã˜ã§ã‚ã‚‹ã“ã¨ã‚’æœŸå¾…ã—ã¾ã™ã€‚
-        // @param {æ•´æ•°} [baseRowNo] ãƒ¦ãƒ‹ãƒƒãƒˆã®ç¾åœ¨ä½ç½®ã®è¡Œç•ªå·
-        // @param {æ•´æ•°} [baseColumnNo] ãƒ¦ãƒ‹ãƒƒãƒˆã®ç¾åœ¨ä½ç½®ã®åˆ—ç•ªå·
-        // @param {æ•´æ•°} [cost] ãƒ¦ãƒ‹ãƒƒãƒˆã®ç§»å‹•åŠ›
-        // @return {MapPoint[]} çµæœã€‚ã‚³ã‚¹ãƒˆãŒè¶³ã‚Šã‚Œã°é–‹å§‹åœ°ç‚¹ãŒè¸ã‚€é­”ã‚Œã‚‹ã“ã¨ã‚‚ã‚ã‚Šã¾ã™
+        // ƒVƒ~ƒ…ƒŒ[ƒVƒ‡ƒ“ƒQ[ƒ€‚È‚Ç‚Ìƒ†ƒjƒbƒgˆÚ“®”»’è
+        // @param {Array<Array<®”>>} [map] 2ŸŒ³”z—ñB
+        //      Šeƒ}ƒX‚ÌˆÚ“®ƒRƒXƒg(0‚âƒ}ƒCƒiƒX‚à‰Â)‚ğİ’è‚µ‚Ü‚·B
+        //      ˆÚ“®‚Å‚«‚È‚¢ƒ}ƒX‚É‚Í‘å‚«‚È”š‚ğ“ü‚ê‚Ä‚­‚¾‚³‚¢B
+        //      Šes‚Ì—ñ”‚Í‘S‚Ä“¯‚¶‚Å‚ ‚é‚±‚Æ‚ğŠú‘Ò‚µ‚Ü‚·B
+        // @param {®”} [baseRowNo] ƒ†ƒjƒbƒg‚ÌŒ»İˆÊ’u‚Ìs”Ô†
+        // @param {®”} [baseColumnNo] ƒ†ƒjƒbƒg‚ÌŒ»İˆÊ’u‚Ì—ñ”Ô†
+        // @param {®”} [cost] ƒ†ƒjƒbƒg‚ÌˆÚ“®—Í
+        // @return {MapPoint[]} Œ‹‰ÊBƒRƒXƒg‚ª‘«‚è‚ê‚ÎŠJn’n“_‚ª“¥‚Ş–‚‚ê‚é‚±‚Æ‚à‚ ‚è‚Ü‚·
         public getRoute(baseRowNo: number, baseColumnNo: number, cost: number): ResultRoute[]{
 
             var route = new ResultRoute(baseRowNo, baseColumnNo, cost, [[]]);
@@ -705,14 +705,14 @@ module exte {
             return points;
         }
 
-        // æŒ‡å®šã—ãŸä½ç½®ã«è¡Œãã®ã«å¿…è¦ãªæœ€å°ã‚³ã‚¹ãƒˆã¨ãã®é“é †ã‚’è¨ˆç®—(ä¸Šè¨˜ getRoute ã®é€†)
-        // @param {æ•´æ•°} [fromRowNo] ç¾åœ¨ä½ç½®ã®è¡Œç•ªå·
-        // @param {æ•´æ•°} [fromColumnNo] ç¾åœ¨ä½ç½®ã®åˆ—ç•ªå·
-        // @param {æ•´æ•°} [toRowNo] ç›®çš„ã®åœ°ç‚¹ã®è¡Œç•ªå·
-        // @param {æ•´æ•°} [toColumnNo] ç›®çš„ã®åœ°ç‚¹ã®åˆ—ç•ªå·
-        // @return {ResultMoveCost} çµæœ
+        // w’è‚µ‚½ˆÊ’u‚És‚­‚Ì‚É•K—v‚ÈÅ¬ƒRƒXƒg‚Æ‚»‚Ì“¹‡‚ğŒvZ(ã‹L getRoute ‚Ì‹t)
+        // @param {®”} [fromRowNo] Œ»İˆÊ’u‚Ìs”Ô†
+        // @param {®”} [fromColumnNo] Œ»İˆÊ’u‚Ì—ñ”Ô†
+        // @param {®”} [toRowNo] –Ú“I‚Ì’n“_‚Ìs”Ô†
+        // @param {®”} [toColumnNo] –Ú“I‚Ì’n“_‚Ì—ñ”Ô†
+        // @return {ResultMoveCost} Œ‹‰Ê
         public calcMoveCost(map: number[][], fromRowNo: number, fromColumnNo: number, toRowNo: number, toColumnNo: number): ResultMoveCost {
-            // åŸºæº–ã¨ã—ã¦ã¾ã£ã™ãç›®çš„åœ°ã«è¡Œã£ãŸæ™‚ã®ã‚³ã‚¹ãƒˆã‚’è¨ˆç®—
+            // Šî€‚Æ‚µ‚Ä‚Ü‚Á‚·‚®–Ú“I’n‚És‚Á‚½‚ÌƒRƒXƒg‚ğŒvZ
             var cost = 0;
 
             if (fromColumnNo != toColumnNo) {
@@ -733,7 +733,7 @@ module exte {
                 cost += map[toRowNo][toColumnNo];
             }
 
-            // ãã®ã‚³ã‚¹ãƒˆã§è¡Œã‘ã‚‹æ‰€å…¨ã¦ã‚’å–å¾—ã—ã¦ã€ç›®çš„ã®ä½ç½®ãŒæ¥ãŸã‚‰è¨˜éŒ²
+            // ‚»‚ÌƒRƒXƒg‚Ås‚¯‚éŠ‘S‚Ä‚ğæ“¾‚µ‚ÄA–Ú“I‚ÌˆÊ’u‚ª—ˆ‚½‚ç‹L˜^
             var routes = this.getRoute(fromRowNo, fromColumnNo, cost);
 
             var resultRoutes
@@ -743,7 +743,7 @@ module exte {
                 }
             });
 
-            // è¦‹ã¤ã‘ãŸé“é †ã§ã‚³ã‚¹ãƒˆã‚’å†è¨ˆç®—
+            // Œ©‚Â‚¯‚½“¹‡‚ÅƒRƒXƒg‚ğÄŒvZ
             cost = 0;
             for (var i = 0; i < resultRoutes[0].length; i++) {
                 var rt = resultRoutes[0][i];
@@ -757,14 +757,14 @@ module exte {
         }
     }
 
-    // ã‚¢ã‚¤ã‚³ãƒ³Surfaceä½œæˆ
-    // @param {æ•´æ•°} [index] ã‚¢ã‚¤ã‚³ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
-    // @param {æ•´æ•°} [count] index~index+count-1ã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ã«å«ã‚ã‚‹(åŒã˜è¡Œå†…)ã€‚åˆæœŸå€¤ã¯1
-    // @param {String} [assetName] ã‚¢ã‚¤ã‚³ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«(ã‚¢ã‚»ãƒƒãƒˆå)ã€‚åˆæœŸå€¤ã¯'icon0.png'
-    // @param {æ•´æ•°} [width] ã‚¢ã‚¤ã‚³ãƒ³1ã¤åˆ†ã®å¹…ã€‚åˆæœŸå€¤ã¯16
-    // @param {æ•´æ•°} [height] ã‚¢ã‚¤ã‚³ãƒ³1ã¤åˆ†ã®é«˜ã•ã€‚åˆæœŸå€¤ã¯16 
-    // @param {æ•´æ•°} [columnNum] assetNameå†…ã®ä¸€è¡Œã«ã‚ã‚‹ã‚¢ã‚¤ã‚³ãƒ³æ•°ã€‚åˆæœŸå€¤ã¯16('icon0.png'ã‚’æƒ³å®š)
-    // @return {Surface} çµæœ
+    // ƒAƒCƒRƒ“Surfaceì¬
+    // @param {®”} [index] ƒAƒCƒRƒ“ƒCƒ[ƒW“à‚ÌƒCƒ“ƒfƒbƒNƒX
+    // @param {®”} [count] index~index+count-1‚ğƒCƒ[ƒW‚ÉŠÜ‚ß‚é(“¯‚¶s“à)B‰Šú’l‚Í1
+    // @param {String} [assetName] ƒAƒCƒRƒ“ƒCƒ[ƒWƒtƒ@ƒCƒ‹(ƒAƒZƒbƒg–¼)B‰Šú’l‚Í'icon0.png'
+    // @param {®”} [width] ƒAƒCƒRƒ“1‚Â•ª‚Ì•B‰Šú’l‚Í16
+    // @param {®”} [height] ƒAƒCƒRƒ“1‚Â•ª‚Ì‚‚³B‰Šú’l‚Í16 
+    // @param {®”} [columnNum] assetName“à‚Ìˆês‚É‚ ‚éƒAƒCƒRƒ“”B‰Šú’l‚Í16('icon0.png'‚ğ‘z’è)
+    // @return {Surface} Œ‹‰Ê
     export function createIconSurface(index: number, count: number, assetName: string, width: number, height: number, columnNum: number) {
         count = count || 1;
         assetName = assetName || 'icon0.png';
@@ -783,14 +783,14 @@ module exte {
         return image;
     }
 
-    // ã‚¢ã‚¤ã‚³ãƒ³Spriteä½œæˆ
-    // @param {æ•´æ•°} [index] ã‚¢ã‚¤ã‚³ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸å†…ã®ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
-    // @param {æ•´æ•°} [count] index~index+count-1ã‚’ã‚¤ãƒ¡ãƒ¼ã‚¸ã«å«ã‚ã‚‹(åŒã˜è¡Œå†…)ã€‚åˆæœŸå€¤ã¯1
-    // @param {String} [assetName] ã‚¢ã‚¤ã‚³ãƒ³ã‚¤ãƒ¡ãƒ¼ã‚¸ãƒ•ã‚¡ã‚¤ãƒ«(ã‚¢ã‚»ãƒƒãƒˆå)ã€‚åˆæœŸå€¤ã¯'icon0.png'
-    // @param {æ•´æ•°} [width] ã‚¢ã‚¤ã‚³ãƒ³1ã¤åˆ†ã®å¹…ã€‚åˆæœŸå€¤ã¯16
-    // @param {æ•´æ•°} [height] ã‚¢ã‚¤ã‚³ãƒ³1ã¤åˆ†ã®é«˜ã•ã€‚åˆæœŸå€¤ã¯16 
-    // @param {æ•´æ•°} [columnNum] assetNameå†…ã®ä¸€è¡Œã«ã‚ã‚‹ã‚¢ã‚¤ã‚³ãƒ³æ•°ã€‚åˆæœŸå€¤ã¯16('icon0.png'ã‚’æƒ³å®š)
-    // @return {Sprite} çµæœ
+    // ƒAƒCƒRƒ“Spriteì¬
+    // @param {®”} [index] ƒAƒCƒRƒ“ƒCƒ[ƒW“à‚ÌƒCƒ“ƒfƒbƒNƒX
+    // @param {®”} [count] index~index+count-1‚ğƒCƒ[ƒW‚ÉŠÜ‚ß‚é(“¯‚¶s“à)B‰Šú’l‚Í1
+    // @param {String} [assetName] ƒAƒCƒRƒ“ƒCƒ[ƒWƒtƒ@ƒCƒ‹(ƒAƒZƒbƒg–¼)B‰Šú’l‚Í'icon0.png'
+    // @param {®”} [width] ƒAƒCƒRƒ“1‚Â•ª‚Ì•B‰Šú’l‚Í16
+    // @param {®”} [height] ƒAƒCƒRƒ“1‚Â•ª‚Ì‚‚³B‰Šú’l‚Í16 
+    // @param {®”} [columnNum] assetName“à‚Ìˆês‚É‚ ‚éƒAƒCƒRƒ“”B‰Šú’l‚Í16('icon0.png'‚ğ‘z’è)
+    // @return {Sprite} Œ‹‰Ê
     export function createIconSprite(index: number, count?: number, assetName?: string, width?: number, height?: number, columnNum?: number) {
         count = count || 1;
         assetName = assetName || 'icon0.png';
@@ -808,24 +808,24 @@ module exte {
         return sprite
     }
 
-    // ç¾åœ¨ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã‹ã©ã†ã‹
+    // Œ»İƒfƒoƒbƒOƒ‚[ƒh‚©‚Ç‚¤‚©
     export function isDebug(): bool {
         return enchant.Game.instance._debug;
     }
 
-    // éŸ³ã®å†ç”Ÿ
-    // @param {æ–‡å­—åˆ—} [assetName] ã‚¢ã‚»ãƒƒãƒˆå
+    // ‰¹‚ÌÄ¶
+    // @param {•¶š—ñ} [assetName] ƒAƒZƒbƒg–¼
     export function playSound(assetName: string): void {
         enchant.Game.instance.assets[assetName].clone().play();
     }
 
-    // ä¸»ã«BGMç”¨ã€‚æ›²ã®çµ‚ã‚ã‚Šã‚’ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ã¦æ›²ã®é ­ã«ã¤ãªã’ã‚‹
-    // â€»enchant.Sceneã®Event.ENTER_FRAMEã§enterFrameã‚’å‘¼ã¶
-    // â€»ç‰¹å®šã®enchant.Sceneã§æµã™ãªã‚‰ã€addChildã§ã‚‚è‰¯ã„
+    // å‚ÉBGM—pB‹È‚ÌI‚í‚è‚ğƒtƒF[ƒhƒAƒEƒg‚µ‚Ä‹È‚Ì“ª‚É‚Â‚È‚°‚é
+    // ¦enchant.Scene‚ÌEvent.ENTER_FRAME‚ÅenterFrame‚ğŒÄ‚Ô
+    // ¦“Á’è‚Ìenchant.Scene‚Å—¬‚·‚È‚çAaddChild‚Å‚à—Ç‚¢
     export class RepeatSoundPlayer extends enchant.Node {
-        // @param {æ–‡å­—åˆ—} [assetName] ã‚¢ã‚»ãƒƒãƒˆå
-        // @param {å®Ÿæ•°} [fadeSec] æ®‹ã‚Šä½•ç§’ã‹ã‚‰ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã‚’é–‹å§‹ã™ã‚‹ã‹ã€‚çœç•¥æ™‚ã¯5ç§’
-        // @param {å®Ÿæ•°} [volume] éŸ³é‡ã€‚çœç•¥æ™‚ã¯1.0(æœ€å¤§)
+        // @param {•¶š—ñ} [assetName] ƒAƒZƒbƒg–¼
+        // @param {À”} [fadeSec] c‚è‰½•b‚©‚çƒtƒF[ƒhƒAƒEƒg‚ğŠJn‚·‚é‚©BÈ—ª‚Í5•b
+        // @param {À”} [volume] ‰¹—ÊBÈ—ª‚Í1.0(Å‘å)
         constructor (assetName: string, fadeSec?: number, volume?: number) {
             super();
 
@@ -839,23 +839,23 @@ module exte {
         private _fadeSec;
         private _volume;
 
-        // å†ç”Ÿé–‹å§‹
+        // Ä¶ŠJn
         public play() {
             this._sound.volume = this._volume;
             this._sound.play();
         }
 
-        // ä¸­æ–­
+        // ’†’f
         public pause() {
             this._sound.pause();
         }
 
-        // åœæ­¢
+        // ’â~
         stop() {
             this._sound.stop();
         }
 
-        // enchant.Event.ENTER_FRAMEã§å®Ÿè¡Œ
+        // enchant.Event.ENTER_FRAME‚ÅÀs
         enterFrame() {
             if (this._fadeSec < (this._sound.duration - this._sound.currentTime)) {
                 return;
@@ -869,12 +869,12 @@ module exte {
         }
     }
 
-    // SceneInputç”¨ã€‚ç™»éŒ²ã—ãŸå…¥åŠ›ãƒ‘ã‚¿ãƒ¼ãƒ³ãŒå®Œäº†ã—ãŸæ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
-    // e.eventID ã‚¤ãƒ™ãƒ³ãƒˆID
-    // e.sec     å…¥åŠ›å®Œäº†ã¾ã§ã®ç§’æ•°
+    // SceneInput—pB“o˜^‚µ‚½“ü—Íƒpƒ^[ƒ“‚ªŠ®—¹‚µ‚½‚ÌƒCƒxƒ“ƒg
+    // e.eventID ƒCƒxƒ“ƒgID
+    // e.sec     “ü—ÍŠ®—¹‚Ü‚Å‚Ì•b”
     export var Event_SceneInput = 'exte.enchant.Event_SceneInput';
 
-    // SceneInputç”¨ã‚¤ãƒ™ãƒ³ãƒˆ
+    // SceneInput—pƒCƒxƒ“ƒg
     export class SceneExEvent extends enchant.Event {
         constructor (type: string) {
             super(type);
@@ -884,29 +884,29 @@ module exte {
         sec: number;
     }
 
-    // SceneInputç”¨å…¥åŠ›ãƒ‘ã‚¿ãƒ¼ãƒ³ãƒ‡ãƒ¼ã‚¿
+    // SceneInput—p“ü—Íƒpƒ^[ƒ“ƒf[ƒ^
     export class InputPatternData {
-        // ã‚¤ãƒ™ãƒ³ãƒˆID
+        // ƒCƒxƒ“ƒgID
         eventID: number;
 
-        // å…¥åŠ›å†…å®¹
+        // “ü—Í“à—e
         pattern: Array;
 
-        // ã“ã®ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã¾ã§ã«å…¥åŠ›ã‚’å®Œäº†ã—ãŸã‚‰ã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
+        // ‚±‚ÌƒtƒŒ[ƒ€”‚Ü‚Å‚É“ü—Í‚ğŠ®—¹‚µ‚½‚çƒCƒxƒ“ƒg”­s
         framelimit: number;
 
-        // trueã«ã™ã‚‹ã¨framelimitã®æ„å‘³ãŒé€†ã«ãªã‚‹ã€‚ã•ã‚‰ã«æŠ¼ã—ç¶šã‘ã‚‹ã¨é€£ç¶šã—ã¦ç™ºè¡Œ
+        // true‚É‚·‚é‚Æframelimit‚ÌˆÓ–¡‚ª‹t‚É‚È‚éB‚³‚ç‚É‰Ÿ‚µ‘±‚¯‚é‚Æ˜A‘±‚µ‚Ä”­s
         loop: bool;
 
-        // ä½œæ¥­ç”¨
+        // ì‹Æ—p
         index: number = 0;
         frame: number = 0;
         active: bool = false;
     }
 
 
-    // Sceneã®æ‹¡å¼µ
-    // ãƒ»ã‚­ãƒ¼å…¥åŠ›è£œåŠ©ã€‚æŒ‡å®šã—ãŸé †ç•ªã§å…¥åŠ›ã™ã‚‹ã¨ã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
+    // Scene‚ÌŠg’£
+    // EƒL[“ü—Í•â•Bw’è‚µ‚½‡”Ô‚Å“ü—Í‚·‚é‚ÆƒCƒxƒ“ƒg”­s
     export class SceneInput extends enchant.Scene {
         constructor () {
             super();
@@ -980,16 +980,16 @@ module exte {
             }
         }
 
-        // å…¥åŠ›ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ç™»éŒ²ã€‚ãƒ‘ã‚¿ãƒ¼ãƒ³ã«ä¸€è‡´ã™ã‚‹ã¨Event_SceneExInputã‚¤ãƒ™ãƒ³ãƒˆã‚’ç™ºè¡Œ
-        // @param {æ•´æ•°}  [eventID] ã‚¤ãƒ™ãƒ³ãƒˆç•ªå·
-        // @param {Array} [pattern] enchant.Event.?_BUTTON_UP/DOWN ã®çµ„ã¿åˆã‚ã›ã‚’æŒ‡å®š
+        // “ü—Íƒpƒ^[ƒ“‚Ì“o˜^Bƒpƒ^[ƒ“‚Éˆê’v‚·‚é‚ÆEvent_SceneExInputƒCƒxƒ“ƒg‚ğ”­s
+        // @param {®”}  [eventID] ƒCƒxƒ“ƒg”Ô†
+        // @param {Array} [pattern] enchant.Event.?_BUTTON_UP/DOWN ‚Ì‘g‚İ‡‚í‚¹‚ğw’è
         //     -----------------------------------------------------------------------------
-        //      [A_BUTTON_DOWN]              Aãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ãŸ
-        //      [A_BUTTON_DOWN, A_BUTTON_UP] Aãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦é›¢ã—ãŸ
-        //      [DOWN_BUTTON_DOWN, RIGHT_BUTTON_DOWN, DOWN_BUTTON_UP, A_BUTTON_DOWN] æ³¢å‹•æ‹³
+        //      [A_BUTTON_DOWN]              Aƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚½
+        //      [A_BUTTON_DOWN, A_BUTTON_UP] Aƒ{ƒ^ƒ“‚ğ‰Ÿ‚µ‚Ä—£‚µ‚½
+        //      [DOWN_BUTTON_DOWN, RIGHT_BUTTON_DOWN, DOWN_BUTTON_UP, A_BUTTON_DOWN] ”g“®Œ
         //     -----------------------------------------------------------------------------
-        // @param {å®Ÿæ•°} [timelimit] ã“ã®ç§’æ•°ã¾ã§ã«å…¥åŠ›ã‚’å®Œäº†ã—ãŸã‚‰ã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œã€‚çœç•¥æ™‚ã¯1.0
-        // @param {Bool} [loop] trueã«ã™ã‚‹ã¨timelimitã®æ„å‘³ãŒé€†ã«ãªã‚‹ã€‚ã•ã‚‰ã«æŠ¼ã—ç¶šã‘ã‚‹ã¨é€£ç¶šã—ã¦ç™ºè¡Œã€‚çœç•¥æ™‚ã¯false
+        // @param {À”} [timelimit] ‚±‚Ì•b”‚Ü‚Å‚É“ü—Í‚ğŠ®—¹‚µ‚½‚çƒCƒxƒ“ƒg”­sBÈ—ª‚Í1.0
+        // @param {Bool} [loop] true‚É‚·‚é‚Ætimelimit‚ÌˆÓ–¡‚ª‹t‚É‚È‚éB‚³‚ç‚É‰Ÿ‚µ‘±‚¯‚é‚Æ˜A‘±‚µ‚Ä”­sBÈ—ª‚Ífalse
         public regist(eventID: number, pattern: Array, timelimit?: number, loop?: bool): void {
             var data = new InputPatternData();
             data.eventID = eventID;
@@ -1001,12 +1001,12 @@ module exte {
         }
     }
 
-    // SceneExç”¨ã€‚ã‚·ãƒ¼ãƒ³ãŒãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã‚’é–‹å§‹ã™ã‚‹ç›´å‰ã«æ¥ã‚‹
+    // SceneEx—pBƒV[ƒ“‚ªƒtƒF[ƒhƒCƒ“‚ğŠJn‚·‚é’¼‘O‚É—ˆ‚é
     export var Event_SceneExStarting = 'Event_SceneExStarting';
 
-    // Sceneã®æ‹¡å¼µ
-    // ãƒ»ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã¨ã€ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³/ã‚¢ã‚¦ãƒˆå‡¦ç†
-    // ãƒ»ã‚·ãƒ¼ãƒ³å…¨ä½“ã®é€éç‡å¤‰æ›´
+    // Scene‚ÌŠg’£
+    // EƒV[ƒ“Ø‚è‘Ö‚¦‚ÆAƒtƒF[ƒhƒCƒ“/ƒAƒEƒgˆ—
+    // EƒV[ƒ“‘S‘Ì‚Ì“§‰ß—¦•ÏX
     export class SceneEx extends SceneInput {
         public name: string;
 
@@ -1091,35 +1091,35 @@ module exte {
             }
         }
 
-        // ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¤ãƒ³ã¾ãŸã¯ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆä¸­
+        // ƒtƒF[ƒhƒCƒ“‚Ü‚½‚ÍƒtƒF[ƒhƒAƒEƒg’†
         public get fadeProsessing(): bool {
             return this._setFadeIn || this._setFadeOut;
         }
 
-        // é€éç‡å–å¾—
+        // “§‰ß—¦æ“¾
         public get opacity(): number {
             return this._opacity;
         }
 
-        // é€éç‡è¨­å®š
+        // “§‰ß—¦İ’è
         public set opacity(v: number) {
             this._opacity = v;
             this._setOpacityChilds(this, v);
         }
 
-        // ã‚·ãƒ¼ãƒ³åˆ‡ã‚Šæ›¿ãˆã€‚ç¾åœ¨ã®ã‚·ãƒ¼ãƒ³ã‚’æŒ‡å®šã—ãŸå ´åˆãƒªã‚¹ã‚¿ãƒ¼ãƒˆ
-        // @param {string} [name] åˆ‡ã‚Šæ›¿ãˆã‚‹ã‚·ãƒ¼ãƒ³ã®åå‰
+        // ƒV[ƒ“Ø‚è‘Ö‚¦BŒ»İ‚ÌƒV[ƒ“‚ğw’è‚µ‚½ê‡ƒŠƒXƒ^[ƒg
+        // @param {string} [name] Ø‚è‘Ö‚¦‚éƒV[ƒ“‚Ì–¼‘O
         public moveSceneTo(name: string): void {
             this._nextSceneName = name;
             this._setFadeOut = true;
         }
     }
 
-    // è‡ªå‹•ã§ãƒ•ã‚§ãƒ¼ãƒ‰ã‚¢ã‚¦ãƒˆã—ã¦æ¶ˆæ»…ã™ã‚‹æ–‡å­—
-    // @param {enchant.Group} [group] è£…é£¾ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç™»éŒ²å…ˆ
-    // @param {enchant.Sprite} [targetsprite] æ–‡å­—ã‚’å‡ºã™åŸºæº–ã¨ãªã‚‹è¦ç´ 
-    // @param {æ–‡å­—åˆ—} [text] æ–‡å­—ã€‚åŠè§’è‹±æ•°è¨˜å·ã®ã¿
-    // @param {å®Ÿæ•°} [sec] è¡¨ç¤ºã—ã¦ã„ã‚‹æ™‚é–“(çœç•¥æ™‚ã¯1ç§’)
+    // ©“®‚ÅƒtƒF[ƒhƒAƒEƒg‚µ‚ÄÁ–Å‚·‚é•¶š
+    // @param {enchant.Group} [group] ‘•üƒXƒvƒ‰ƒCƒg“o˜^æ
+    // @param {enchant.Sprite} [targetsprite] •¶š‚ğo‚·Šî€‚Æ‚È‚é—v‘f
+    // @param {•¶š—ñ} [text] •¶šB”¼Šp‰p”‹L†‚Ì‚İ
+    // @param {À”} [sec] •\¦‚µ‚Ä‚¢‚éŠÔ(È—ª‚Í1•b)
     export function addFadeOutText(group: enchant.Group, targetsprite: enchant.IPoint, text: string, sec?: number) {
         if (enchant.util.MutableText === undefined) return;
 
@@ -1135,20 +1135,20 @@ module exte {
         group.addChild(mt);
     }
 
-    // ã‚­ãƒ¼ãƒã‚¤ãƒ³ãƒ‰ã€‚æ–‡å­—ã‚³ãƒ¼ãƒ‰ã‚’èª¿ã¹ã‚‹ã®ãŒé¢å€’ãªã®ã§
-    // @param {æ–‡å­—åˆ—} [key] å‰²ã‚Šå½“ã¦ã‚‹1æ–‡å­—
-    // @param {æ–‡å­—åˆ—} [button] 'left', 'right', 'up', 'down', 'a', 'b' ãªã©
+    // ƒL[ƒoƒCƒ“ƒhB•¶šƒR[ƒh‚ğ’²‚×‚é‚Ì‚ª–Ê“|‚È‚Ì‚Å
+    // @param {•¶š—ñ} [key] Š„‚è“–‚Ä‚é1•¶š
+    // @param {•¶š—ñ} [button] 'left', 'right', 'up', 'down', 'a', 'b' ‚È‚Ç
     export function keyBind(key, button) {
         var game = enchant.Game.instance;
         game.keybind(key[0].toUpperCase().charCodeAt(0), button);
         game.keybind(key[0].toLowerCase().charCodeAt(0), button);
     }
 
-    // Timerç”¨ã€‚æŒ‡å®šã—ãŸæ™‚é–“ãŒæ¥ãŸæ™‚ã®ã‚¤ãƒ™ãƒ³ãƒˆ
+    // Timer—pBw’è‚µ‚½ŠÔ‚ª—ˆ‚½‚ÌƒCƒxƒ“ƒg
     export var Event_TimerTimeOut = 'Event_TimerTimeout';
 
-    //æŒ‡å®šã—ãŸæ™‚é–“ãŒæ¥ãŸã‚‰ã‚¤ãƒ™ãƒ³ãƒˆç™ºè¡Œ
-    // â€»game.frameã‚’ãƒ™ãƒ¼ã‚¹ã«ã—ã¦ã„ã‚‹ã®ã§æ­£ç¢ºã§ã¯ãªã„ã€‚
+    //w’è‚µ‚½ŠÔ‚ª—ˆ‚½‚çƒCƒxƒ“ƒg”­s
+    // ¦game.frame‚ğƒx[ƒX‚É‚µ‚Ä‚¢‚é‚Ì‚Å³Šm‚Å‚Í‚È‚¢B
     export class Timer extends enchant.Node {
         constructor () {
             super();
@@ -1171,8 +1171,8 @@ module exte {
         _startFrame = 0;
         _active = false;
 
-        // ã‚¿ã‚¤ãƒãƒ¼ã‚’é–‹å§‹
-        // @param {å®Ÿæ•°} [sec] ç§’ã€‚æŒ‡å®šã—ãªã„å ´åˆã¯å‰å›ã¨åŒã˜
+        // ƒ^ƒCƒ}[‚ğŠJn
+        // @param {À”} [sec] •bBw’è‚µ‚È‚¢ê‡‚Í‘O‰ñ‚Æ“¯‚¶
         start(sec: number) {
             if (typeof sec == 'number') {
                 this._frame =
@@ -1181,14 +1181,14 @@ module exte {
             this._active = (0 < this._startFrame);
         }
 
-        // ã‚¿ã‚¤ãƒãƒ¼ã‚’åœæ­¢
+        // ƒ^ƒCƒ}[‚ğ’â~
         stop() {
             this._active = false;
         }
     }
 
-    // æ–¹å‘ã‚­ãƒ¼å…¥åŠ›(ã¾ãŸã¯ui.Padã®å…¥åŠ›)ã‚’ãƒ©ã‚¸ã‚¢ãƒ³ã«å¤‰æ›
-    // @return {å®Ÿæ•°} çµæœã€‚0ï½Math.PI*2(å³ãŒ0)ã€‚å…¥åŠ›ã—ã¦ã„ãªã„ã¨ãã¯Number.NaN
+    // •ûŒüƒL[“ü—Í(‚Ü‚½‚Íui.Pad‚Ì“ü—Í)‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·
+    // @return {À”} Œ‹‰ÊB0`Math.PI*2(‰E‚ª0)B“ü—Í‚µ‚Ä‚¢‚È‚¢‚Æ‚«‚ÍNumber.NaN
     export function inputToRad() {
         var input = enchant.Game.instance.input;
 
@@ -1204,19 +1204,19 @@ module exte {
         return Number.NaN;
     }
 
-    // å›è»¢ã‚’è€ƒæ…®ã—ãŸè¡çªåˆ¤å®š
-    // â€»å‚è€ƒ http://smallomega.com/?p=397
-    // @param {enchant.Sprite} [sprite1] è¦ç´ 1
-    // @param {enchant.Sprite} [sprite2] è¦ç´ 2
-    // @return {Boolen} è¡çªã—ã¦ã„ã‚‹ãªã‚‰true
+    // ‰ñ“]‚ğl—¶‚µ‚½Õ“Ë”»’è
+    // ¦Ql http://smallomega.com/?p=397
+    // @param {enchant.Sprite} [sprite1] —v‘f1
+    // @param {enchant.Sprite} [sprite2] —v‘f2
+    // @return {Boolen} Õ“Ë‚µ‚Ä‚¢‚é‚È‚çtrue
     export function collision2Sprites(sprite1: enchant.Sprite, sprite2: enchant.Sprite): bool {
         if (sprite1.rotation == 0 && sprite2.rotation == 0) return sprite1.intersect(sprite2);
 
-        //aã¯this,bã¯other
+        //a‚Íthis,b‚Íother
         var a = new Array(9);
         var b = new Array(9);
 
-        //å›è»¢ã—ã¦ãªã„ã¨ãã®ï¼”ç‚¹ã‚’æ ¼ç´+å„è¾ºã®ä¸­ç‚¹4ç‚¹([0]=[4],[5][6][7][8]ã¯ã™ã‚ŠæŠœã‘ãŒã²ã©ã„ã®ã§è¿½åŠ )
+        //‰ñ“]‚µ‚Ä‚È‚¢‚Æ‚«‚Ì‚S“_‚ğŠi”[+Še•Ó‚Ì’†“_4“_([0]=[4],[5][6][7][8]‚Í‚·‚è”²‚¯‚ª‚Ğ‚Ç‚¢‚Ì‚Å’Ç‰Á)
         a[0] = { X: sprite1.x, Y: sprite1.y };
         a[1] = { X: sprite1.x + sprite1.width, Y: sprite1.y };
         a[2] = { X: sprite1.x + sprite1.width, Y: sprite1.y + sprite1.height };
@@ -1236,7 +1236,7 @@ module exte {
         b[7] = { X: sprite2.x, Y: sprite2.y + sprite2.height / 2 };
         b[8] = { X: sprite2.x + sprite2.width, Y: sprite2.y + sprite2.height / 2 };
 
-        //ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ä¸­å¿ƒã‚’åŸç‚¹ã«å¹³è¡Œç§»å‹•
+        //ƒXƒvƒ‰ƒCƒg‚Ì’†S‚ğŒ´“_‚É•½sˆÚ“®
         for (var i = 0; i < a.length; i++) {
             a[i].X -= (sprite1.x + sprite1.width / 2);
             a[i].Y -= (sprite1.y + sprite1.height / 2);
@@ -1246,7 +1246,7 @@ module exte {
             b[i].Y -= (sprite2.y + sprite2.height / 2);
         }
 
-        //ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã‚’å›è»¢ã•ã›ã‚‹
+        //ƒXƒvƒ‰ƒCƒg‚ğ‰ñ“]‚³‚¹‚é
         for (var i = 0; i < a.length; i++) {
             var tmpX = a[i].X;
             var tmpY = a[i].Y;
@@ -1260,7 +1260,7 @@ module exte {
             b[i].Y = tmpX * Math.sin(sprite2.rotation * Math.PI / 180) + tmpY * Math.cos(sprite2.rotation * Math.PI / 180);
         }
 
-        //å…ƒã®ä½ç½®ã«å¹³è¡Œç§»å‹•
+        //Œ³‚ÌˆÊ’u‚É•½sˆÚ“®
         for (var i = 0; i < a.length; i++) {
             a[i].X += (sprite1.x + sprite1.width / 2);
             a[i].Y += (sprite1.y + sprite1.height / 2);
@@ -1270,7 +1270,7 @@ module exte {
             b[i].Y += (sprite2.y + sprite2.height / 2);
         }
 
-        //ãã‚Œãã‚Œã®ç·šåˆ†ã§äº¤å·®åˆ¤å®š
+        //‚»‚ê‚¼‚ê‚Ìü•ª‚ÅŒğ·”»’è
         for (var i = 0; i < a.length - 1; i++) for (var j = 0; j < b.length - 1; j++) {
             var penetrate1 = (a[i + 1].X - a[i].X) * (b[j].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[j].X - a[i].X);
             var penetrate2 = (a[i + 1].X - a[i].X) * (b[j + 1].Y - a[i].Y) - (a[i + 1].Y - a[i].Y) * (b[j + 1].X - a[i].X);
@@ -1282,13 +1282,13 @@ module exte {
         return false;
     }
 
-    // è¿·è·¯ä½œæˆ(æ£’å€’ã—æ³•)
-    // @param {enchant.Map} [map] ä½œæˆã—ãŸãƒ‡ãƒ¼ã‚¿ã®è¨­å®šå…ˆã€‚map.collisionDataã«exte.createMazeã®å€¤ã‚’ã‚»ãƒƒãƒˆã—ã¦ãŠã
-    // @param {æ•´æ•°} [rowNum] è¡Œæ•°ã€‚å¿…ãšå¥‡æ•°ã«ã™ã‚‹ã“ã¨
-    // @param {æ•´æ•°} [columnNum] åˆ—æ•°ã€‚å¿…ãšå¥‡æ•°ã«ã™ã‚‹ã“ã¨
-    // @param {æ•´æ•°} [floorNo] åºŠã«ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸Noã€‚èƒŒæ™¯ã«ä½¿ç”¨
-    // @param {æ•´æ•°} [wallNo] å£ã«ã™ã‚‹ã‚¤ãƒ¡ãƒ¼ã‚¸Noã€‚
-    // @param {Boolen} [addframe] å¤–æ ã‚’å£ã«ã™ã‚‹ã‹ã©ã†ã‹ã€‚çœç•¥æ™‚ã¯false(å£ã«ã—ãªã„)
+    // –À˜Hì¬(–_“|‚µ–@)
+    // @param {enchant.Map} [map] ì¬‚µ‚½ƒf[ƒ^‚Ìİ’èæBmap.collisionData‚Éexte.createMaze‚Ì’l‚ğƒZƒbƒg‚µ‚Ä‚¨‚­
+    // @param {®”} [rowNum] s”B•K‚¸Šï”‚É‚·‚é‚±‚Æ
+    // @param {®”} [columnNum] —ñ”B•K‚¸Šï”‚É‚·‚é‚±‚Æ
+    // @param {®”} [floorNo] °‚É‚·‚éƒCƒ[ƒWNoB”wŒi‚Ég—p
+    // @param {®”} [wallNo] •Ç‚É‚·‚éƒCƒ[ƒWNoB
+    // @param {Boolen} [addframe] ŠO˜g‚ğ•Ç‚É‚·‚é‚©‚Ç‚¤‚©BÈ—ª‚Ífalse(•Ç‚É‚µ‚È‚¢)
     export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe?: bool) {
         var mapData1 = [];
         var mapData2 = [];
@@ -1306,18 +1306,18 @@ module exte {
         map.loadData(mapData1, mapData2);
     }
 
-    // æ–‡å­—åˆ—ã®å¹…(å…¨è§’ã ã¨æ­£ç¢ºã§ã¯ãªã„)
-    // @param {enchant.Surface} [surface] æç”»å…ˆ
-    // @param {String} [str] æ–‡å­—åˆ—
-    // @return {Number} å¹…
+    // •¶š—ñ‚Ì•(‘SŠp‚¾‚Æ³Šm‚Å‚Í‚È‚¢)
+    // @param {enchant.Surface} [surface] •`‰ææ
+    // @param {String} [str] •¶š—ñ
+    // @return {Number} •
     export function stringWidth(surface: enchant.Surface, str: string) {
         return surface.context.measureText(str).width;
     }
 
-    // ã‚¹ã‚¯ãƒªãƒ¼ãƒ³å¤–ã«å‡ºãŸã‹ã©ã†ã‹
-    // @param {Object} [obj] å¯¾è±¡ã®è¦ç´ {x,y,width,height}ã€‚ä¾‹ãˆã°enchant.Sprite
-    // @param {æ•´æ•°} [padding] å†…å´ã¸ã®ä½™ç™½ã€‚æŒ‡å®šã—ãªã„å ´åˆã¯0(è¦ç´ ãŒè¦‹ãˆãªããªã£ãŸæ™‚ã«æˆ»ã‚Šå€¤ãŒtrueã«ãªã‚‹)
-    // @return {Boolen} å‡ºãŸãªã‚‰true
+    // ƒXƒNƒŠ[ƒ“ŠO‚Éo‚½‚©‚Ç‚¤‚©
+    // @param {Object} [obj] ‘ÎÛ‚Ì—v‘f{x,y,width,height}B—á‚¦‚Îenchant.Sprite
+    // @param {®”} [padding] “à‘¤‚Ö‚Ì—]”’Bw’è‚µ‚È‚¢ê‡‚Í0(—v‘f‚ªŒ©‚¦‚È‚­‚È‚Á‚½‚É–ß‚è’l‚ªtrue‚É‚È‚é)
+    // @return {Boolen} o‚½‚È‚çtrue
     export function isOutOfScreen(obj: enchant.IArea, padding?: number) {
         var game = enchant.Game.instance;
         padding = padding | 0;
@@ -1327,20 +1327,20 @@ module exte {
                 game.height - padding < obj.y;
     }
 
-    // å˜ç´”ãªenchant.Mapã®ä½œæˆ
-    // @param {String} [assetName] ã‚¢ã‚»ãƒƒãƒˆå
-    // @param {æ•´æ•°} [tileSize] 1ãƒã‚¹ã®ç¸¦æ¨ªå¹…
-    // @param {æ•´æ•°} [rowNum] è¡Œæ•°
-    // @param {æ•´æ•°} [columnNum] åˆ—æ•°
-    // @param {æ•´æ•°} [no] ä¸­å¤®ãƒãƒƒãƒ—ãƒãƒƒãƒ—No
-    // @param {æ•´æ•°} [tlNo] å·¦ä¸Šãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [tNo] ä¸Šãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [trNo] å³ä¸Šãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [lNo] å·¦ãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [rNo] å³ãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [blNo] å·¦ä¸‹ãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [bNo] ä¸‹ãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
-    // @param {æ•´æ•°} [brNo] å³ä¸‹ãƒãƒƒãƒ—ãƒãƒƒãƒ—No çœç•¥æ™‚ã¯noã¨åŒã˜
+    // ’Pƒ‚Èenchant.Map‚Ìì¬
+    // @param {String} [assetName] ƒAƒZƒbƒg–¼
+    // @param {®”} [tileSize] 1ƒ}ƒX‚Ìc‰¡•
+    // @param {®”} [rowNum] s”
+    // @param {®”} [columnNum] —ñ”
+    // @param {®”} [no] ’†‰›ƒ}ƒbƒvƒ`ƒbƒvNo
+    // @param {®”} [tlNo] ¶ãƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [tNo] ãƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [trNo] ‰Eãƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [lNo] ¶ƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [rNo] ‰Eƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [blNo] ¶‰ºƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [bNo] ‰ºƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
+    // @param {®”} [brNo] ‰E‰ºƒ}ƒbƒvƒ`ƒbƒvNo È—ª‚Íno‚Æ“¯‚¶
     export function createSimpleMap(assetName: string, tileSize: number, rowNum: number, columnNum: number, no: number, tlNo?: number, tNo?: number, trNo?: number, lNo?: number, rNo?: number, blNo?: number, bNo?: number, brNo?: number): enchant.Map {
         tlNo = tlNo || no;
         tNo = tNo || no;
@@ -1376,10 +1376,10 @@ module exte {
         return map;
     }
 
-    // "enchant.js/images/map1.gif"ã‚’ä½¿ã£ãŸã€å˜ç´”ãªenchant.Mapã‚’ä½œæˆ
-    // @param {æ•´æ•°} [typeNo] ã‚¿ã‚¤ãƒ— 0ï½
-    // @param {æ•´æ•°} [rowNum] è¡Œæ•°
-    // @param {æ•´æ•°} [columnNum] åˆ—æ•°
+    // "enchant.js/images/map1.gif"‚ğg‚Á‚½A’Pƒ‚Èenchant.Map‚ğì¬
+    // @param {®”} [typeNo] ƒ^ƒCƒv 0`
+    // @param {®”} [rowNum] s”
+    // @param {®”} [columnNum] —ñ”
     export function createSampleMap(typeNo: number, rowNum: number, columnNum: number) {
         var assetName = 'map1.gif';
         switch (typeNo) {
@@ -1402,50 +1402,62 @@ module exte {
         return createSimpleMap(assetName, 16, rowNum, columnNum, 0);
     }
 
-    // ãƒ­ã‚°ã®ã‚ˆã†ã«æµã‚Œã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’è¡¨ç¤º
-    export class LogList extends enchant.Group {//enchant.CanvasGroupã ã¨æ–‡å­—å¤§ãã•ãŒåæ˜ ã—ãªã„(2012/10/7æ™‚ç‚¹)
-        // æ–‡å­—åˆ—è¿½åŠ æ™‚ã®é€éç‡å¤‰åŒ–é‡/ãƒ•ãƒ¬ãƒ¼ãƒ 
+    // ƒƒO‚Ì‚æ‚¤‚É—¬‚ê‚éƒƒbƒZ[ƒW‚ğ•\¦
+    export class LogList extends enchant.Group {//enchant.CanvasGroup‚¾‚Æ•¶š‘å‚«‚³‚ª”½‰f‚µ‚È‚¢(2012/10/7“_)
+        // •¶š—ñ’Ç‰Á‚Ì“§‰ß—¦•Ï‰»—Ê/ƒtƒŒ[ƒ€
         public fadeIn = 0.1;
 
-        // æ–‡å­—åˆ—å‰Šé™¤æ™‚ã®é€éç‡å¤‰åŒ–é‡/ãƒ•ãƒ¬ãƒ¼ãƒ 
+        // •¶š—ñíœ‚Ì“§‰ß—¦•Ï‰»—Ê/ƒtƒŒ[ƒ€
         public fadeOut = 0.1;
 
-        // æµã‚Œã‚‹ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã®ã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«é‡/ãƒ•ãƒ¬ãƒ¼ãƒ 
+        // —¬‚ê‚éƒƒbƒZ[ƒW‚ÌƒXƒNƒ[ƒ‹—Ê/ƒtƒŒ[ƒ€
         public scrollPx = 2;
 
-        // è¡Œé«˜ã•
+        // s‚‚³
         public lineHeight = 10;
 
-        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆã‚«ãƒ©ãƒ¼
+        // ƒfƒtƒHƒ‹ƒgƒJƒ‰[
         public color = null;
 
-        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ•ã‚©ãƒ³ãƒˆ
+        // ƒfƒtƒHƒ‹ƒg”wŒiF(ƒ‰ƒxƒ‹©‘Ì‚Ì”wŒiB‘S‘Ì‚Ì”wŒi‚ÍƒRƒ“ƒXƒgƒ‰ƒNƒ^‚Åw’è)
+        public backgroundColor = null;
+
+        // ƒfƒtƒHƒ‹ƒgƒtƒHƒ“ƒg
         public font = null;
 
-        // ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚º
+        // ƒfƒtƒHƒ‹ƒgƒtƒHƒ“ƒgƒTƒCƒY
         public fontSize = null;
 
-        // æŠ˜ã‚Šè¿”ã—ã€‚ã€Œnormalã€ã€Œbreak-allã€ã€Œkeep-allã€ã®ã©ã‚Œã‹
+        // Ü‚è•Ô‚µBunormalvubreak-allvukeep-allv‚Ì‚Ç‚ê‚©
         public wordBreak = null;
 
-        // æ–‡å­—ä½ç½®ã€‚ã€Œleftã€ã€Œcenterã€ã€Œrightã€ãªã©
+        // •¶šˆÊ’uBuleftvucentervurightv‚È‚Ç
         public textAlign = null;
 
-        // ã“ã®æ•°ã¾ã§ãƒ­ã‚°ãŒæºœã¾ã£ãŸæ™‚ã¯ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç„¡åŠ¹åŒ–ã—ã¦ä¸€æ°—ã«è¡¨ç¤º
-        // 0ã®æ™‚ã¯åˆ¶é™ã—ãªã„
+        // ŠeƒƒO‚ğLogList•‚É‡‚í‚¹‚é‚È‚çtrueBfalse‚¾‚ÆƒeƒLƒXƒg‚ª’·‚¢‚Æ•‚ğ’´‚¦‚é
+        public adjustWidth = true;
+
+        // ‚±‚Ì”‚Ü‚ÅƒƒO‚ª—­‚Ü‚Á‚½‚ÍAƒAƒjƒ[ƒVƒ‡ƒ“‚ğ–³Œø‰»‚µ‚Äˆê‹C‚É•\¦
+        // 0‚Ì‚Í§ŒÀ‚µ‚È‚¢
         public stackLimit = 0;
 
-        // @param {æ•´æ•°} [x] Xåº§æ¨™
-        // @param {æ•´æ•°} [y] Yåº§æ¨™
-        // @param {æ•´æ•°} [width] å¹…
-        // @param {æ•´æ•°} [height] é«˜ã•
-        constructor (x: number, y: number, width: number, height: number) {
+        // @param {®”} [x] XÀ•W
+        // @param {®”} [y] YÀ•W
+        // @param {®”} [width] •
+        // @param {®”} [height] ‚‚³
+        // @param {string} [backgroundColor] ”wŒiF
+        constructor (x: number, y: number, width: number, height: number, backgroundColor?: string) {
             super();
 
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
+
+            if (backgroundColor) {
+                var back = createRectangleSprite(width, height, backgroundColor, true);
+                this.addChild(back);
+            }
 
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
@@ -1464,7 +1476,9 @@ module exte {
 
         private createLabel(): any {
             var label = new enchant.Label('');
-            label.width = this.width;
+            if (this.adjustWidth) {
+                label.width = this.width;
+            }
             label.visible = false;
             if (this.font) {
                 label.font = this.font;
@@ -1504,6 +1518,7 @@ module exte {
             label.text = t.text;
             label._style.fontSize = t.fontSize || "";
             label.color = t.color || "";
+            label.backgroundColor = t.backgroundColor || "";
             label.height = t.lineHeight || 10;
             label.opacity = 0;
             label.textAlign = t.textAlign || 'left';
@@ -1577,7 +1592,7 @@ module exte {
             }
         }
 
-        // è¡¨ç¤º/éè¡¨ç¤º
+        // •\¦/”ñ•\¦
         public get visible() { return this._visible; }
         public set(v) {
             if (this._visible == v) return;
@@ -1588,28 +1603,30 @@ module exte {
             }
         }
 
-        // ãƒ­ã‚°ç™»éŒ²
-        // @param {æ–‡å­—åˆ—} [text] è¡¨ç¤ºã™ã‚‹ãƒ†ã‚­ã‚¹ãƒˆ
-        // @param {æ–‡å­—åˆ—} [color] ã“ã®ãƒ†ã‚­ã‚¹ãƒˆã®ã¿ã®æ–‡å­—è‰²ã€‚çœç•¥æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
-        // @param {æ–‡å­—åˆ—} [fontSize] ã“ã®ãƒ†ã‚­ã‚¹ãƒˆã®ã¿ã®ãƒ•ã‚©ãƒ³ãƒˆã‚µã‚¤ã‚ºã€‚çœç•¥æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
-        // @param {æ•°å€¤} [lineWidth] ã“ã®ãƒ†ã‚­ã‚¹ãƒˆã®ã¿ã®è¡Œé«˜ã•ã€‚çœç•¥æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
-        // @param {æ•°å€¤} [textAlign] ã“ã®ãƒ†ã‚­ã‚¹ãƒˆã®ã¿ã®æ–‡å­—ä½ç½®ã€‚çœç•¥æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆ
-        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number): void {
+        // ƒƒO“o˜^
+        // @param {•¶š—ñ} [text] •\¦‚·‚éƒeƒLƒXƒg
+        // @param {•¶š—ñ} [color] ‚±‚ÌƒeƒLƒXƒg‚Ì‚İ‚Ì•¶šFBÈ—ª‚ÍƒfƒtƒHƒ‹ƒg
+        // @param {•¶š—ñ} [fontSize] ‚±‚ÌƒeƒLƒXƒg‚Ì‚İ‚ÌƒtƒHƒ“ƒgƒTƒCƒYBÈ—ª‚ÍƒfƒtƒHƒ‹ƒg
+        // @param {”’l} [lineWidth] ‚±‚ÌƒeƒLƒXƒg‚Ì‚İ‚Ìs‚‚³BÈ—ª‚ÍƒfƒtƒHƒ‹ƒg
+        // @param {”’l} [textAlign] ‚±‚ÌƒeƒLƒXƒg‚Ì‚İ‚Ì•¶šˆÊ’uBÈ—ª‚ÍƒfƒtƒHƒ‹ƒg
+        // @param {string} [backgroundColor] ‚±‚ÌƒeƒLƒXƒg‚Ì‚İ‚Ì”wŒiF
+        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number, backgroundColor?: string): void {
             this._texts.push({
                 text: text,
                 color: color || this.color,
                 fontSize: fontSize || this.fontSize,
                 lineHeight: lineHeight || this.lineHeight,
-                textAlign: textAlign || this.textAlign
+                textAlign: textAlign || this.textAlign,
+                backgroundColor: backgroundColor || this.backgroundColor
             });
         }
 
-        // æºœã¾ã£ã¦ã„ã‚‹ãƒ­ã‚°ã‚’ã€ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã‚’ç„¡åŠ¹åŒ–ã—ã¦ä¸€æ°—ã«å‡ºåŠ›
+        // —­‚Ü‚Á‚Ä‚¢‚éƒƒO‚ğAƒAƒjƒ[ƒVƒ‡ƒ“‚ğ–³Œø‰»‚µ‚Äˆê‹C‚Éo—Í
         public outAllLog(): void {
             this._outAllLog = true;
         }
 
-        // å…¨å‰Šé™¤
+        // ‘Síœ
         public clear(): void {
             this._texts.length = 0;
             for (var i = 0; i < this._labels.length; i++) {
@@ -1620,12 +1637,12 @@ module exte {
         }
     }
 
-    // å˜ç´”ãªå››è§’å½¢ã®Surfaceä½œæˆ
-    // @param {å®Ÿæ•°} [width] å¹…
-    // @param {å®Ÿæ•°} [height] é«˜ã•
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Surface} çµæœ
+    // ’Pƒ‚ÈlŠpŒ`‚ÌSurfaceì¬
+    // @param {À”} [width] •
+    // @param {À”} [height] ‚‚³
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Surface} Œ‹‰Ê
     export function createRectangleSurface(width: number, height: number, color: string, fill?: bool): enchant.Surface {
         var s = new enchant.Surface(width, height);
         var c = s.context;
@@ -1639,28 +1656,28 @@ module exte {
         return s;
     }
 
-    // å˜ç´”ãªå››è§’å½¢ã®Spriteä½œæˆ
-    // @param {å®Ÿæ•°} [width] å¹…
-    // @param {å®Ÿæ•°} [height] é«˜ã•
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Sprite} çµæœ
+    // ’Pƒ‚ÈlŠpŒ`‚ÌSpriteì¬
+    // @param {À”} [width] •
+    // @param {À”} [height] ‚‚³
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Sprite} Œ‹‰Ê
     export function createRectangleSprite(width: number, height: number, color: string, fill?: bool): enchant.Sprite {
         var sprite = new enchant.Sprite(width, height);
         sprite.image = createRectangleSurface(width, height, color, fill);
         return sprite;
     }
 
-    // å˜ç´”ãªå††ã®Surfaceä½œæˆ
-    // @param {æ•´æ•°} [radius] åŠå¾„
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Surface} çµæœ
+    // ’Pƒ‚È‰~‚ÌSurfaceì¬
+    // @param {®”} [radius] ”¼Œa
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Surface} Œ‹‰Ê
     export function createCircleSurface(radius: number, color: string, fill?: bool): enchant.Surface {
         var s = new enchant.Surface(radius * 2, radius * 2);
         var c = s.context;
 
-        // ç·šå¹…åˆ†å†…å´ã«æ›¸ã
+        // ü••ª“à‘¤‚É‘‚­
         var padding = c.lineWidth;
 
         if (fill) {
@@ -1678,23 +1695,23 @@ module exte {
         return s;
     }
 
-    // å˜ç´”ãªå††ã®Spriteä½œæˆ
-    // @param {æ•´æ•°} [radius] åŠå¾„
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Sprite} çµæœ
+    // ’Pƒ‚È‰~‚ÌSpriteì¬
+    // @param {®”} [radius] ”¼Œa
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Sprite} Œ‹‰Ê
     export function createCircleSprite(radius: number, color: string, fill?: bool): enchant.Sprite {
         var sprite = new enchant.Sprite(radius * 2, radius * 2);
         sprite.image = createCircleSurface(radius, color, fill);
         return sprite;
     }
 
-    // å˜ç´”ãªæ¥•å††ã®Surfaceä½œæˆ
-    // @param {æ•´æ•°} [width] çœç•¥æ™‚ã¯0
-    // @param {æ•´æ•°} [height] çœç•¥æ™‚ã¯0
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Surface} çµæœ
+    // ’Pƒ‚È‘È‰~‚ÌSurfaceì¬
+    // @param {®”} [width] È—ª‚Í0
+    // @param {®”} [height] È—ª‚Í0
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Surface} Œ‹‰Ê
     export function createEllipseSurface(width: number, height: number, color: string, fill?: bool): enchant.Surface {
         var s = new enchant.Surface(width, height);
         var c = s.context;
@@ -1706,10 +1723,10 @@ module exte {
         }
         var halfW = width / 2;
         var halfH = height / 2;
-        // ç·šå¹…åˆ†å†…å´ã«æ›¸ã
+        // ü••ª“à‘¤‚É‘‚­
         var padding = c.lineWidth;
 
-        // è¿‘ã„ã†ã¡ã«canvasã«ellipseãŒä»˜ãã‚‰ã—ã„ã‘ã©ã€ã“ã“ã§ã¯è¿‘ä¼¼
+        // ‹ß‚¢‚¤‚¿‚Écanvas‚Éellipse‚ª•t‚­‚ç‚µ‚¢‚¯‚ÇA‚±‚±‚Å‚Í‹ß—
         c.beginPath();
         var cw = 4.0 * (Math.sqrt(2.0) - 1.0) * halfW / 3.0;
         var ch = 4.0 * (Math.sqrt(2.0) - 1.0) * halfH / 3.0;
@@ -1726,30 +1743,30 @@ module exte {
         return s;
     }
 
-    // å˜ç´”ãªæ¥•å††ã®Spriteä½œæˆ
-    // @param {æ•´æ•°} [width] çœç•¥æ™‚ã¯0
-    // @param {æ•´æ•°} [height] çœç•¥æ™‚ã¯0
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Sprite} çµæœ
+    // ’Pƒ‚È‘È‰~‚ÌSpriteì¬
+    // @param {®”} [width] È—ª‚Í0
+    // @param {®”} [height] È—ª‚Í0
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Sprite} Œ‹‰Ê
     export function createEllipseSprite(width: number, height: number, color: string, fill?: bool): enchant.Sprite {
         var sprite = new enchant.Sprite(width, height);
         sprite.image = createEllipseSurface(width, height, color, fill);
         return sprite;
     }
 
-    // å˜ç´”ãªå††ã®Surfaceä½œæˆ
-    // @param {æ•´æ•°} [radius] åŠå¾„
-    // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [angle] æ–¹å‘è§’(å¼§ã®ä¸­å¤®)
-    // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [range] å¼§ã®ç¯„å›²ã€‚angleÂ±(range/2)ãŒæç”»ã•ã‚Œã‚‹
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Surface} çµæœ
+    // ’Pƒ‚È‰~‚ÌSurfaceì¬
+    // @param {®”} [radius] ”¼Œa
+    // @param {ƒ‰ƒWƒAƒ“} [angle] •ûŒüŠp(ŒÊ‚Ì’†‰›)
+    // @param {ƒ‰ƒWƒAƒ“} [range] ŒÊ‚Ì”ÍˆÍBangle}(range/2)‚ª•`‰æ‚³‚ê‚é
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Surface} Œ‹‰Ê
     export function createArcSurface(radius: number, angle: number, range: number, color: string, fill?: bool): enchant.Surface {
         var s = new enchant.Surface(radius * 2, radius * 2);
         var c = s.context;
 
-        // ç·šå¹…åˆ†å†…å´ã«æ›¸ã
+        // ü••ª“à‘¤‚É‘‚­
         var padding = c.lineWidth;
 
         var startAngle = angle - range * 0.5;
@@ -1772,78 +1789,78 @@ module exte {
         return s;
     }
 
-    // å˜ç´”ãªå††å¼§ã®Spriteä½œæˆ
-    // @param {æ•´æ•°} [radius] åŠå¾„
-    // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [angle] æ–¹å‘è§’(å¼§ã®ä¸­å¤®)
-    // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [range] å¼§ã®ç¯„å›²ã€‚angleÂ±(range/2)ãŒæç”»ã•ã‚Œã‚‹
-    // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-    // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-    // @return {enchant.Sprite} çµæœ
+    // ’Pƒ‚È‰~ŒÊ‚ÌSpriteì¬
+    // @param {®”} [radius] ”¼Œa
+    // @param {ƒ‰ƒWƒAƒ“} [angle] •ûŒüŠp(ŒÊ‚Ì’†‰›)
+    // @param {ƒ‰ƒWƒAƒ“} [range] ŒÊ‚Ì”ÍˆÍBangle}(range/2)‚ª•`‰æ‚³‚ê‚é
+    // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+    // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+    // @return {enchant.Sprite} Œ‹‰Ê
     export function createArcSprite(radius: number, angle: number, range: number, color: string, fill?: bool): enchant.Sprite {
         var sprite = new enchant.Sprite(radius * 2, radius * 2);
         sprite.image = createArcSurface(radius, angle, range, color, fill);
         return sprite;
     }
 
-    // ç‚¹
+    // “_
     export class Point {
         x = 0;
         y = 0;
 
-        // @param {æ•´æ•°} [x] çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [y] çœç•¥æ™‚ã¯0
+        // @param {®”} [x] È—ª‚Í0
+        // @param {®”} [y] È—ª‚Í0
         constructor (x: number, y: number) {
-            // Xåº§æ¨™å€¤
+            // XÀ•W’l
             this.x = x || 0;
 
-            // Yåº§æ¨™å€¤
+            // YÀ•W’l
             this.y = y || 0;
         }
 
-        // æŒ‡å®šã—ãŸç‚¹ã¨è‡ªåˆ†ã¨ã®è·é›¢
-        // @param {object} [point] ç‚¹{x,y}
-        // @return {å®Ÿæ•°} è·é›¢
+        // w’è‚µ‚½“_‚Æ©•ª‚Æ‚Ì‹——£
+        // @param {object} [point] “_{x,y}
+        // @return {À”} ‹——£
         public getDistance(point: enchant.IPoint) {
             var dx = point.x - this.x;
             var dy = point.y - this.y;
             return Math.sqrt(dx * dx + dy * dy);
         }
 
-        // æŒ‡å®šã—ãŸç‚¹ã¨è‡ªåˆ†ãŒåŒã˜ä½ç½®ã‹ã©ã†ã‹
-        // @param {object} [point] ç‚¹{x,y}
-        // @return {boolen} åŒã˜ãªã‚‰true
+        // w’è‚µ‚½“_‚Æ©•ª‚ª“¯‚¶ˆÊ’u‚©‚Ç‚¤‚©
+        // @param {object} [point] “_{x,y}
+        // @return {boolen} “¯‚¶‚È‚çtrue
         public isEqual(point) {
             return point.x == this.x && point.y == this.y;
         }
 
-        // è¤‡è£½
-        // @return {Point} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Point} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Point {
             return new Point(this.x, this.y);
         }
     }
 
-    // ç·š
+    // ü
     export class Line {
-        // å§‹ç‚¹
+        // n“_
         posS: Point;
 
-        // çµ‚ç‚¹
+        // I“_
         posE: Point;
 
-        // @param {æ•´æ•°} [x1] å§‹ç‚¹X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [y1] å§‹ç‚¹Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [x2] çµ‚ç‚¹X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [y2] çµ‚ç‚¹Y çœç•¥æ™‚ã¯0
+        // @param {®”} [x1] n“_X È—ª‚Í0
+        // @param {®”} [y1] n“_Y È—ª‚Í0
+        // @param {®”} [x2] I“_X È—ª‚Í0
+        // @param {®”} [y2] I“_Y È—ª‚Í0
         constructor (x1: number, y1: number, x2: number, y2: number) {
-            // å§‹ç‚¹
+            // n“_
             this.posS = new Point(x1, y1);
 
-            // çµ‚ç‚¹
+            // I“_
             this.posE = new Point(x2, y2);
         }
 
-        // å§‹çµ‚ç‚¹é–“ã®Xé‡ã€‚çµ‚ç‚¹ãŒå§‹ç‚¹ã‚ˆã‚Šå·¦ã«ã‚ã£ãŸã‚‰ãƒã‚¤ãƒŠã‚¹ã«ãªã‚‹
+        // nI“_ŠÔ‚ÌX—ÊBI“_‚ªn“_‚æ‚è¶‚É‚ ‚Á‚½‚çƒ}ƒCƒiƒX‚É‚È‚é
         public get dx() {
             return this.posE.x - this.posS.x;
         }
@@ -1851,7 +1868,7 @@ module exte {
             this.posE.x = this.posS.x + dx;
         }
 
-        // å§‹çµ‚ç‚¹é–“ã®Yé‡ã€‚çµ‚ç‚¹ãŒå§‹ç‚¹ã‚ˆã‚Šä¸Šã«ã‚ã£ãŸã‚‰ãƒã‚¤ãƒŠã‚¹ã«ãªã‚‹
+        // nI“_ŠÔ‚ÌY—ÊBI“_‚ªn“_‚æ‚èã‚É‚ ‚Á‚½‚çƒ}ƒCƒiƒX‚É‚È‚é
         public get dy() {
             return this.posE.y - this.posS.y;
         }
@@ -1859,7 +1876,7 @@ module exte {
             this.posE.y = this.posS.y + dy;
         }
 
-        // é•·ã•ã€‚setæ™‚ã€çµ‚ç‚¹ã®ä½ç½®ãŒå¤‰ã‚ã‚‹ã€‚å§‹ç‚¹ã‹ã‚‰é ãorè¿‘ããªã‚‹
+        // ’·‚³BsetAI“_‚ÌˆÊ’u‚ª•Ï‚í‚éBn“_‚©‚ç‰“‚­or‹ß‚­‚È‚é
         public get length() {
             return this.posS.getDistance(this.posE);
         }
@@ -1869,17 +1886,17 @@ module exte {
             this.posE.y = this.posS.y + Math.floor(this.dy * dstL / srcL);
         }
 
-        // æŒ‡å®šã—ãŸç·šã¨äº¤å·®ã—ã¦ã„ã‚‹ã‹ã©ã†ã‹
-        // @param {Line} [line] ç·š
-        // @return {Boolen} äº¤å·®ã—ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½ü‚ÆŒğ·‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        // @param {Line} [line] ü
+        // @return {Boolen} Œğ·‚µ‚Ä‚¢‚é‚È‚çtrue
         public isCross(line: Line): bool {
-            // ç·šåˆ†Aã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚
+            // ü•ªA‚ÌƒxƒNƒgƒ‹B
             var vax = this.dx;
             var vay = this.dy;
-            // vax, vay ã‚’æ™‚è¨ˆå›ã‚Šã«90åº¦å›è»¢ã€‚
+            // vax, vay ‚ğŒv‰ñ‚è‚É90“x‰ñ“]B
             var nx = -vay;
             var ny = vax;
-            // æ³•ç·šã‚’æ­£è¦åŒ–ã€‚
+            // –@ü‚ğ³‹K‰»B
             var length = this.length;
             if (0 < length) {
                 length = 1 / length;
@@ -1887,7 +1904,7 @@ module exte {
             nx *= length;
             ny *= length;
 
-            // ç·šåˆ†Bã®ãƒ™ã‚¯ãƒˆãƒ«ã€‚
+            // ü•ªB‚ÌƒxƒNƒgƒ‹B
             var vbx = line.dx;
             var vby = line.dy;
             //
@@ -1898,10 +1915,10 @@ module exte {
             }
             var t = -(nx * line.posS.x + ny * line.posS.y + d) / bunbo;
             if (t <= 0 || 1 < t) {
-                // å½“ãŸã£ã¦ãªã„ã€‚
+                // “–‚½‚Á‚Ä‚È‚¢B
                 return false;
             }
-            // ç·šã¨ã®äº¤å·®ç‚¹ã€‚
+            // ü‚Æ‚ÌŒğ·“_B
             var hitX = line.posS.x + vbx * t;
             var hitY = line.posS.y + vby * t;
             //
@@ -1909,10 +1926,10 @@ module exte {
             return (doc < 0);
         }
 
-        // Surfaceä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {æ•´æ•°} [width] ç·šå¹…ã€‚çœç•¥æ™‚ã¯1
-        // @return {enchant.Surface} çµæœ
+        // Surfaceì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {®”} [width] ü•BÈ—ª‚Í1
+        // @return {enchant.Surface} Œ‹‰Ê
         public createSurface(color: string, width?: number): enchant.Surface {
             var x1 = 0, y1, x2, y2;
             if ((this.posS.x < this.posE.x) == (this.posS.y < this.posE.y)) {
@@ -1938,10 +1955,10 @@ module exte {
             return s;
         }
 
-        // Spriteä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {æ•´æ•°} [width] ç·šå¹…ã€‚çœç•¥æ™‚ã¯1
-        // @return {enchant.Sprite} çµæœ
+        // Spriteì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {®”} [width] ü•BÈ—ª‚Í1
+        // @return {enchant.Sprite} Œ‹‰Ê
         public createSprite(color: string, width?: number): enchant.Sprite {
             var s = this.createSurface(color, width);
 
@@ -1952,24 +1969,24 @@ module exte {
             return sprite;
         }
 
-        // è¤‡è£½
-        // @return {Line} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Line} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Line {
             return new Line(this.posS.x, this.posS.y, this.posE.x, this.posE.y);
         }
     }
 
-    // ç¯„å›²ã®ã‚ã‚‹å›³å½¢ã®åŸºæœ¬ã‚¯ãƒ©ã‚¹
+    // ”ÍˆÍ‚Ì‚ ‚é}Œ`‚ÌŠî–{ƒNƒ‰ƒX
     export class Area {
         x: number;
         y: number;
         width: number;
         height: number;
 
-        // @param {æ•´æ•°} [x] å›³å½¢ã®å·¦ä¸Šåº§æ¨™X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [y] å›³å½¢ã®å·¦ä¸Šåº§æ¨™Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [width] çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [height] çœç•¥æ™‚ã¯0
+        // @param {®”} [x] }Œ`‚Ì¶ãÀ•WX È—ª‚Í0
+        // @param {®”} [y] }Œ`‚Ì¶ãÀ•WY È—ª‚Í0
+        // @param {®”} [width] È—ª‚Í0
+        // @param {®”} [height] È—ª‚Í0
         constructor (x: number, y: number, width: number, height: number) {
             this.x = x || 0;
             this.y = y || 0;
@@ -1977,41 +1994,41 @@ module exte {
             this.height = height || 0;
         }
 
-        // ä¸Š
+        // ã
         public get top() { return this.y; }
         public set top(t: number) { this.y = t; }
 
-        // ä¸‹
+        // ‰º
         public get bottom() { return this.y + this.height; }
         public set bottom(b: number) {
-            // ä½ç½®ç¶­æŒã‚’å„ªå…ˆ
+            // ˆÊ’uˆÛ‚ğ—Dæ
             this.height = Math.abs(b - this.y);
             if (b < this.y) {
                 this.y = b;
             }
 
-            // ã‚µã‚¤ã‚ºç¶­æŒã‚’å„ªå…ˆ
+            // ƒTƒCƒYˆÛ‚ğ—Dæ
             //this.y = b - this.height;
         }
 
-        // å·¦
+        // ¶
         public get left() { return this.x; }
         public set left(l: number) { this.x = l; }
 
-        // å³
+        // ‰E
         public get right() { return this.x + this.width; }
         public set right(r: number) {
-            // ä½ç½®ç¶­æŒã‚’å„ªå…ˆ
+            // ˆÊ’uˆÛ‚ğ—Dæ
             this.width = Math.abs(r - this.x);
             if (r < this.x) {
                 this.x = r;
             }
 
-            // ã‚µã‚¤ã‚ºç¶­æŒã‚’å„ªå…ˆ
+            // ƒTƒCƒYˆÛ‚ğ—Dæ
             //this.x = r - this.width;
         }
 
-        // ä¸­å¿ƒ {x,y} 
+        // ’†S {x,y} 
         public get center() {
             return new Point(this.x + this.width / 2, this.y + this.height / 2);
         }
@@ -2020,7 +2037,7 @@ module exte {
             this.y = c.y - this.height / 2;
         }
 
-        // å¯¾è§’ç·šã®é•·ã•ã€‚setã¯ä¸­å¿ƒåŸºæº–ã§å¤‰æ›´
+        // ‘ÎŠpü‚Ì’·‚³Bset‚Í’†SŠî€‚Å•ÏX
         public get diagonal() {
             return Math.sqrt(this.width * this.width + this.height * this.height);
         }
@@ -2036,10 +2053,10 @@ module exte {
             }
         }
 
-        // æ‹¡å¤§ç¸®å°ã€‚åŸºæº–ã¯ä¸­å¿ƒ
-        // â€»enchant.Spriteã®ã‚ˆã†ãªä¸€æ™‚çš„ãªå¤‰åŒ–ã§ã¯ãªãã€å€¤ã¯ä¸Šæ›¸ãã•ã‚Œã‚‹
-        // @param {å®Ÿæ•°} [sx] æ¨ªæ–¹å‘ã®æ‹¡å¤§ç‡
-        // @param {å®Ÿæ•°} [sy] ç¸¦æ–¹å‘ã®æ‹¡å¤§ç‡ã€‚çœç•¥æ™‚ã¯sxã¨åŒã˜
+        // Šg‘åk¬BŠî€‚Í’†S
+        // ¦enchant.Sprite‚Ì‚æ‚¤‚Èˆê“I‚È•Ï‰»‚Å‚Í‚È‚­A’l‚Íã‘‚«‚³‚ê‚é
+        // @param {À”} [sx] ‰¡•ûŒü‚ÌŠg‘å—¦
+        // @param {À”} [sy] c•ûŒü‚ÌŠg‘å—¦BÈ—ª‚Ísx‚Æ“¯‚¶
         public scale(sx: number, sy?: number): void {
             if (typeof sy != 'number') sy = sx;
             var w = this.width * sx;
@@ -2050,8 +2067,8 @@ module exte {
             this.height = Math.floor(h);
         }
 
-        // enchant.Sprieteã®ä½ç½®ãƒ»å¤§ãã•ã‚’å–ã‚Šè¾¼ã‚€
-        // @param {enchant.Sprite} [sprite] å¯¾è±¡
+        // enchant.Spriete‚ÌˆÊ’uE‘å‚«‚³‚ğæ‚è‚Ş
+        // @param {enchant.Sprite} [sprite] ‘ÎÛ
         public updateFrom(sprite: enchant.Sprite): void {
             this.x = sprite.x;
             this.y = sprite.y;
@@ -2059,9 +2076,9 @@ module exte {
             this.width = sprite.width;
         }
 
-        // enchant.Sprieteç­‰ã«ä½ç½®ãƒ»å¤§ãã•ã‚’è¨­å®š
-        // @param {enchant.Sprite} [sprite] å¯¾è±¡
-        // @param {Boolen} [updateSize] ã‚µã‚¤ã‚ºã®å–ã‚Šè¾¼ã¿ã«ãŠã„ã¦ã€å¹…/é«˜ã•ã‚’æ›´æ–°ã™ã‚‹ãªã‚‰trueã€‚scaleX/scaleYã‚’æ›´æ–°ã™ã‚‹ãªã‚‰ falseã€‚çœç•¥æ™‚ã¯false
+        // enchant.Spriete“™‚ÉˆÊ’uE‘å‚«‚³‚ğİ’è
+        // @param {enchant.Sprite} [sprite] ‘ÎÛ
+        // @param {Boolen} [updateSize] ƒTƒCƒY‚Ìæ‚è‚İ‚É‚¨‚¢‚ÄA•/‚‚³‚ğXV‚·‚é‚È‚çtrueBscaleX/scaleY‚ğXV‚·‚é‚È‚ç falseBÈ—ª‚Ífalse
         public setTo(sprite: enchant.Sprite, updateSize?: bool) {
             sprite.x = this.x;
             sprite.y = this.y;
@@ -2076,10 +2093,10 @@ module exte {
             }
         }
 
-        // è‰²æƒ…å ±ã®ä¸€æ‹¬å–å¾—
-        // â€»enchant.Surface.getPixelãŒé…ã„ã‚‰ã—ã„ã®ã§
-        // @param {enchant.Surface} [surface] å–å¾—å…ƒSurface
-        // @return {Array.<Array.<{r,g,b,a}>>} ä¾‹ãˆã° data[y][x].r ã¯ã€åº§æ¨™x,yã®èµ¤è‰²ã®å€¤
+        // Fî•ñ‚ÌˆêŠ‡æ“¾
+        // ¦enchant.Surface.getPixel‚ª’x‚¢‚ç‚µ‚¢‚Ì‚Å
+        // @param {enchant.Surface} [surface] æ“¾Œ³Surface
+        // @return {Array.<Array.<{r,g,b,a}>>} —á‚¦‚Î data[y][x].r ‚ÍAÀ•Wx,y‚ÌÔF‚Ì’l
         public getPixels(surface: enchant.Surface): IColor[] {
             var data = surface.context.getImageData(this.left, this.top, this.width, this.height).data;
 
@@ -2102,19 +2119,19 @@ module exte {
             return result;
         }
 
-        // è¤‡è£½
-        // @return {Area} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Area} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Area {
             return new Area(this.x, this.y, this.width, this.height);
         }
     }
 
-    // å››è§’å½¢
+    // lŠpŒ`
     export class Rectangle extends Area {
-        // @param {æ•´æ•°} [x] å››è§’å½¢ã®å·¦ä¸Šåº§æ¨™X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [y] å››è§’å½¢ã®å·¦ä¸Šåº§æ¨™Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [width] çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [height] çœç•¥æ™‚ã¯0
+        // @param {®”} [x] lŠpŒ`‚Ì¶ãÀ•WX È—ª‚Í0
+        // @param {®”} [y] lŠpŒ`‚Ì¶ãÀ•WY È—ª‚Í0
+        // @param {®”} [width] È—ª‚Í0
+        // @param {®”} [height] È—ª‚Í0
         constructor (x: number, y: number, width: number, height: number) {
             super(x, y, width, height);
 
@@ -2127,59 +2144,59 @@ module exte {
             return Math.floor(this.height * (2 - Math.floor((key - 1) / 3)) * 0.5);
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ãŒå››è§’å½¢å†…ã«å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹
-        // @param {object} [point] ä½ç½®{x,y}
-        // @return {Boolen} å…¥ã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½À•W‚ªlŠpŒ`“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        // @param {object} [point] ˆÊ’u{x,y}
+        // @return {Boolen} “ü‚Á‚Ä‚¢‚é‚È‚çtrue
         public hitTest(point: enchant.IPoint): bool {
             return this.x < point.x && point.x < this.right &&
                 this.y < point.y && point.y < this.bottom;
         }
 
-        // æŒ‡å®šã—ãŸå››è§’å½¢ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Rectangle} [rect] å››è§’å½¢
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½lŠpŒ`‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Rectangle} [rect] lŠpŒ`
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectRect(rect: Area): bool {
             return this.x < rect.right && rect.x < this.right &&
                 this.y < rect.bottom && rect.y < this.bottom;
         }
 
-        // æŒ‡å®šã—ãŸç·šã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Line} [line] ç·š
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½ü‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Line} [line] ü
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectLine(line: Line): bool {
-            // ç·šã®ç«¯éƒ¨ãŒå››è§’å½¢å†…ã«ã‚ã‚‹ã‹ã©ã†ã‹
+            // ü‚Ì’[•”‚ªlŠpŒ`“à‚É‚ ‚é‚©‚Ç‚¤‚©
             if (this.hitTest(line.posS) || this.hitTest(line.posE)) {
                 return true;
             }
 
-            // ç·šãŒå››è§’å½¢ã®å„è¾ºã¨äº¤å·®ã—ã¦ã„ã‚‹ã‹
+            // ü‚ªlŠpŒ`‚ÌŠe•Ó‚ÆŒğ·‚µ‚Ä‚¢‚é‚©
             return this.getSideLine(0).isCross(line) ||
                 this.getSideLine(1).isCross(line) ||
                 this.getSideLine(2).isCross(line) ||
                 this.getSideLine(3).isCross(line);
         }
 
-        // ãƒ†ãƒ³ã‚­ãƒ¼1ï½9ã®ä½ç½®ã‚’å››è§’å½¢ã®å„ç‚¹ã«è¦‹ç«‹ã¦ã€ãã®åº§æ¨™ã‚’è¿”ã™
-        // ä¾‹ãˆã°1ã ã¨å››è§’å½¢ã®å·¦ä¸‹ã®åº§æ¨™å€¤ã‚’è¿”ã™
-        // @param {æ•´æ•°} [key] 1ï½9
-        // @return {Point} çµæœ
+        // ƒeƒ“ƒL[1`9‚ÌˆÊ’u‚ğlŠpŒ`‚ÌŠe“_‚ÉŒ©—§‚ÄA‚»‚ÌÀ•W‚ğ•Ô‚·
+        // —á‚¦‚Î1‚¾‚ÆlŠpŒ`‚Ì¶‰º‚ÌÀ•W’l‚ğ•Ô‚·
+        // @param {®”} [key] 1`9
+        // @return {Point} Œ‹‰Ê
         public getPos(key: number): Point {
             return new Point(
             this.x + this._calcWidth(key),
             this.y + this._calcHeight(key));
         }
 
-        // ãƒ†ãƒ³ã‚­ãƒ¼1ï½9ã®ä½ç½®ã‚’å››è§’å½¢ã®å„ç‚¹ã«è¦‹ç«‹ã¦ã€æŒ‡å®šã—ãŸåº§æ¨™ãŒãã®ä½ç½®ã«ãªã‚‹ã‚ˆã†ã«å¤‰æ›´
-        // ä¾‹ãˆã°1ãªã‚‰ã€å››è§’å½¢ã®å·¦ä¸‹ã®åº§æ¨™å€¤ã‚’æŒ‡å®šå€¤ã«åˆã‚ã›ã‚‹
-        // @param {æ•´æ•°} [key] 1ï½9
-        // @param {object} [pos] ä½ç½®{x,y}
+        // ƒeƒ“ƒL[1`9‚ÌˆÊ’u‚ğlŠpŒ`‚ÌŠe“_‚ÉŒ©—§‚ÄAw’è‚µ‚½À•W‚ª‚»‚ÌˆÊ’u‚É‚È‚é‚æ‚¤‚É•ÏX
+        // —á‚¦‚Î1‚È‚çAlŠpŒ`‚Ì¶‰º‚ÌÀ•W’l‚ğw’è’l‚É‡‚í‚¹‚é
+        // @param {®”} [key] 1`9
+        // @param {object} [pos] ˆÊ’u{x,y}
         public setPos(key: number, pos: enchant.IPoint): void {
             this.x = pos.x - this._calcWidth(key);
             this.y = pos.y - this._calcHeight(key);
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ã‚’å››è§’å½¢å†…ã«åã‚ã‚‹
-        // @param {object} [pos] ä½ç½®{x,y}
+        // w’è‚µ‚½À•W‚ğlŠpŒ`“à‚Éû‚ß‚é
+        // @param {object} [pos] ˆÊ’u{x,y}
         public adjustPos(pos: enchant.IPoint): void {
             if (pos.x < this.left) pos.x = this.left;
             else if (this.right < pos.x) pos.x = this.right;
@@ -2187,17 +2204,17 @@ module exte {
             else if (this.bottom < pos.y) pos.y = this.bottom;
         }
 
-        // å››è§’å½¢å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™ã‚’è¿”ã™
-        // @return {Point} çµæœ
+        // lŠpŒ`“à‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W‚ğ•Ô‚·
+        // @return {Point} Œ‹‰Ê
         public getRandomPos(): Point {
             return new Point(
             this.x + rand(this.width),
             this.y + rand(this.height));
         }
 
-        // å››è§’å½¢ã®å„è¾ºã‚’Lineã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã§è¿”ã™
-        // @param {æ•´æ•°} [no] 0=ä¸Šè¾º, 1=ä¸‹è¾º, 2=å·¦è¾º,3=å³è¾º
-        // @return {Line} çµæœ
+        // lŠpŒ`‚ÌŠe•Ó‚ğLineƒIƒuƒWƒFƒNƒg‚Å•Ô‚·
+        // @param {®”} [no] 0=ã•Ó, 1=‰º•Ó, 2=¶•Ó,3=‰E•Ó
+        // @return {Line} Œ‹‰Ê
         public getSideLine(no: number): Line {
             var key1, key2;
             switch (no) {
@@ -2212,9 +2229,9 @@ module exte {
             return line;
         }
 
-        // å¯¾è§’ç·šã‚’Lineã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã¨ã—ã¦è¿”ã™
-        // @param {æ•´æ•°} [key] ãƒ†ãƒ³ã‚­ãƒ¼1,3,7,9ã®ã©ã‚Œã‹ã€‚ãã‚Œã‚’å§‹ç‚¹ã«ãªã‚‹
-        // @return {Line} çµæœ
+        // ‘ÎŠpü‚ğLineƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä•Ô‚·
+        // @param {®”} [key] ƒeƒ“ƒL[1,3,7,9‚Ì‚Ç‚ê‚©B‚»‚ê‚ğn“_‚É‚È‚é
+        // @return {Line} Œ‹‰Ê
         public getDiagonalLine(key: number): Line {
             var key2;
             switch (key) {
@@ -2229,18 +2246,18 @@ module exte {
             return line;
         }
 
-        // Surfaceä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Surface} çµæœ
+        // Surfaceì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Surface} Œ‹‰Ê
         public createSurface(color: string, fill?: bool): enchant.Surface {
             return createRectangleSurface(this.width, this.height, color, fill);
         }
 
-        // Spriteä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Sprite} çµæœ
+        // Spriteì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Sprite} Œ‹‰Ê
         public createSprite(color: string, fill?: bool): enchant.Sprite {
             var s = this.createSurface(color, fill);
             var sprite = new enchant.Sprite(s.width, s.height);
@@ -2250,23 +2267,23 @@ module exte {
             return sprite;
         }
 
-        // è¤‡è£½
-        // @return {Rectangle} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Rectangle} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Rectangle {
             return new Rectangle(this.x, this.y, this.width, this.height);
         }
     }
 
-    // å††
+    // ‰~
     export class Circle extends Area {
-        // @param {æ•´æ•°} [centerX] ä¸­å¿ƒåº§æ¨™X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [centerY] ä¸­å¿ƒåº§æ¨™Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [radius] åŠå¾„ çœç•¥æ™‚ã¯0
+        // @param {®”} [centerX] ’†SÀ•WX È—ª‚Í0
+        // @param {®”} [centerY] ’†SÀ•WY È—ª‚Í0
+        // @param {®”} [radius] ”¼Œa È—ª‚Í0
         constructor (centerX: number, centerY: number, radius: number) {
             super(centerX - radius, centerY - radius, radius * 2, radius * 2);
         }
 
-        // åŠå¾„
+        // ”¼Œa
         public get radius() {
             return this.width / 2;
         }
@@ -2277,7 +2294,7 @@ module exte {
             this.width = r * 2;
         }
 
-        // ç›´å¾„
+        // ’¼Œa
         public get diameter() {
             return this.width;
         }
@@ -2288,40 +2305,40 @@ module exte {
             this.width = d;
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ãŒå††å†…ã«å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹
-        // @param {object} [point] ä½ç½®{x,y}
-        // @return {Boolen} å…¥ã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½À•W‚ª‰~“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        // @param {object} [point] ˆÊ’u{x,y}
+        // @return {Boolen} “ü‚Á‚Ä‚¢‚é‚È‚çtrue
         public hitTest(point: enchant.IPoint): bool {
             return this.center.getDistance(point) < this.radius;
         }
 
-        // æŒ‡å®šã—ãŸå››è§’å½¢ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Rectangle} [rect] å››è§’å½¢
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½lŠpŒ`‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Rectangle} [rect] lŠpŒ`
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectRect(rect): bool {
             //return this.x < rect.right && rect.x < this.right &&
             //        this.y < rect.bottom && rect.y < this.bottom;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Circle.intersectRect is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸç·šã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Line} [line] ç·š
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½ü‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Line} [line] ü
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectLine(line: Line): bool {
-            //// ç·šã®ç«¯éƒ¨ãŒå††å†…ã«ã‚ã‚‹ã‹ã©ã†ã‹
+            //// ü‚Ì’[•”‚ª‰~“à‚É‚ ‚é‚©‚Ç‚¤‚©
             //if (this.hitTest(line.posS) || this.hitTest(line.posE)) {
             //    return true;
             //}
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Circle.intersectLine is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸå††ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Circle} [circle] å††
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½‰~‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Circle} [circle] ‰~
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectCircle(circle: Circle): bool {
             var distance = (this.diameter + circle.diameter) / 2;
 
@@ -2330,8 +2347,8 @@ module exte {
                     (_ = this.y - circle.y + (this.height - circle.height) / 2) * _ < distance * distance;
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ã‚’å††å†…ã«åã‚ã‚‹
-        // @param {object} [pos] ä½ç½®{x,y}
+        // w’è‚µ‚½À•W‚ğ‰~“à‚Éû‚ß‚é
+        // @param {object} [pos] ˆÊ’u{x,y}
         public adjustPos(pos: enchant.IPoint): void {
             var distance = this.center.getDistance(pos);
             if (distance < this.radius) return;
@@ -2341,8 +2358,8 @@ module exte {
             pos.y = center.y + Math.floor(this.radius * (pos.y - center.y) / distance);
         }
 
-        // å††å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™{x,y}ã‚’è¿”ã™
-        // @return {Point} çµæœ
+        // ‰~“à‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W{x,y}‚ğ•Ô‚·
+        // @return {Point} Œ‹‰Ê
         public getRandomPos(): Point {
             var r = Math.random() * this.radius;
             var angle = Math.random() * Math.PI * 2;
@@ -2352,18 +2369,18 @@ module exte {
             return point;
         }
 
-        // å˜ç´”ãªå††ã®Surfaceä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Surface} çµæœ
+        // ’Pƒ‚È‰~‚ÌSurfaceì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Surface} Œ‹‰Ê
         public createSurface(color: string, fill?: bool): enchant.Surface {
             return createCircleSurface(this.radius, color, fill);
         }
 
-        // Spriteä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Sprite} çµæœ
+        // Spriteì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Sprite} Œ‹‰Ê
         public createSprite(color: string, fill?: bool): enchant.Sprite {
             var s = this.createSurface(color, fill);
             var sprite = new enchant.Sprite(s.width, s.height);
@@ -2373,63 +2390,63 @@ module exte {
             return sprite;
         }
 
-        // è¤‡è£½
-        // @return {Circle} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Circle} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Circle {
             var center = this.center;
             return new Circle(center.x, center.y, this.radius);
         }
     }
 
-    // æ¥•å††
+    // ‘È‰~
     export class Ellipse extends Area {
-        // @param {æ•´æ•°} [centerX] ä¸­å¿ƒåº§æ¨™X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [centerY] ä¸­å¿ƒåº§æ¨™Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [width] çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [height] çœç•¥æ™‚ã¯0
+        // @param {®”} [centerX] ’†SÀ•WX È—ª‚Í0
+        // @param {®”} [centerY] ’†SÀ•WY È—ª‚Í0
+        // @param {®”} [width] È—ª‚Í0
+        // @param {®”} [height] È—ª‚Í0
         constructor (centerX: number, centerY: number, width: number, height: number) {
             super(centerX - width / 2, centerY - height / 2, width, height);
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ãŒæ¥•å††å†…ã«å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹
-        // @param {object} [point] ä½ç½®{x,y}
-        // @return {Boolen} å…¥ã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½À•W‚ª‘È‰~“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        // @param {object} [point] ˆÊ’u{x,y}
+        // @return {Boolen} “ü‚Á‚Ä‚¢‚é‚È‚çtrue
         public hitTest(point: enchant.IPoint): bool {
             //var pos = (typeof sec == 'Point') ? point : new Point(point.x, point.y);
             //return this.center.getDistance(pos) < radius;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Ellipse.hitTest is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸå››è§’å½¢ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Rectangle} [rect] å››è§’å½¢
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½lŠpŒ`‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Rectangle} [rect] lŠpŒ`
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectRect(rect: Rectangle): bool {
             //return this.x < rect.right && rect.x < this.right &&
             //        this.y < rect.bottom && rect.y < this.bottom;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Ellipse.intersectRect is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸç·šã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Line} [line] ç·š
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½ü‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Line} [line] ü
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectLine(line: Line): bool {
-            // ç·šã®ç«¯éƒ¨ãŒæ¥•å††å†…ã«ã‚ã‚‹ã‹ã©ã†ã‹
+            // ü‚Ì’[•”‚ª‘È‰~“à‚É‚ ‚é‚©‚Ç‚¤‚©
             //if (this.hitTest(line.posS) || this.hitTest(line.posE)) {
             //    return true;
             //}
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Ellipse.intersectLine is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ã‚’æ¥•å††å†…ã«åã‚ã‚‹
-        // @param {object} [pos] ä½ç½®{x,y}
+        // w’è‚µ‚½À•W‚ğ‘È‰~“à‚Éû‚ß‚é
+        // @param {object} [pos] ˆÊ’u{x,y}
         public adjustPos(pos: enchant.IPoint): void {
-            // æœªå®Œæˆ(å††ã¨ã—ã¦åˆ¤å®š)
+            // –¢Š®¬(‰~‚Æ‚µ‚Ä”»’è)
             //var radius = Math.min(this.width, this.height) / 2;
 
             //var distance = this.center.getDistance(pos);
@@ -2439,14 +2456,14 @@ module exte {
             //pos.x = center.x + Math.floor(radius * (pos.x - center.x) / distance);
             //pos.y = center.y + Math.floor(radius * (pos.y - center.y) / distance);
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Ellipse.adjustPos is not implemented');
         }
 
-        // æ¥•å††å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™{x,y}ã‚’è¿”ã™
-        // @return {Point} çµæœ
+        // ‘È‰~“à‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W{x,y}‚ğ•Ô‚·
+        // @return {Point} Œ‹‰Ê
         public getRandomPos(): Point {
-            // æœªå®Œæˆ(å††ã¨ã—ã¦åˆ¤å®š)
+            // –¢Š®¬(‰~‚Æ‚µ‚Ä”»’è)
             //var r = Math.random() * Math.min(this.width, this.height) * 0.5;
             //var angle = Math.random() * Math.PI * 2;
             //var point = this.center;
@@ -2454,22 +2471,22 @@ module exte {
             //point.y += Math.floor(Math.sin(angle) * r);
             //return point;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Ellipse.getRandomPos is not implemented');
         }
 
-        // Surfaceä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Surface} çµæœ
+        // Surfaceì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Surface} Œ‹‰Ê
         public createSurface(color: string, fill?: bool): enchant.Surface {
             return createEllipseSurface(this.width, this.height, color, fill);
         }
 
-        // Spriteä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Sprite} çµæœ
+        // Spriteì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Sprite} Œ‹‰Ê
         public createSprite(color: string, fill?: bool): enchant.Sprite {
             var s = this.createSurface(color, fill);
             var sprite = new enchant.Sprite(s.width, s.height);
@@ -2479,27 +2496,27 @@ module exte {
             return sprite;
         }
 
-        // è¤‡è£½
-        // @return {Ellipse} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Ellipse} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Ellipse {
             var center = this.center;
             return new Ellipse(center.x, center.y, this.width, this.height);
         }
     }
 
-    // å††å¼§
+    // ‰~ŒÊ
     export class Arc extends Circle {
-        // æ–¹å‘è§’(å¼§ã®ä¸­å¤®)
+        // •ûŒüŠp(ŒÊ‚Ì’†‰›)
         angle: number;
 
-        // å¼§ã®ç¯„å›²ã€‚angleÂ±(range/2)ãŒæç”»ã•ã‚Œã‚‹
+        // ŒÊ‚Ì”ÍˆÍBangle}(range/2)‚ª•`‰æ‚³‚ê‚é
         range: number;
 
-        // @param {æ•´æ•°} [centerX] ä¸­å¿ƒåº§æ¨™X çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [centerY] ä¸­å¿ƒåº§æ¨™Y çœç•¥æ™‚ã¯0
-        // @param {æ•´æ•°} [radius] åŠå¾„ çœç•¥æ™‚ã¯0
-        // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [angle] æ–¹å‘è§’(å¼§ã®ä¸­å¤®) çœç•¥æ™‚ã¯0
-        // @param {ãƒ©ã‚¸ã‚¢ãƒ³} [range] å¼§ã®ç¯„å›²ã€‚angleÂ±(range/2)ãŒæç”»ã•ã‚Œã‚‹ çœç•¥æ™‚ã¯0
+        // @param {®”} [centerX] ’†SÀ•WX È—ª‚Í0
+        // @param {®”} [centerY] ’†SÀ•WY È—ª‚Í0
+        // @param {®”} [radius] ”¼Œa È—ª‚Í0
+        // @param {ƒ‰ƒWƒAƒ“} [angle] •ûŒüŠp(ŒÊ‚Ì’†‰›) È—ª‚Í0
+        // @param {ƒ‰ƒWƒAƒ“} [range] ŒÊ‚Ì”ÍˆÍBangle}(range/2)‚ª•`‰æ‚³‚ê‚é È—ª‚Í0
         constructor (centerX: number, centerY: number, radius: number, angle: number, range: number) {
             super(centerX, centerY, radius);
 
@@ -2507,30 +2524,30 @@ module exte {
             this.range = normalinzeRad(range | 0);
         }
 
-        // é–‹å§‹è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)
+        // ŠJnŠp“x(ƒ‰ƒWƒAƒ“)
         public get angleStart() {
             return normalinzeRad(this.angle - this.range * 0.5);
         }
 
-        // çµ‚äº†è§’åº¦(ãƒ©ã‚¸ã‚¢ãƒ³)
+        // I—¹Šp“x(ƒ‰ƒWƒAƒ“)
         public get angleEnd() {
             return normalinzeRad(this.angle + this.range * 0.5);
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ãŒå††å¼§å†…ã«å…¥ã£ã¦ã„ã‚‹ã‹ã©ã†ã‹
-        // @param {object} [point] ä½ç½®{x,y}
-        // @return {Boolen} å…¥ã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½À•W‚ª‰~ŒÊ“à‚É“ü‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
+        // @param {object} [point] ˆÊ’u{x,y}
+        // @return {Boolen} “ü‚Á‚Ä‚¢‚é‚È‚çtrue
         public hitTest(point: enchant.IPoint): bool {
             //var pos = (typeof sec == 'Point') ? point : new Point(point.x, point.y);
             //if (this.radius < this.center.getDistance(pos)) return false;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Arc.hitTest is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸå››è§’å½¢ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Rectangle} [rect] å››è§’å½¢
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½lŠpŒ`‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Rectangle} [rect] lŠpŒ`
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectRect(rect: Rectangle): bool {
             //var distance = (this.width + this.height + rect.width + rect.height) / 4;
 
@@ -2545,42 +2562,42 @@ module exte {
             //    return this.angleStart < direction || direction < this.angleEnd;
             //}
 
-            // æœªå®Ÿè£…ã€‚arc_within.jsã‚’ä½¿ã†ãªã‚‰ãã¡ã‚‰ã‚’ã©ã†ã
+            // –¢À‘•Barc_within.js‚ğg‚¤‚È‚ç‚»‚¿‚ç‚ğ‚Ç‚¤‚¼
             throw new Error('Arc.intersectRect is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸç·šã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Line} [line] ç·š
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½ü‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Line} [line] ü
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectLine(line: Line): bool {
-            // ç·šã®ç«¯éƒ¨ãŒå††å†…ã«ã‚ã‚‹ã‹ã©ã†ã‹
+            // ü‚Ì’[•”‚ª‰~“à‚É‚ ‚é‚©‚Ç‚¤‚©
             //if (this.hitTest(line.posS) || this.hitTest(line.posE)) {
             //    return true;
             //}
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Arc.intersectLine is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸå††ã¨é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
-        // @param {Circle} [circle] å††
-        // @return {Boolen} é‡ãªã£ã¦ã„ã‚‹ãªã‚‰true
+        // w’è‚µ‚½‰~‚Æd‚È‚Á‚Ä‚¢‚é‚È‚çtrue
+        // @param {Circle} [circle] ‰~
+        // @return {Boolen} d‚È‚Á‚Ä‚¢‚é‚È‚çtrue
         public intersectCircle(circle: Circle): bool {
-            // æœªå®Ÿè£…(å††ã¨ã—ã¦åˆ¤å®š)
+            // –¢À‘•(‰~‚Æ‚µ‚Ä”»’è)
             //var distance = (this.diameter + circle.diameter) / 2;
 
             //var _;
             //return (_ = this.x - rect.x + (this.width - rect.width) / 2) * _ +
             //(_ = this.y - circle.y + (this.height - circle.height) / 2) * _ < distance * distance;
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Arc.intersectCircle is not implemented');
         }
 
-        // æŒ‡å®šã—ãŸåº§æ¨™ã‚’å††å¼§å†…ã«åã‚ã‚‹
-        // @param {object} [pos] ä½ç½®{x,y}
+        // w’è‚µ‚½À•W‚ğ‰~ŒÊ“à‚Éû‚ß‚é
+        // @param {object} [pos] ˆÊ’u{x,y}
         public adjustPos(pos: enchant.IPoint): void {
-            // æœªå®Ÿè£…
+            // –¢À‘•
             /*
             var distance = this.center.getDistance(pos);
             if (distance < this.radius) return;
@@ -2590,12 +2607,12 @@ module exte {
             pos.y = center.y + Math.floor(this.radius * (pos.y - center.y) / distance);
             */
 
-            // æœªå®Ÿè£…
+            // –¢À‘•
             throw new Error('Arc.adjustPos is not implemented');
         }
 
-        // å††å¼§å†…ã®ãƒ©ãƒ³ãƒ€ãƒ ãªåº§æ¨™{x,y}ã‚’è¿”ã™
-        // @return {Point} çµæœ
+        // ‰~ŒÊ“à‚Ìƒ‰ƒ“ƒ_ƒ€‚ÈÀ•W{x,y}‚ğ•Ô‚·
+        // @return {Point} Œ‹‰Ê
         public getRandomPos(): Point {
             var r = Math.random() * this.radius;
             var angle = this.angle + Math.random() * this.range - this.range * 0.5;
@@ -2605,18 +2622,18 @@ module exte {
             return point;
         }
 
-        // Surfaceä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Surface} çµæœ
+        // Surfaceì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Surface} Œ‹‰Ê
         public createSurface(color: string, fill?: bool): enchant.Surface {
             return createArcSurface(this.radius, this.angle, this.range, color, fill);
         }
 
-        // Spriteä½œæˆ
-        // @param {string} [color] è‰²ã€‚'red'ãªã©ã€‚ã‚‚ã—ãã¯ toRGBString ã§ä½œã‚‹
-        // @param {boolen} [fill] true=å¡—ã‚Šã¤ã¶ã—,false=æ ç·šã€‚çœç•¥æ™‚ã¯æ ç·š
-        // @return {enchant.Sprite} çµæœ
+        // Spriteì¬
+        // @param {string} [color] FB'red'‚È‚ÇB‚à‚µ‚­‚Í toRGBString ‚Åì‚é
+        // @param {boolen} [fill] true=“h‚è‚Â‚Ô‚µ,false=˜güBÈ—ª‚Í˜gü
+        // @return {enchant.Sprite} Œ‹‰Ê
         public createSprite(color: string, fill?: bool): enchant.Sprite {
             var s = this.createSurface(color, fill);
             var sprite = new enchant.Sprite(s.width, s.height);
@@ -2626,19 +2643,19 @@ module exte {
             return sprite;
         }
 
-        // è¤‡è£½
-        // @return {Arc} æ–°ã—ã„ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹
+        // •¡»
+        // @return {Arc} V‚µ‚¢ƒCƒ“ƒXƒ^ƒ“ƒX
         public clone(): Arc {
             var center = this.center;
             return new Arc(center.x, center.y, this.radius, this.angle, this.range);
         }
     }
 
-    // æ³¢ç´‹
-    // â€»Chromeã§ã†ã¾ãã„ã‹ãªã„ã€‚Firefoxã§ã¯å¤§ä¸ˆå¤«
+    // ”g–ä
+    // ¦Chrome‚Å‚¤‚Ü‚­‚¢‚©‚È‚¢BFirefox‚Å‚Í‘åä•v
     export class Ripple extends enchant.Sprite {
-        // @param {æ•´æ•°} [width] å¹… çœç•¥æ™‚ã¯ã‚²ãƒ¼ãƒ ç”»é¢å¹…
-        // @param {æ•´æ•°} [height] é«˜ã• çœç•¥æ™‚ã¯ã‚²ãƒ¼ãƒ ç”»é¢é«˜ã•
+        // @param {®”} [width] • È—ª‚ÍƒQ[ƒ€‰æ–Ê•
+        // @param {®”} [height] ‚‚³ È—ª‚ÍƒQ[ƒ€‰æ–Ê‚‚³
         constructor (width: number, height: number) {
             super(width, height);
             //var game = enchant.Game.instance;
@@ -2688,7 +2705,7 @@ module exte {
             c.stroke();
         }
 
-            // ç·šè‰²
+            // üF
         public get lineColor() {
             return this.image.context.strokeStyle; // this._lineColor;
         }
@@ -2697,7 +2714,7 @@ module exte {
             this.image.context.strokeStyle = c;
         }
 
-        // ç·šå¹…
+        // ü•
         public get lineWidth() {
             return this.image.context.lineWidth;
         }
@@ -2705,7 +2722,7 @@ module exte {
             this.image.context.lineWidth = l;
         }
 
-        // æ³¢ç´‹ã®é€Ÿåº¦(ãƒ•ãƒ¬ãƒ¼ãƒ æ¯ã®åŠå¾„å¢—åŠ é‡)
+        // ”g–ä‚Ì‘¬“x(ƒtƒŒ[ƒ€–ˆ‚Ì”¼Œa‘‰Á—Ê)
         public get speed() {
             return this._speed;
         }
@@ -2713,17 +2730,17 @@ module exte {
             this._speed = s;
         }
 
-        // ç¾åœ¨è¡¨ç¤ºã—ã¦ã„ã‚‹æ³¢ç´‹ã®åŠå¾„
+        // Œ»İ•\¦‚µ‚Ä‚¢‚é”g–ä‚Ì”¼Œa
         public get radius() {
             return this._radius;
         }
 
-        // æ³¢ç´‹ã®æœ€å¤§åŠå¾„ã€‚startã§æŒ‡å®šã—ãŸä½ç½®ã‹ã‚‰ã€ä¸€ç•ªé ã„å››éš…ã¾ã§ã®è·é›¢
+        // ”g–ä‚ÌÅ‘å”¼ŒaBstart‚Åw’è‚µ‚½ˆÊ’u‚©‚çAˆê”Ô‰“‚¢l‹÷‚Ü‚Å‚Ì‹——£
         public get radiusMax() {
             return this._radiusMax;
         }
 
-        // åŠå¾„ã®åˆ¶é™ã€‚0ã ã¨æç”»ç¯„å›²ã‚’è¶Šãˆã‚‹ã¾ã§å®Ÿè¡Œ
+        // ”¼Œa‚Ì§ŒÀB0‚¾‚Æ•`‰æ”ÍˆÍ‚ğ‰z‚¦‚é‚Ü‚ÅÀs
         public get radiusLimit() {
             return this._radiusLimit;
         }
@@ -2731,9 +2748,9 @@ module exte {
             this._radiusLimit = r;
         }
 
-        // è¡¨ç¤ºé–‹å§‹
-        // @param {æ•´æ•°} [x] é–‹å§‹åœ°ç‚¹ Xåº§æ¨™
-        // @param {æ•´æ•°} [y] é–‹å§‹åœ°ç‚¹ Xåº§æ¨™
+        // •\¦ŠJn
+        // @param {®”} [x] ŠJn’n“_ XÀ•W
+        // @param {®”} [y] ŠJn’n“_ XÀ•W
         public start(x: number, y: number) {
             this._center = new Point(x, y);
             this._active = true;
@@ -2752,7 +2769,7 @@ module exte {
             this.image.clear();
         }
 
-        // åœæ­¢/å†é–‹
+        // ’â~/ÄŠJ
         public get active() {
             return this._active;
         }
@@ -2762,7 +2779,7 @@ module exte {
             this._active = a;
         }
 
-        // è¡¨ç¤ºçµ‚äº†
+        // •\¦I—¹
         public stop() {
             this._active = false;
             this._radiusMax = 0;

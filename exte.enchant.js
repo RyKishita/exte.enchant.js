@@ -1237,17 +1237,19 @@ var exte;
     exte.createSampleMap = createSampleMap;
     var LogList = (function (_super) {
         __extends(LogList, _super);
-        function LogList(x, y, width, height) {
+        function LogList(x, y, width, height, backgroundColor) {
                 _super.call(this);
             this.fadeIn = 0.1;
             this.fadeOut = 0.1;
             this.scrollPx = 2;
             this.lineHeight = 10;
             this.color = null;
+            this.backgroundColor = null;
             this.font = null;
             this.fontSize = null;
             this.wordBreak = null;
             this.textAlign = null;
+            this.adjustWidth = true;
             this.stackLimit = 0;
             this._labels = [];
             this._texts = [];
@@ -1261,11 +1263,17 @@ var exte;
             this.y = y;
             this.width = width;
             this.height = height;
+            if(backgroundColor) {
+                var back = createRectangleSprite(width, height, backgroundColor, true);
+                this.addChild(back);
+            }
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
         LogList.prototype.createLabel = function () {
             var label = new enchant.Label('');
-            label.width = this.width;
+            if(this.adjustWidth) {
+                label.width = this.width;
+            }
             label.visible = false;
             if(this.font) {
                 label.font = this.font;
@@ -1299,6 +1307,7 @@ var exte;
             label.text = t.text;
             label._style.fontSize = t.fontSize || "";
             label.color = t.color || "";
+            label.backgroundColor = t.backgroundColor || "";
             label.height = t.lineHeight || 10;
             label.opacity = 0;
             label.textAlign = t.textAlign || 'left';
@@ -1398,13 +1407,14 @@ var exte;
                 l.visible = v && l.valid;
             }
         };
-        LogList.prototype.regist = function (text, color, fontSize, lineHeight, textAlign) {
+        LogList.prototype.regist = function (text, color, fontSize, lineHeight, textAlign, backgroundColor) {
             this._texts.push({
                 text: text,
                 color: color || this.color,
                 fontSize: fontSize || this.fontSize,
                 lineHeight: lineHeight || this.lineHeight,
-                textAlign: textAlign || this.textAlign
+                textAlign: textAlign || this.textAlign,
+                backgroundColor: backgroundColor || this.backgroundColor
             });
         };
         LogList.prototype.outAllLog = function () {

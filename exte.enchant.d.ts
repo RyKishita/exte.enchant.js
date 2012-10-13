@@ -147,12 +147,14 @@ module exte {
         public scrollPx: number;
         public lineHeight: number;
         public color;
+        public backgroundColor;
         public font;
         public fontSize;
         public wordBreak;
         public textAlign;
+        public adjustWidth: bool;
         public stackLimit: number;
-        constructor (x: number, y: number, width: number, height: number);
+        constructor (x: number, y: number, width: number, height: number, backgroundColor?: string);
         public width: number;
         public height: number;
         private _labels: any[];
@@ -171,7 +173,7 @@ module exte {
         private enterFrame(e): void;
         public visible : bool;
         public set(v): void;
-        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number): void;
+        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number, backgroundColor?: string): void;
         public outAllLog(): void;
         public clear(): void;
     }
