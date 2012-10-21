@@ -4,6 +4,7 @@
         function GameData() {
             this.playAssetName = 'img/play.png';
             this.mapAssetName = 'map1.gif';
+            this.waitAssetName = 'img/wait.png';
             this.buttonWidth = 60;
             this.buttonHeight = 40;
             this.buttonAAssetName = "img/buttonA.png";
@@ -20,7 +21,9 @@
                 this.buttonBAssetName, 
                 this.soundStart, 
                 this.soundOK, 
-                this.soundBGM
+                this.soundBGM, 
+                this.waitAssetName, 
+                
             ];
         };
         return GameData;
@@ -966,6 +969,14 @@ var ExteGame;
             label.x = 10;
             label.y = 10;
             mainGroup.addChild(label);
+            var label2 = new enchant.Label('Push A key, Show waitScene');
+            label2.x = 10;
+            label2.y = 40;
+            mainGroup.addChild(label2);
+            var label3 = new enchant.Label("http2str('Text.txt')→" + exte.http2str('Text.txt'));
+            label3.x = 10;
+            label3.y = 70;
+            mainGroup.addChild(label3);
         })();
         scene.addChild(mainGroup);
         var uiGroup = new enchant.Group();
@@ -996,6 +1007,7 @@ var ExteGame;
         scene.addEventListener(exte.Event_SceneExStarting, function (e) {
             ; ;
         });
+        var waitFrame = 0;
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if(scene.fadeProsessing) {
                 return;
@@ -1009,6 +1021,10 @@ var ExteGame;
             if(game.input.right) {
             }
             if(game.input.a) {
+                waitFrame = game.fps * 3;
+                exte.pushWaitScene(function () {
+                    return waitFrame-- <= 0;
+                }, game.assets[gameData.waitAssetName]);
             }
             if(game.input.b) {
                 scene.moveSceneTo('1');

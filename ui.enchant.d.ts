@@ -1,10 +1,10 @@
-﻿/// <reference path="enchant.d.ts"/>
+/// <reference path="enchant.d.ts"/>
 
 module enchant.ui {
     declare class Pad extends Sprite {
         constructor ();
     }
-    declare class APad extends Sprite {
+    declare class APad extends Group {
         constructor ();
         isTouched: bool;
         vx: number;

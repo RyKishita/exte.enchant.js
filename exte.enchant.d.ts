@@ -302,4 +302,119 @@ module exte {
         public active : bool;
         public stop(): void;
     }
+    export function pushWaitScene(eventEnterFrame: () => bool, image?: enchant.Surface): void;
+    export function http2str(url: string): string;
+}
+module exte {
+    export class Card {
+        static CARD: string;
+        static ICON: string;
+        static FONT: string;
+        static BACK: string;
+        static WIDTH: number;
+        static HEIGHT: number;
+        static SUIT_SIZE: number;
+        static NUME_SIZE: number;
+        static CARD_SIZE: number;
+        static SPADE: number;
+        static HEART: number;
+        static DIAMOND: number;
+        static CLUB: number;
+        static ACE: number;
+        static JACK: number;
+        static QUEEN: number;
+        static KING: number;
+        static ERROR: number;
+        static JOKER: number;
+        static S01: number;
+        static S02: number;
+        static S03: number;
+        static S04: number;
+        static S05: number;
+        static S06: number;
+        static S07: number;
+        static S08: number;
+        static S09: number;
+        static S10: number;
+        static S11: number;
+        static S12: number;
+        static S13: number;
+        static H01: number;
+        static H02: number;
+        static H03: number;
+        static H04: number;
+        static H05: number;
+        static H06: number;
+        static H07: number;
+        static H08: number;
+        static H09: number;
+        static H10: number;
+        static H11: number;
+        static H12: number;
+        static H13: number;
+        static D01: number;
+        static D02: number;
+        static D03: number;
+        static D04: number;
+        static D05: number;
+        static D06: number;
+        static D07: number;
+        static D08: number;
+        static D09: number;
+        static D10: number;
+        static D11: number;
+        static D12: number;
+        static D13: number;
+        static C01: number;
+        static C02: number;
+        static C03: number;
+        static C04: number;
+        static C05: number;
+        static C06: number;
+        static C07: number;
+        static C08: number;
+        static C09: number;
+        static C10: number;
+        static C11: number;
+        static C12: number;
+        static C13: number;
+        static SA: number;
+        static SJ: number;
+        static SQ: number;
+        static SK: number;
+        static HA: number;
+        static HJ: number;
+        static HQ: number;
+        static HK: number;
+        static DA: number;
+        static DJ: number;
+        static DQ: number;
+        static DK: number;
+        static CA: number;
+        static CJ: number;
+        static CQ: number;
+        static CK: number;
+        static table: any[];
+        static getSuit(card: number): number;
+        static getNumber(card: number): number;
+        static getData(suit: number, no: number): number;
+        static getCard(data: number): TCardSprite;
+        static setImage(): void;
+        static drawCard(card): enchant.Surface;
+    }
+    export class TCardSprite extends enchant.Sprite {
+        constructor (width: number, height: number);
+        public data: number;
+    }
+}
+module exte {
+    export class Dice extends enchant.Sprite {
+        constructor ();
+        static IMAGE: string;
+        static WIDTH: number;
+        static HEIGHT: number;
+        static MAXNUM: number;
+        public value : number;
+        public drawFace(top: number): enchant.Surface;
+    }
 }

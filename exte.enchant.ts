@@ -2786,4 +2786,43 @@ module exte {
             this.image.clear();
         }
     }
+
+    // 待機シーンの追加
+    // 指定のコールバックがtrueを返すまで待機し続ける
+    // イメージを指定した場合は画面中央に配置する
+    export function pushWaitScene(eventEnterFrame: () =>bool, image?: enchant.Surface) {
+        var game = enchant.Game.instance;
+
+        var scene = new enchant.Scene();
+
+        if (image) {
+            var backSprite = new enchant.Sprite(image.width, image.height);
+            backSprite.x = (game.width - image.width) / 2;
+            backSprite.y = (game.height - image.height) / 2;
+            backSprite.image = image;
+            scene.addChild(backSprite);
+        }
+
+        scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+            if (eventEnterFrame()) {
+                game.popScene();
+            }
+        });
+
+        game.pushScene(scene);
+    }
+
+    //HTTP→文字列
+    export function http2str(url: string): string {
+        try {
+            var request = new XMLHttpRequest();
+            request.open("GET", url, false);
+            request.send(null);
+            if (request.status == 200 || request.status == 0) {
+                return request.responseText;
+            }
+        } catch (e) {
+        }
+        return null;
+    }
 }

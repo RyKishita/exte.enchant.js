@@ -93,7 +93,7 @@ module enchant {
         _debug: bool;
     }
 
-    declare class Node extends EventTarget {
+    declare class Node extends EventTarget implements IPoint {
         constructor();
         age: number;
         parentNode: Node;
@@ -105,7 +105,7 @@ module enchant {
         remove(): void;
     }
 
-    declare class Entity extends Node {
+    declare class Entity extends Node implements IArea {
         constructor();
         buttonMode: string;
         buttonPressed: bool;
@@ -195,7 +195,7 @@ module enchant {
         getPixel(x: number, y: number): Int32Array;
         setPixel(x: number, y: number, r: number, g: number, b: number, a: number): void;
         clear(): void;
-        draw(src: Surface, sx: number, sy: number, sw: number, sh: number, dx: number, dy: number, dw: number, dh: number): void;
+        draw(src: Surface, sx: number, sy: number, sw?: number, sh?: number, dx?: number, dy?: number, dw?: number, dh?: number): void;
         clone(): void;
         toDataURL(): String;
         static load(src: string): Surface;
@@ -212,7 +212,6 @@ module enchant {
         static load(src: string, type?: string): Sound;
         static enabledInMobileSafari: bool;
     }
-
 
     // --------------------------------------
 
@@ -235,5 +234,3 @@ module enchant {
         height: number;
     }
 }
-
-//declare function enchant(): void;

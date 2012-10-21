@@ -1142,6 +1142,15 @@ module ExteGame {
             label.y = 10;
             mainGroup.addChild(label);
 
+            var label2 = new enchant.Label('Push A key, Show waitScene');
+            label2.x = 10;
+            label2.y = 40;
+            mainGroup.addChild(label2);
+
+            var label3 = new enchant.Label("http2str('Text.txt')¨"+ exte.http2str('Text.txt'));
+            label3.x = 10;
+            label3.y = 70;
+            mainGroup.addChild(label3);
         })();
         scene.addChild(mainGroup);
 
@@ -1183,6 +1192,8 @@ module ExteGame {
             ;
         });
 
+        var waitFrame = 0;
+
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
@@ -1195,6 +1206,8 @@ module ExteGame {
             if (game.input.right) {
             }
             if (game.input.a) {
+                waitFrame = game.fps * 3;
+                exte.pushWaitScene(() => waitFrame-- <= 0, game.assets[gameData.waitAssetName] );
             }
             if (game.input.b) {
                 scene.moveSceneTo('1');

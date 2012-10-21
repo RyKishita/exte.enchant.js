@@ -3,6 +3,7 @@ module ExteGame {
         constructor ();
         public playAssetName: string;
         public mapAssetName: string;
+        public waitAssetName: string;
         public buttonWidth: number;
         public buttonHeight: number;
         public buttonAAssetName: string;

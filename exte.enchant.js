@@ -2227,5 +2227,396 @@ var exte;
         return Ripple;
     })(enchant.Sprite);
     exte.Ripple = Ripple;    
+    function pushWaitScene(eventEnterFrame, image) {
+        var game = enchant.Game.instance;
+        var scene = new enchant.Scene();
+        if(image) {
+            var backSprite = new enchant.Sprite(image.width, image.height);
+            backSprite.x = (game.width - image.width) / 2;
+            backSprite.y = (game.height - image.height) / 2;
+            backSprite.image = image;
+            scene.addChild(backSprite);
+        }
+        scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+            if(eventEnterFrame()) {
+                game.popScene();
+            }
+        });
+        game.pushScene(scene);
+    }
+    exte.pushWaitScene = pushWaitScene;
+    function http2str(url) {
+        try  {
+            var request = new XMLHttpRequest();
+            request.open("GET", url, false);
+            request.send(null);
+            if(request.status == 200 || request.status == 0) {
+                return request.responseText;
+            }
+        } catch (e) {
+        }
+        return null;
+    }
+    exte.http2str = http2str;
+})(exte || (exte = {}));
+
+var exte;
+(function (exte) {
+    var Card = (function () {
+        function Card() { }
+        Card.CARD = 'card.png';
+        Card.ICON = 'icon0.png';
+        Card.FONT = 'font1.png';
+        Card.BACK = 'enchant_normal.png';
+        Card.WIDTH = 32;
+        Card.HEIGHT = 48;
+        Card.SUIT_SIZE = 4;
+        Card.NUME_SIZE = 13;
+        Card.CARD_SIZE = 52;
+        Card.SPADE = 1;
+        Card.HEART = 2;
+        Card.DIAMOND = 3;
+        Card.CLUB = 4;
+        Card.ACE = 1;
+        Card.JACK = 11;
+        Card.QUEEN = 12;
+        Card.KING = 13;
+        Card.ERROR = -1;
+        Card.JOKER = 0;
+        Card.S01 = 1;
+        Card.S02 = 2;
+        Card.S03 = 3;
+        Card.S04 = 4;
+        Card.S05 = 5;
+        Card.S06 = 6;
+        Card.S07 = 7;
+        Card.S08 = 8;
+        Card.S09 = 9;
+        Card.S10 = 10;
+        Card.S11 = 11;
+        Card.S12 = 12;
+        Card.S13 = 13;
+        Card.H01 = 14;
+        Card.H02 = 15;
+        Card.H03 = 16;
+        Card.H04 = 17;
+        Card.H05 = 18;
+        Card.H06 = 19;
+        Card.H07 = 20;
+        Card.H08 = 21;
+        Card.H09 = 22;
+        Card.H10 = 23;
+        Card.H11 = 24;
+        Card.H12 = 25;
+        Card.H13 = 26;
+        Card.D01 = 27;
+        Card.D02 = 28;
+        Card.D03 = 29;
+        Card.D04 = 30;
+        Card.D05 = 31;
+        Card.D06 = 32;
+        Card.D07 = 33;
+        Card.D08 = 34;
+        Card.D09 = 35;
+        Card.D10 = 36;
+        Card.D11 = 37;
+        Card.D12 = 38;
+        Card.D13 = 39;
+        Card.C01 = 40;
+        Card.C02 = 41;
+        Card.C03 = 42;
+        Card.C04 = 43;
+        Card.C05 = 44;
+        Card.C06 = 45;
+        Card.C07 = 46;
+        Card.C08 = 47;
+        Card.C09 = 48;
+        Card.C10 = 49;
+        Card.C11 = 50;
+        Card.C12 = 51;
+        Card.C13 = 52;
+        Card.SA = Card.S01;
+        Card.SJ = Card.S11;
+        Card.SQ = Card.S12;
+        Card.SK = Card.S13;
+        Card.HA = Card.H01;
+        Card.HJ = Card.H11;
+        Card.HQ = Card.H12;
+        Card.HK = Card.H13;
+        Card.DA = Card.D01;
+        Card.DJ = Card.D11;
+        Card.DQ = Card.D12;
+        Card.DK = Card.D13;
+        Card.CA = Card.C01;
+        Card.CJ = Card.C11;
+        Card.CQ = Card.C12;
+        Card.CK = Card.C13;
+        Card.table = [
+            [], 
+            [
+                Card.S01, 
+                Card.S02, 
+                Card.S03, 
+                Card.S04, 
+                Card.S05, 
+                Card.S06, 
+                Card.S07, 
+                Card.S08, 
+                Card.S09, 
+                Card.S10, 
+                Card.S11, 
+                Card.S12, 
+                Card.S13
+            ], 
+            [
+                Card.H01, 
+                Card.H02, 
+                Card.H03, 
+                Card.H04, 
+                Card.H05, 
+                Card.H06, 
+                Card.H07, 
+                Card.H08, 
+                Card.H09, 
+                Card.H10, 
+                Card.H11, 
+                Card.H12, 
+                Card.H13
+            ], 
+            [
+                Card.D01, 
+                Card.D02, 
+                Card.D03, 
+                Card.D04, 
+                Card.D05, 
+                Card.D06, 
+                Card.D07, 
+                Card.D08, 
+                Card.D09, 
+                Card.D10, 
+                Card.D11, 
+                Card.D12, 
+                Card.D13
+            ], 
+            [
+                Card.C01, 
+                Card.C02, 
+                Card.C03, 
+                Card.C04, 
+                Card.C05, 
+                Card.C06, 
+                Card.C07, 
+                Card.C08, 
+                Card.C09, 
+                Card.C10, 
+                Card.C11, 
+                Card.C12, 
+                Card.C13
+            ], 
+            
+        ];
+        Card.getSuit = function getSuit(card) {
+            if(card == Card.JOKER) {
+                return Card.JOKER;
+            }
+            if(card <= Card.ERROR || Card.CARD_SIZE < card) {
+                return Card.ERROR;
+            }
+            return Math.floor((card + Card.NUME_SIZE - 1) / Card.NUME_SIZE);
+        }
+        Card.getNumber = function getNumber(card) {
+            if(card == Card.JOKER) {
+                return Card.JOKER;
+            }
+            if(card <= Card.ERROR || Card.CARD_SIZE < card) {
+                return Card.ERROR;
+            }
+            return (card - 1) % Card.NUME_SIZE + 1;
+        }
+        Card.getData = function getData(suit, no) {
+            if(suit == Card.JOKER || no == Card.JOKER) {
+                return Card.JOKER;
+            }
+            if(suit <= Card.ERROR || Card.SUIT_SIZE < suit || no <= Card.ERROR || Card.NUME_SIZE < no) {
+                return Card.ERROR;
+            }
+            return (suit - 1) * Card.NUME_SIZE + no;
+        }
+        Card.getCard = function getCard(data) {
+            if(data <= Card.ERROR || Card.CARD_SIZE < data) {
+                return null;
+            }
+            var image = new enchant.Surface(Card.WIDTH * 2, Card.HEIGHT);
+            var assetName = enchant.Game.instance.assets[Card.CARD];
+            var x = (Card.getNumber(data) - 1) * Card.WIDTH;
+            var y = (Card.getSuit(data) - 1) * Card.HEIGHT;
+            image.draw(assetName, x, y, Card.WIDTH, Card.HEIGHT, 0, 0, Card.WIDTH, Card.HEIGHT);
+            image.draw(assetName, Card.WIDTH, Card.HEIGHT * 4, Card.WIDTH, Card.HEIGHT, Card.WIDTH, 0, Card.WIDTH, Card.HEIGHT);
+            var card = new TCardSprite(Card.WIDTH, Card.HEIGHT);
+            card.image = image;
+            card.data = data;
+            return card;
+        }
+        Card.setImage = function setImage() {
+            var cards = new enchant.Surface(Card.WIDTH * Card.NUME_SIZE, Card.HEIGHT * (Card.SUIT_SIZE + 1));
+            for(var card = Card.S01; card <= Card.CARD_SIZE; card++) {
+                var x = (Card.getNumber(card) - 1) * Card.WIDTH;
+                var y = (Card.getSuit(card) - 1) * Card.HEIGHT;
+                cards.draw(Card.drawCard(card), 0, 0, Card.WIDTH, Card.HEIGHT, x, y, Card.WIDTH, Card.HEIGHT);
+            }
+            ; ;
+            cards.draw(Card.drawCard(Card.JOKER), 0, 0, Card.WIDTH, Card.HEIGHT, 0, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
+            cards.draw(Card.drawCard(Card.ERROR), 0, 0, Card.WIDTH, Card.HEIGHT, Card.WIDTH, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
+            enchant.Game.instance.assets[Card.CARD] = cards;
+        }
+        Card.drawCard = function drawCard(card) {
+            var face = new enchant.Surface(Card.WIDTH, Card.HEIGHT);
+            var c = face.context;
+            c.fillStyle = 'white';
+            c.strokeStyle = 'black';
+            c.beginPath();
+            c.moveTo(0, 8);
+            c.quadraticCurveTo(0, 0, 8, 0);
+            c.lineTo(22, 0);
+            c.quadraticCurveTo(32, 0, 32, 8);
+            c.lineTo(32, 40);
+            c.quadraticCurveTo(32, 48, 22, 48);
+            c.lineTo(8, 48);
+            c.quadraticCurveTo(0, 48, 0, 40);
+            c.closePath();
+            c.fill();
+            c.stroke();
+            switch(Card.getSuit(card)) {
+                case Card.JOKER: {
+                    face.draw(enchant.Game.instance.assets[Card.ICON], 16 * 11, 0, 16, 16, 4, 12, 24, 24);
+                    break;
+
+                }
+                case Card.ERROR: {
+                    face.draw(enchant.Game.instance.assets[Card.BACK], 0, 0, 48, 48, 0, 8, 32, 32);
+                    break;
+
+                }
+                default: {
+                    var sx = Card.getSuit(card) == Card.SPADE ? 48 : Card.getSuit(card) == Card.HEART ? 96 : Card.getSuit(card) == Card.DIAMOND ? 80 : Card.getSuit(card) == Card.CLUB ? 64 : 0;
+                    face.draw(enchant.Game.instance.assets[Card.ICON], sx, 64, 16, 16, 8, 4, 16, 16);
+                    var fontAssetName = enchant.Game.instance.assets[Card.FONT];
+                    if(Card.getNumber(card) == 10) {
+                        face.draw(fontAssetName, 16, 16, 16, 16, 1, 26, 16, 16);
+                        face.draw(fontAssetName, 0, 16, 16, 16, 13, 26, 16, 16);
+                    } else {
+                        var nm = Card.getNumber(card) == Card.ACE ? [
+                            16, 
+                            32
+                        ] : Card.getNumber(card) == 2 ? [
+                            32, 
+                            16
+                        ] : Card.getNumber(card) == 3 ? [
+                            48, 
+                            16
+                        ] : Card.getNumber(card) == 4 ? [
+                            64, 
+                            16
+                        ] : Card.getNumber(card) == 5 ? [
+                            80, 
+                            16
+                        ] : Card.getNumber(card) == 6 ? [
+                            96, 
+                            16
+                        ] : Card.getNumber(card) == 7 ? [
+                            112, 
+                            16
+                        ] : Card.getNumber(card) == 8 ? [
+                            128, 
+                            16
+                        ] : Card.getNumber(card) == 9 ? [
+                            144, 
+                            16
+                        ] : Card.getNumber(card) == Card.JACK ? [
+                            160, 
+                            32
+                        ] : Card.getNumber(card) == Card.QUEEN ? [
+                            16, 
+                            48
+                        ] : Card.getNumber(card) == Card.KING ? [
+                            176, 
+                            32
+                        ] : [
+                            0, 
+                            0
+                        ];
+                        face.draw(fontAssetName, nm[0], nm[1], 16, 16, 10, 26, 16, 16);
+                    }
+                    break;
+
+                }
+            }
+            return face;
+        }
+        return Card;
+    })();
+    exte.Card = Card;    
+    var TCardSprite = (function (_super) {
+        __extends(TCardSprite, _super);
+        function TCardSprite(width, height) {
+                _super.call(this, width, height);
+        }
+        return TCardSprite;
+    })(enchant.Sprite);
+    exte.TCardSprite = TCardSprite;    
+})(exte || (exte = {}));
+
+var exte;
+(function (exte) {
+    var Dice = (function (_super) {
+        __extends(Dice, _super);
+        function Dice() {
+                _super.call(this, Dice.WIDTH, Dice.HEIGHT);
+            this.image = new enchant.Surface(Dice.WIDTH * Dice.MAXNUM, Dice.HEIGHT);
+            for(var i = 0; i < Dice.MAXNUM; i++) {
+                this.image.draw(this.drawFace(i + 1), i * Dice.WIDTH, 0);
+            }
+        }
+        Dice.IMAGE = 'icon0.png';
+        Dice.WIDTH = 24;
+        Dice.HEIGHT = 34;
+        Dice.MAXNUM = 6;
+        Object.defineProperty(Dice.prototype, "value", {
+            get: function () {
+                return this.frame;
+            },
+            set: function (num) {
+                if(0 < num && num <= Dice.MAXNUM) {
+                    this.frame = num - 1;
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Dice.prototype.drawFace = function (top) {
+            var num = [];
+            top == 1 ? num.push(64, 80, 96) : top == 2 ? num.push(80, 96, 144) : top == 3 ? num.push(96, 144, 128) : top == 4 ? num.push(112, 128, 64) : top == 5 ? num.push(128, 64, 112) : top == 6 ? num.push(144, 112, 80) : num.push(0, 0, 0);
+            var face = new enchant.Surface(Dice.WIDTH, Dice.HEIGHT);
+            var c = face.context;
+            c.moveTo(12, 0);
+            c.lineTo(24, 12);
+            c.lineTo(24, 24);
+            c.lineTo(12, 34);
+            c.lineTo(0, 24);
+            c.lineTo(0, 12);
+            c.closePath();
+            c.fill();
+            var rad = 45 * Math.PI / 180;
+            face.context.setTransform(1, 1, -1, 1, 12, -5);
+            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[0], 32, 16, 16, 0, 0, 16, 16);
+            face.context.setTransform(1, 1, 0, 1, -2, 7);
+            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[1], 32, 16, 16, 0, 0, 16, 16);
+            face.context.setTransform(1, -1, 0, 1, 10, 23);
+            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[2], 32, 16, 16, 0, 0, 16, 16);
+            return face;
+        };
+        return Dice;
+    })(enchant.Sprite);
+    exte.Dice = Dice;    
 })(exte || (exte = {}));
 

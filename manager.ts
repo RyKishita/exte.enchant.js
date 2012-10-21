@@ -4,6 +4,7 @@ module ExteGame {
 
         playAssetName = 'img/play.png';
         mapAssetName = 'map1.gif';
+        waitAssetName = 'img/wait.png';
 
         buttonWidth = 60;
         buttonHeight = 40;
@@ -22,7 +23,8 @@ module ExteGame {
                 this.buttonBAssetName,
                 this.soundStart,
                 this.soundOK,
-                this.soundBGM
+                this.soundBGM,
+                this.waitAssetName,
                 ];
         }
     }

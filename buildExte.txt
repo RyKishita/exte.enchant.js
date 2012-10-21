@@ -1,1 +1,3 @@
 exte.enchant.ts
+Card.ts
+Dice.ts
