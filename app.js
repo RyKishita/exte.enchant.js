@@ -2,7 +2,6 @@
 (function (ExteGame) {
     var GameData = (function () {
         function GameData() {
-            this.playAssetName = 'img/play.png';
             this.mapAssetName = 'map1.gif';
             this.waitAssetName = 'img/wait.png';
             this.buttonWidth = 60;
@@ -15,7 +14,6 @@
         }
         GameData.prototype.getAssetList = function () {
             return [
-                this.playAssetName, 
                 this.mapAssetName, 
                 this.buttonAAssetName, 
                 this.buttonBAssetName, 
@@ -37,7 +35,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('1');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var sp1;
         var sp2;
@@ -152,7 +149,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('2');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var aRand = new exte.AverageRandamizer(10);
         var label;
@@ -336,7 +332,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('3');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
@@ -426,7 +421,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('4');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var clabel = [];
         function update_calc() {
@@ -534,7 +528,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('5');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
@@ -677,7 +670,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('6');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
@@ -753,7 +745,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('7');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var rlabel;
         var moveSprite;
@@ -873,7 +864,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('8');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
@@ -961,7 +951,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('9');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
@@ -1036,7 +1025,6 @@ var ExteGame;
         var game = enchant.Game.instance;
         var scene = new exte.SceneEx('');
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {

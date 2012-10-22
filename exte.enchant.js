@@ -1,4 +1,4 @@
-var __extends = this.__extends || function (d, b) {
+﻿var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
@@ -906,18 +906,25 @@ var exte;
         if(enchant.util.MutableText === undefined) {
             return;
         }
-        var mt = new enchant.util.MutableText(targetsprite.x, targetsprite.y);
+        var mt = new FadeOutMutableText(targetsprite.x, targetsprite.y);
         mt.text = text;
         mt.fedingValue = 1 / (enchant.Game.instance.fps * (sec || 1));
-        mt.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
-            this.opacity -= this.fedingValue;
-            if(this.opacity < this.fedingValue) {
-                this.parentNode.removeChild(this);
-            }
-        });
         group.addChild(mt);
     }
     exte.addFadeOutText = addFadeOutText;
+    var FadeOutMutableText = (function (_super) {
+        __extends(FadeOutMutableText, _super);
+        function FadeOutMutableText(x, y) {
+                _super.call(this, x, y);
+            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+                this.opacity -= this.fedingValue;
+                if(this.opacity < this.fedingValue) {
+                    this.parentNode.removeChild(this);
+                }
+            });
+        }
+        return FadeOutMutableText;
+    })(enchant.util.MutableText);    
     function keyBind(key, button) {
         var game = enchant.Game.instance;
         game.keybind(key[0].toUpperCase().charCodeAt(0), button);
@@ -2351,70 +2358,6 @@ var exte;
         Card.CJ = Card.C11;
         Card.CQ = Card.C12;
         Card.CK = Card.C13;
-        Card.table = [
-            [], 
-            [
-                Card.S01, 
-                Card.S02, 
-                Card.S03, 
-                Card.S04, 
-                Card.S05, 
-                Card.S06, 
-                Card.S07, 
-                Card.S08, 
-                Card.S09, 
-                Card.S10, 
-                Card.S11, 
-                Card.S12, 
-                Card.S13
-            ], 
-            [
-                Card.H01, 
-                Card.H02, 
-                Card.H03, 
-                Card.H04, 
-                Card.H05, 
-                Card.H06, 
-                Card.H07, 
-                Card.H08, 
-                Card.H09, 
-                Card.H10, 
-                Card.H11, 
-                Card.H12, 
-                Card.H13
-            ], 
-            [
-                Card.D01, 
-                Card.D02, 
-                Card.D03, 
-                Card.D04, 
-                Card.D05, 
-                Card.D06, 
-                Card.D07, 
-                Card.D08, 
-                Card.D09, 
-                Card.D10, 
-                Card.D11, 
-                Card.D12, 
-                Card.D13
-            ], 
-            [
-                Card.C01, 
-                Card.C02, 
-                Card.C03, 
-                Card.C04, 
-                Card.C05, 
-                Card.C06, 
-                Card.C07, 
-                Card.C08, 
-                Card.C09, 
-                Card.C10, 
-                Card.C11, 
-                Card.C12, 
-                Card.C13
-            ], 
-            
-        ];
         Card.getSuit = function getSuit(card) {
             if(card == Card.JOKER) {
                 return Card.JOKER;

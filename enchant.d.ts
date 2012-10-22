@@ -124,6 +124,8 @@ module enchant {
         scaleX: number;
         scaleY: number;
         rotation: number;
+        originX: number;
+        originY: number;
     }
 
     declare class Sprite extends Entity {
@@ -158,20 +160,9 @@ module enchant {
         removeChild(node: Node): void;
         firstChild: Node;
         lastChild: Node;
-    }
-
-    declare class RGroup extends Group {
-        constructor (width: number, height: number);
-        width: number;
-        height: number;
-        rotationOrigin: IPoint;
-        addChild(node: Node): void;
         rotation: number;
-    }
-
-    declare class Scene extends Group {
-        constructor ();
-        backgroundColor: string;
+        originX: number;
+        originY: number;
     }
 
     declare class CanvasGroup extends Group {
@@ -185,6 +176,11 @@ module enchant {
         addChild(node: Node): void;
         insertBefore(node: Node, reference: Node): void;
         removeChild(node: Node): void;
+    }
+
+    declare class Scene extends Group {
+        constructor ();
+        backgroundColor: string;
     }
 
     declare class Surface extends EventTarget {

@@ -2,7 +2,6 @@ module ExteGame {
     export class GameData{
         constructor () { }
 
-        playAssetName = 'img/play.png';
         mapAssetName = 'map1.gif';
         waitAssetName = 'img/wait.png';
 
@@ -17,7 +16,6 @@ module ExteGame {
 
         getAssetList(): string[] {
             return [
-                this.playAssetName,
                 this.mapAssetName,
                 this.buttonAAssetName,
                 this.buttonBAssetName,

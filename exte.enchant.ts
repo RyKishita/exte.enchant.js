@@ -1123,16 +1123,24 @@ module exte {
     export function addFadeOutText(group: enchant.Group, targetsprite: enchant.IPoint, text: string, sec?: number) {
         if (enchant.util.MutableText === undefined) return;
 
-        var mt = new enchant.util.MutableText(targetsprite.x, targetsprite.y);
+        var mt = new FadeOutMutableText(targetsprite.x, targetsprite.y);
         mt.text = text;
         mt.fedingValue = 1.0 / (enchant.Game.instance.fps * (sec || 1.0));
-        mt.addEventListener(enchant.Event.ENTER_FRAME, function(e){
-            this.opacity -= this.fedingValue;
-            if (this.opacity < this.fedingValue) {
-                this.parentNode.removeChild(this);
-            }
-        });
         group.addChild(mt);
+    }
+
+    class FadeOutMutableText extends enchant.util.MutableText {
+        constructor (x: number, y: number) {
+            super(x, y);
+
+            this.addEventListener(enchant.Event.ENTER_FRAME, function(e){
+                this.opacity -= this.fedingValue;
+                if (this.opacity < this.fedingValue) {
+                    this.parentNode.removeChild(this);
+                }
+            });
+        }
+        fedingValue: number;
     }
 
     // キーバインド。文字コードを調べるのが面倒なので

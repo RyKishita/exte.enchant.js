@@ -394,7 +394,6 @@ module exte {
         static CJ: number;
         static CQ: number;
         static CK: number;
-        static table: any[];
         static getSuit(card: number): number;
         static getNumber(card: number): number;
         static getData(suit: number, no: number): number;

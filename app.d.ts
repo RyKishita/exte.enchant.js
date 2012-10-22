@@ -1,7 +1,6 @@
 module ExteGame {
     export class GameData {
         constructor ();
-        public playAssetName: string;
         public mapAssetName: string;
         public waitAssetName: string;
         public buttonWidth: number;

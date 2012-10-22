@@ -13,7 +13,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -168,7 +167,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -375,7 +373,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -494,7 +491,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -633,7 +629,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -797,7 +792,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -896,7 +890,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -1035,7 +1028,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -1131,7 +1123,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------
@@ -1224,7 +1215,6 @@ module ExteGame {
 
         //------------------------------------------
         var backGroup = new enchant.Group();
-        backGroup.addChild(new enchant.util.Wallpaper(game.assets[gameData.playAssetName]));
         scene.addChild(backGroup);
 
         //------------------------------------------

@@ -1,13 +1,11 @@
-﻿/// <reference path="enchant.d.ts"/>
+/// <reference path="enchant.d.ts"/>
 
 module enchant.util {
     declare class MutableText extends Sprite {
-        constructor(posX: number, posY: number, width?: number);
+        constructor(x: number, y: number, width?: number);
+        setText(txt: string): void;
         text: string;
-        fedingValue: number;
-    }
-    declare class Wallpaper extends Sprite {
-        constructor (backgroundimage: Surface);
+        row: number;
     }
     declare class ScoreLabel extends MutableText {
         constructor (x?: number, y?: number);
@@ -21,18 +19,15 @@ module enchant.util {
         constructor (x?: number, y?: number, maxlife?: number);
         life: number;
     }
-    declare class VirtualMap extends Group {
-    }
-}
-
-module enchant {
-    // なぜかこれだけutilに入っていない
     declare class Bar extends Sprite {
         constructor (x?: number, y?: number);
         direction: string;
         maxvalue: number;
     }
+    declare class VirtualMap extends Group {
+        addChild(node: Node): void;
+        insertBefore(node: Node, reference: Node): void;
+    }
 }
 
-declare function isTouch(): bool;
 declare function rand(number): number;
