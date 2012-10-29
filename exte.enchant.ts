@@ -74,6 +74,9 @@ module exte {
     // Math.randomと比べて、発生した値が次の発生以降に出にくくなります。
     // 値の偏りが防がれることで運に左右されづらくなりますが、
     // 事故が起きないので面白くない乱数とも言えます。
+    // [使い方]
+    //   var ar = new AverageRandamizer(10);
+    //   var value = ar.next;
     export class AverageRandamizer {
         // @param {整数} [range] 0～range-1を発生させる
         constructor (range: number) {
@@ -403,7 +406,7 @@ module exte {
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.roundと同じ)
     // @return {実数} 結果
     export function round(num: number, figure?: number): number {
-        if (figure) {
+        if (0 < figure) {
             var base = Math.pow(10, figure);
             return Math.round(num * base) / base;
         } else {
@@ -416,7 +419,7 @@ module exte {
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.ceilと同じ)
     // @return {実数} 結果
     export function ceil(num: number, figure?: number): number {
-        if (figure) {
+        if (0 < figure) {
             var base = Math.pow(10, figure);
             return Math.ceil(num * base) / base;
         } else {
@@ -429,7 +432,7 @@ module exte {
     // @param {整数} [figure] 小数点以下桁。省略時は0(Math.floorと同じ)
     // @return {実数} 結果
     export function floor(num: number, figure?: number): number {
-        if (figure) {
+        if (0 < figure) {
             var base = Math.pow(10, figure);
             return Math.floor(num * base) / base;
         } else {
@@ -502,26 +505,37 @@ module exte {
         }
     }
 
+    // マップ上の1地点
     export class MapPoint {
+        // @param {number} [row] 行
+        // @param {number} [column] 列
         constructor (row: number, column: number) {
             this.row = row;
             this.column = column;
         }
-        row: number;
-        column: number;
+
+        // 行
+        public row: number;
+
+        // 列
+        public column: number;
     }
 
     // MapPointSeacher.getRoute の結果データ
     export class ResultRoute extends MapPoint {
-        constructor (row: number, column: number, rest: number, route: MapPoint[][]) {
+        // @param {number} [row] 行
+        // @param {number} [column] 列
+        // @param {number} [rest] 残り移動量
+        // @param {MapPoint[][]} [routes] このマスへ行くための道順。複数のルートになることがあるので配列の配列になっている
+        constructor (row: number, column: number, rest: number, routes: MapPoint[][]) {
             super(row, column);
             this.row = row;
             this.column = column;
             this.rest = rest;
-            this.routes = route;
+            this.routes = routes;
         }
 
-        //残り移動力
+        //残り移動量
         rest: number;
 
         //このマスへ行くための道順
@@ -534,8 +548,10 @@ module exte {
 
     // calcMoveCost の結果データ
     export class ResultMoveCost {
+        // 必要コスト
         cost: number;
-        routes: number[][];
+        // ルート
+        routes: MapPoint[][];
     }
 
     // マップ上の地点検索
@@ -736,10 +752,10 @@ module exte {
             // そのコストで行ける所全てを取得して、目的の位置が来たら記録
             var routes = this.getRoute(fromRowNo, fromColumnNo, cost);
 
-            var resultRoutes
+            var resultRoutes: MapPoint[][] = null;
             routes.forEach(value => {
                 if (value.row == toRowNo && value.column == toColumnNo) {
-                    resultRoutes = routes;
+                    resultRoutes = value.routes;
                 }
             });
 
@@ -1384,12 +1400,12 @@ module exte {
         return map;
     }
 
-    // "enchant.js/images/map1.gif"を使った、単純なenchant.Mapを作成
+    // "enchant.js/images/map1.png"を使った、単純なenchant.Mapを作成
     // @param {整数} [typeNo] タイプ 0～
     // @param {整数} [rowNum] 行数
     // @param {整数} [columnNum] 列数
     export function createSampleMap(typeNo: number, rowNum: number, columnNum: number) {
-        var assetName = 'map1.gif';
+        var assetName = 'map1.png';
         switch (typeNo) {
             case 0: return createSimpleMap(assetName, 16, rowNum, columnNum, 33);
             case 1: return createSimpleMap(assetName, 16, rowNum, columnNum, 36);
@@ -1425,22 +1441,29 @@ module exte {
         public lineHeight = 10;
 
         // デフォルトカラー
-        public color = null;
+        public color: string = null;
 
         // デフォルト背景色(ラベル自体の背景。全体の背景はコンストラクタで指定)
-        public backgroundColor = null;
+        public backgroundColor: string = null;
 
         // デフォルトフォント
-        public font = null;
+        public font: string = null;
 
         // デフォルトフォントサイズ
-        public fontSize = null;
+        public fontSize: string = null;
 
         // 折り返し。「normal」「break-all」「keep-all」のどれか
-        public wordBreak = null;
+        public wordBreak: string = null;
+
+        // デフォルトの折り返し
+        public static WB_Normal = "normal";
+        // 単語の途中であっても折り返し
+        public static WB_BreakAll = "break-all";
+        // 空白で区切った単位で折り返し
+        public static WB_KeepAll = "keep-all";
 
         // 文字位置。「left」「center」「right」など
-        public textAlign = null;
+        public textAlign: string = null;
 
         // 各ログをLogList幅に合わせるならtrue。falseだとテキストが長いと幅を超える
         public adjustWidth = true;
@@ -1474,7 +1497,7 @@ module exte {
         public height: number;
 
         private _labels = [];
-        private _texts = [];
+        private _texts: LogTextData[] = [];
         private _currentWork = 0; //0:check, 1:textout, 2:scroll, 3:textin
         private _fadeInLabel = null;
         private _fadeOutLabel = null;
@@ -1600,9 +1623,11 @@ module exte {
             }
         }
 
-        // 表示/非表示
+        // 表示状態の取得
         public get visible() { return this._visible; }
-        public set(v) {
+
+        // 表示状態の設定
+        public set visible(v: bool) {
             if (this._visible == v) return;
             this._visible = v;
             for (var i = 0; i < this._labels.length; i++) {
@@ -1616,17 +1641,17 @@ module exte {
         // @param {文字列} [color] このテキストのみの文字色。省略時はデフォルト
         // @param {文字列} [fontSize] このテキストのみのフォントサイズ。省略時はデフォルト
         // @param {数値} [lineWidth] このテキストのみの行高さ。省略時はデフォルト
-        // @param {数値} [textAlign] このテキストのみの文字位置。省略時はデフォルト
+        // @param {文字列} [textAlign] このテキストのみの文字位置。省略時はデフォルト
         // @param {string} [backgroundColor] このテキストのみの背景色
-        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number, backgroundColor?: string): void {
-            this._texts.push({
-                text: text,
-                color: color || this.color,
-                fontSize: fontSize || this.fontSize,
-                lineHeight: lineHeight || this.lineHeight,
-                textAlign: textAlign || this.textAlign,
-                backgroundColor: backgroundColor || this.backgroundColor
-            });
+        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: string, backgroundColor?: string): void {
+            this._texts.push(
+                new LogTextData(
+                    text,
+                    color || this.color,
+                    fontSize || this.fontSize,
+                    lineHeight || this.lineHeight,
+                    textAlign || this.textAlign,
+                    backgroundColor || this.backgroundColor));
         }
 
         // 溜まっているログを、アニメーションを無効化して一気に出力
@@ -1643,6 +1668,24 @@ module exte {
             }
             this._currentWork = 0;
         }
+    }
+
+    // LogList作業用
+    class LogTextData {
+        constructor (text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: string, backgroundColor?: string) {
+            this.text = text;
+            this.color = color;
+            this.fontSize = fontSize;
+            this.lineHeight = lineHeight;
+            this.textAlign = textAlign;
+            this.backgroundColor = backgroundColor;
+        }
+        text: string;
+        color: string;
+        fontSize: string;
+        lineHeight: number;
+        textAlign: string;
+        backgroundColor: string;
     }
 
     // 単純な四角形のSurface作成
@@ -1811,13 +1854,16 @@ module exte {
     }
 
     // 点
-    export class Point {
+    export class Point implements enchant.IPoint {
+        // 座標X
         x = 0;
+
+        // 座標Y
         y = 0;
 
         // @param {整数} [x] 省略時は0
         // @param {整数} [y] 省略時は0
-        constructor (x: number, y: number) {
+        constructor (x?: number, y?: number) {
             // X座標値
             this.x = x || 0;
 
@@ -1860,7 +1906,7 @@ module exte {
         // @param {整数} [y1] 始点Y 省略時は0
         // @param {整数} [x2] 終点X 省略時は0
         // @param {整数} [y2] 終点Y 省略時は0
-        constructor (x1: number, y1: number, x2: number, y2: number) {
+        constructor (x1?: number, y1?: number, x2?: number, y2?: number) {
             // 始点
             this.posS = new Point(x1, y1);
 
@@ -1868,26 +1914,31 @@ module exte {
             this.posE = new Point(x2, y2);
         }
 
-        // 始終点間のX量。終点が始点より左にあったらマイナスになる
-        public get dx() {
+        // 始終点間のX量の取得。終点が始点より左にあったらマイナスになる
+        public get dx(): number {
             return this.posE.x - this.posS.x;
         }
-        public set dx(dx: number) {
-            this.posE.x = this.posS.x + dx;
+
+        // 始終点間のX量の設定。終点側を移動
+        public set dx(v: number) {
+            this.posE.x = this.posS.x + v;
         }
 
-        // 始終点間のY量。終点が始点より上にあったらマイナスになる
-        public get dy() {
+        // 始終点間のY量の取得。終点が始点より上にあったらマイナスになる
+        public get dy(): number {
             return this.posE.y - this.posS.y;
         }
-        public set dy(dy: number) {
-            this.posE.y = this.posS.y + dy;
+
+        // 始終点間のY量の設定。終点側を移動
+        public set dy(v: number) {
+            this.posE.y = this.posS.y + v;
         }
 
-        // 長さ。set時、終点の位置が変わる。始点から遠くor近くなる
-        public get length() {
+        // 長さの取得
+        public get length(): number {
             return this.posS.getDistance(this.posE);
         }
+        // 長さの設定。終点の位置が変わる。始点から遠くor近くなる
         public set length(dstL: number) {
             var srcL = this.length;
             this.posE.x = this.posS.x + Math.floor(this.dx * dstL / srcL);
@@ -1985,31 +2036,34 @@ module exte {
     }
 
     // 範囲のある図形の基本クラス
-    export class Area {
-        x: number;
-        y: number;
+    export class Area extends Point implements enchant.IArea {
+        // 幅
         width: number;
+
+        // 高さ
         height: number;
 
         // @param {整数} [x] 図形の左上座標X 省略時は0
         // @param {整数} [y] 図形の左上座標Y 省略時は0
         // @param {整数} [width] 省略時は0
         // @param {整数} [height] 省略時は0
-        constructor (x: number, y: number, width: number, height: number) {
-            this.x = x || 0;
-            this.y = y || 0;
+        constructor (x?: number, y?: number, width?: number, height?: number) {
+            super(x, y);
             this.width = width || 0;
             this.height = height || 0;
         }
 
-        // 上
-        public get top() { return this.y; }
+        // 上の座標値を取得
+        public get top(): number { return this.y; }
+
+        // 上の座標値を設定
         public set top(t: number) { this.y = t; }
 
-        // 下
-        public get bottom() { return this.y + this.height; }
+        // 下の座標値を取得
+        public get bottom(): number { return this.y + this.height; }
+
+        // 下の座標値を設定。位置の維持を優先
         public set bottom(b: number) {
-            // 位置維持を優先
             this.height = Math.abs(b - this.y);
             if (b < this.y) {
                 this.y = b;
@@ -2019,14 +2073,17 @@ module exte {
             //this.y = b - this.height;
         }
 
-        // 左
-        public get left() { return this.x; }
+        // 左の座標値を取得
+        public get left(): number { return this.x; }
+
+        // 左の座標値を設定
         public set left(l: number) { this.x = l; }
 
-        // 右
-        public get right() { return this.x + this.width; }
+        // 右の座標値を取得
+        public get right(): number { return this.x + this.width; }
+
+        // 右の座標値を設定。位置の維持を優先
         public set right(r: number) {
-            // 位置維持を優先
             this.width = Math.abs(r - this.x);
             if (r < this.x) {
                 this.x = r;
@@ -2036,19 +2093,25 @@ module exte {
             //this.x = r - this.width;
         }
 
-        // 中心 {x,y} 
-        public get center() {
-            return new Point(this.x + this.width / 2, this.y + this.height / 2);
+        // 中心の取得
+        public get center(): enchant.IPoint {
+            return new Point(
+                this.x + this.width / 2,
+                this.y + this.height / 2);
         }
-        public set center(c) {
+
+        // 中心の設定
+        public set center(c: enchant.IPoint) {
             this.x = c.x - this.width / 2;
             this.y = c.y - this.height / 2;
         }
 
-        // 対角線の長さ。setは中心基準で変更
-        public get diagonal() {
+        // 対角線の長さを取得
+        public get diagonal(): number {
             return Math.sqrt(this.width * this.width + this.height * this.height);
         }
+
+        // 対角線の長さを設定。中心基準
         public set diagonal(l: number) {
             var d = this.diagonal;
             if (d == 0) {
@@ -2081,13 +2144,13 @@ module exte {
             this.x = sprite.x;
             this.y = sprite.y;
             this.height = sprite.height * sprite.scaleX;
-            this.width = sprite.width;
+            this.width = sprite.width * sprite.scaleY;
         }
 
         // enchant.Spriete等に位置・大きさを設定
         // @param {enchant.Sprite} [sprite] 対象
         // @param {Boolen} [updateSize] サイズの取り込みにおいて、幅/高さを更新するならtrue。scaleX/scaleYを更新するなら false。省略時はfalse
-        public setTo(sprite: enchant.Sprite, updateSize?: bool) {
+        public setTo(sprite: enchant.Sprite, updateSize?: bool): void {
             sprite.x = this.x;
             sprite.y = this.y;
             if (updateSize) {
@@ -2163,9 +2226,9 @@ module exte {
         // 指定した四角形と重なっているならtrue
         // @param {Rectangle} [rect] 四角形
         // @return {Boolen} 重なっているならtrue
-        public intersectRect(rect: Area): bool {
-            return this.x < rect.right && rect.x < this.right &&
-                this.y < rect.bottom && rect.y < this.bottom;
+        public intersectRect(rect: enchant.IArea): bool {
+            return this.x < (rect.x + rect.width) && rect.x < this.right &&
+                this.y < (rect.y + rect.height) && rect.y < this.bottom;
         }
 
         // 指定した線と重なっているならtrue
@@ -2231,7 +2294,7 @@ module exte {
                 case 2: key1 = 7; key2 = 1; break;
                 case 3: key1 = 9; key2 = 3; break;
             }
-            var line = new Line(0, 0, 0, 0);
+            var line = new Line();
             line.posS = this.getPos(key1);
             line.posE = this.getPos(key2);
             return line;
@@ -2248,7 +2311,7 @@ module exte {
                 case 7: key2 = 3; break;
                 case 9: key2 = 1; break;
             }
-            var line = new Line(0, 0, 0, 0);
+            var line = new Line();
             line.posS = this.getPos(key);
             line.posE = this.getPos(key2);
             return line;
@@ -2291,22 +2354,24 @@ module exte {
             super(centerX - radius, centerY - radius, radius * 2, radius * 2);
         }
 
-        // 半径
-        public get radius() {
+        // 半径を取得
+        public get radius(): number {
             return this.width / 2;
         }
-        public set radius(r) {
+        // 半径を設定
+        public set radius(r: number) {
             var v = Math.floor((r - this.radius) * 0.5);
             this.x -= v;
             this.y -= v;
             this.width = r * 2;
         }
 
-        // 直径
-        public get diameter() {
+        // 直径を取得
+        public get diameter():number {
             return this.width;
         }
-        public set(d) {
+        // 直径を設定
+        public set(d: number) {
             var v = Math.floor((d - this.diameter) * 0.5);
             this.x -= v;
             this.y -= v;
@@ -2317,7 +2382,7 @@ module exte {
         // @param {object} [point] 位置{x,y}
         // @return {Boolen} 入っているならtrue
         public hitTest(point: enchant.IPoint): bool {
-            return this.center.getDistance(point) < this.radius;
+            return getDistance(this.center, point) < this.radius;
         }
 
         // 指定した四角形と重なっているならtrue
@@ -2358,7 +2423,7 @@ module exte {
         // 指定した座標を円内に収める
         // @param {object} [pos] 位置{x,y}
         public adjustPos(pos: enchant.IPoint): void {
-            var distance = this.center.getDistance(pos);
+            var distance = getDistance(this.center, pos);
             if (distance < this.radius) return;
 
             var center = this.center;
@@ -2370,11 +2435,10 @@ module exte {
         // @return {Point} 結果
         public getRandomPos(): Point {
             var r = Math.random() * this.radius;
-            var angle = Math.random() * Math.PI * 2;
-            var point = this.center;
-            point.x += Math.floor(Math.cos(angle) * r);
-            point.y += Math.floor(Math.sin(angle) * r);
-            return point;
+            var angle = Math.random() * Math.PI * 2.0;
+            var x = this.center.x + Math.floor(Math.cos(angle) * r);
+            var y = this.center.y + Math.floor(Math.sin(angle) * r);
+            return new Point(x, y);
         }
 
         // 単純な円のSurface作成
@@ -2624,10 +2688,9 @@ module exte {
         public getRandomPos(): Point {
             var r = Math.random() * this.radius;
             var angle = this.angle + Math.random() * this.range - this.range * 0.5;
-            var point = this.center;
-            point.x += Math.floor(Math.cos(angle) * r);
-            point.y += Math.floor(Math.sin(angle) * r);
-            return point;
+            var x = this.center.x + Math.floor(Math.cos(angle) * r);
+            var y = this.center.y + Math.floor(Math.sin(angle) * r);
+            return new Point(x, y);
         }
 
         // Surface作成
@@ -2713,53 +2776,60 @@ module exte {
             c.stroke();
         }
 
-            // 線色
-        public get lineColor() {
+        // 線色の取得
+        public get lineColor(): string {
             return this.image.context.strokeStyle; // this._lineColor;
         }
-        public set(c) {
+
+        // 線色の設定
+        public set(c: string) {
             //this._lineColor = c;
             this.image.context.strokeStyle = c;
         }
 
-        // 線幅
-        public get lineWidth() {
+        // 線幅の取得
+        public get lineWidth(): number {
             return this.image.context.lineWidth;
         }
+
+        // 線幅の設定
         public set lineWidth(l) {
             this.image.context.lineWidth = l;
         }
 
-        // 波紋の速度(フレーム毎の半径増加量)
-        public get speed() {
+        // 波紋の速度(フレーム毎の半径増加量)を取得
+        public get speed(): number {
             return this._speed;
         }
-        public set speed(s) {
+
+        // 波紋の速度(フレーム毎の半径増加量)を設定
+        public set speed(s: number) {
             this._speed = s;
         }
 
         // 現在表示している波紋の半径
-        public get radius() {
+        public get radius(): number {
             return this._radius;
         }
 
         // 波紋の最大半径。startで指定した位置から、一番遠い四隅までの距離
-        public get radiusMax() {
+        public get radiusMax(): number {
             return this._radiusMax;
         }
 
-        // 半径の制限。0だと描画範囲を越えるまで実行
-        public get radiusLimit() {
+        // 半径の制限を取得
+        public get radiusLimit(): number {
             return this._radiusLimit;
         }
-        public set radiusLimit(r) {
+        // 半径の制限を設定。0だと描画範囲を越えるまで実行
+        public set radiusLimit(r: number) {
             this._radiusLimit = r;
         }
 
         // 表示開始
         // @param {整数} [x] 開始地点 X座標
         // @param {整数} [y] 開始地点 X座標
-        public start(x: number, y: number) {
+        public start(x: number, y: number): void {
             this._center = new Point(x, y);
             this._active = true;
             this._radius = 0;
@@ -2777,11 +2847,13 @@ module exte {
             this.image.clear();
         }
 
-        // 停止/再開
-        public get active() {
+        // 動作中かどうか
+        public get active(): bool {
             return this._active;
         }
-        public set active(a) {
+
+        // 動作させるならtrue。停止させるならfalse
+        public set active(a: bool) {
             if (this._active == a) return;
             if (a && this._radiusMax == 0) return;
             this._active = a;
@@ -2798,7 +2870,7 @@ module exte {
     // 待機シーンの追加
     // 指定のコールバックがtrueを返すまで待機し続ける
     // イメージを指定した場合は画面中央に配置する
-    export function pushWaitScene(eventEnterFrame: () =>bool, image?: enchant.Surface) {
+    export function pushWaitScene(eventEnterFrame: () =>bool, image?: enchant.Surface): void {
         var game = enchant.Game.instance;
 
         var scene = new enchant.Scene();

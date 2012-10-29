@@ -44,14 +44,14 @@ module exte {
         public column: number;
     }
     export class ResultRoute extends MapPoint {
-        constructor (row: number, column: number, rest: number, route: MapPoint[][]);
+        constructor (row: number, column: number, rest: number, routes: MapPoint[][]);
         public rest: number;
         public routes: MapPoint[][];
         public valid: bool;
     }
     export class ResultMoveCost {
         public cost: number;
-        public routes: number[][];
+        public routes: MapPoint[][];
     }
     export class MapPointSeacher {
         constructor (map: number[][]);
@@ -146,19 +146,22 @@ module exte {
         public fadeOut: number;
         public scrollPx: number;
         public lineHeight: number;
-        public color;
-        public backgroundColor;
-        public font;
-        public fontSize;
-        public wordBreak;
-        public textAlign;
+        public color: string;
+        public backgroundColor: string;
+        public font: string;
+        public fontSize: string;
+        public wordBreak: string;
+        static WB_Normal: string;
+        static WB_BreakAll: string;
+        static WB_KeepAll: string;
+        public textAlign: string;
         public adjustWidth: bool;
         public stackLimit: number;
         constructor (x: number, y: number, width: number, height: number, backgroundColor?: string);
         public width: number;
         public height: number;
         private _labels: any[];
-        private _texts: any[];
+        private _texts;
         private _currentWork: number;
         private _fadeInLabel;
         private _fadeOutLabel;
@@ -172,8 +175,7 @@ module exte {
         private enterFrame3(): void;
         private enterFrame(e): void;
         public visible : bool;
-        public set(v): void;
-        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: number, backgroundColor?: string): void;
+        public regist(text: string, color?: string, fontSize?: string, lineHeight?: number, textAlign?: string, backgroundColor?: string): void;
         public outAllLog(): void;
         public clear(): void;
     }
@@ -185,10 +187,10 @@ module exte {
     export function createEllipseSprite(width: number, height: number, color: string, fill?: bool): enchant.Sprite;
     export function createArcSurface(radius: number, angle: number, range: number, color: string, fill?: bool): enchant.Surface;
     export function createArcSprite(radius: number, angle: number, range: number, color: string, fill?: bool): enchant.Sprite;
-    export class Point {
+    export class Point implements enchant.IPoint {
         public x: number;
         public y: number;
-        constructor (x: number, y: number);
+        constructor (x?: number, y?: number);
         public getDistance(point: enchant.IPoint): number;
         public isEqual(point): bool;
         public clone(): Point;
@@ -196,7 +198,7 @@ module exte {
     export class Line {
         public posS: Point;
         public posE: Point;
-        constructor (x1: number, y1: number, x2: number, y2: number);
+        constructor (x1?: number, y1?: number, x2?: number, y2?: number);
         public dx : number;
         public dy : number;
         public length : number;
@@ -205,17 +207,15 @@ module exte {
         public createSprite(color: string, width?: number): enchant.Sprite;
         public clone(): Line;
     }
-    export class Area {
-        public x: number;
-        public y: number;
+    export class Area extends Point implements enchant.IArea {
         public width: number;
         public height: number;
-        constructor (x: number, y: number, width: number, height: number);
+        constructor (x?: number, y?: number, width?: number, height?: number);
         public top : number;
         public bottom : number;
         public left : number;
         public right : number;
-        public center : Point;
+        public center : enchant.IPoint;
         public diagonal : number;
         public scale(sx: number, sy?: number): void;
         public updateFrom(sprite: enchant.Sprite): void;
@@ -228,7 +228,7 @@ module exte {
         private _calcWidth(key): number;
         private _calcHeight(key): number;
         public hitTest(point: enchant.IPoint): bool;
-        public intersectRect(rect: Area): bool;
+        public intersectRect(rect: enchant.IArea): bool;
         public intersectLine(line: Line): bool;
         public getPos(key: number): Point;
         public setPos(key: number, pos: enchant.IPoint): void;
@@ -244,7 +244,7 @@ module exte {
         constructor (centerX: number, centerY: number, radius: number);
         public radius : number;
         public diameter : number;
-        public set(d): void;
+        public set(d: number): void;
         public hitTest(point: enchant.IPoint): bool;
         public intersectRect(rect): bool;
         public intersectLine(line: Line): bool;
@@ -291,8 +291,8 @@ module exte {
         private _speed: number;
         private _center;
         private _draw(): void;
-        public lineColor : any;
-        public set(c): void;
+        public lineColor : string;
+        public set(c: string): void;
         public lineWidth : number;
         public speed : number;
         public radius : number;

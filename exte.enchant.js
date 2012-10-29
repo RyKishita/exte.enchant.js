@@ -361,7 +361,7 @@ var exte;
     }
     exte.randomString = randomString;
     function round(num, figure) {
-        if(figure) {
+        if(0 < figure) {
             var base = Math.pow(10, figure);
             return Math.round(num * base) / base;
         } else {
@@ -370,7 +370,7 @@ var exte;
     }
     exte.round = round;
     function ceil(num, figure) {
-        if(figure) {
+        if(0 < figure) {
             var base = Math.pow(10, figure);
             return Math.ceil(num * base) / base;
         } else {
@@ -379,7 +379,7 @@ var exte;
     }
     exte.ceil = ceil;
     function floor(num, figure) {
-        if(figure) {
+        if(0 < figure) {
             var base = Math.pow(10, figure);
             return Math.floor(num * base) / base;
         } else {
@@ -443,13 +443,13 @@ var exte;
     exte.MapPoint = MapPoint;    
     var ResultRoute = (function (_super) {
         __extends(ResultRoute, _super);
-        function ResultRoute(row, column, rest, route) {
+        function ResultRoute(row, column, rest, routes) {
                 _super.call(this, row, column);
             this.valid = true;
             this.row = row;
             this.column = column;
             this.rest = rest;
-            this.routes = route;
+            this.routes = routes;
         }
         return ResultRoute;
     })(MapPoint);
@@ -619,10 +619,10 @@ var exte;
                 cost += map[toRowNo][toColumnNo];
             }
             var routes = this.getRoute(fromRowNo, fromColumnNo, cost);
-            var resultRoutes;
+            var resultRoutes = null;
             routes.forEach(function (value) {
                 if(value.row == toRowNo && value.column == toColumnNo) {
-                    resultRoutes = routes;
+                    resultRoutes = value.routes;
                 }
             });
             cost = 0;
@@ -1176,7 +1176,7 @@ var exte;
     }
     exte.createSimpleMap = createSimpleMap;
     function createSampleMap(typeNo, rowNum, columnNum) {
-        var assetName = 'map1.gif';
+        var assetName = 'map1.png';
         switch(typeNo) {
             case 0: {
                 return createSimpleMap(assetName, 16, rowNum, columnNum, 33);
@@ -1276,6 +1276,9 @@ var exte;
             }
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
+        LogList.WB_Normal = "normal";
+        LogList.WB_BreakAll = "break-all";
+        LogList.WB_KeepAll = "keep-all";
         LogList.prototype.createLabel = function () {
             var label = new enchant.Label('');
             if(this.adjustWidth) {
@@ -1401,28 +1404,21 @@ var exte;
             get: function () {
                 return this._visible;
             },
+            set: function (v) {
+                if(this._visible == v) {
+                    return;
+                }
+                this._visible = v;
+                for(var i = 0; i < this._labels.length; i++) {
+                    var l = this._labels[i];
+                    l.visible = v && l.valid;
+                }
+            },
             enumerable: true,
             configurable: true
         });
-        LogList.prototype.set = function (v) {
-            if(this._visible == v) {
-                return;
-            }
-            this._visible = v;
-            for(var i = 0; i < this._labels.length; i++) {
-                var l = this._labels[i];
-                l.visible = v && l.valid;
-            }
-        };
         LogList.prototype.regist = function (text, color, fontSize, lineHeight, textAlign, backgroundColor) {
-            this._texts.push({
-                text: text,
-                color: color || this.color,
-                fontSize: fontSize || this.fontSize,
-                lineHeight: lineHeight || this.lineHeight,
-                textAlign: textAlign || this.textAlign,
-                backgroundColor: backgroundColor || this.backgroundColor
-            });
+            this._texts.push(new LogTextData(text, color || this.color, fontSize || this.fontSize, lineHeight || this.lineHeight, textAlign || this.textAlign, backgroundColor || this.backgroundColor));
         };
         LogList.prototype.outAllLog = function () {
             this._outAllLog = true;
@@ -1438,6 +1434,17 @@ var exte;
         return LogList;
     })(enchant.Group);
     exte.LogList = LogList;    
+    var LogTextData = (function () {
+        function LogTextData(text, color, fontSize, lineHeight, textAlign, backgroundColor) {
+            this.text = text;
+            this.color = color;
+            this.fontSize = fontSize;
+            this.lineHeight = lineHeight;
+            this.textAlign = textAlign;
+            this.backgroundColor = backgroundColor;
+        }
+        return LogTextData;
+    })();    
     function createRectangleSurface(width, height, color, fill) {
         var s = new enchant.Surface(width, height);
         var c = s.context;
@@ -1574,8 +1581,8 @@ var exte;
             get: function () {
                 return this.posE.x - this.posS.x;
             },
-            set: function (dx) {
-                this.posE.x = this.posS.x + dx;
+            set: function (v) {
+                this.posE.x = this.posS.x + v;
             },
             enumerable: true,
             configurable: true
@@ -1584,8 +1591,8 @@ var exte;
             get: function () {
                 return this.posE.y - this.posS.y;
             },
-            set: function (dy) {
-                this.posE.y = this.posS.y + dy;
+            set: function (v) {
+                this.posE.y = this.posS.y + v;
             },
             enumerable: true,
             configurable: true
@@ -1668,10 +1675,10 @@ var exte;
         return Line;
     })();
     exte.Line = Line;    
-    var Area = (function () {
+    var Area = (function (_super) {
+        __extends(Area, _super);
         function Area(x, y, width, height) {
-            this.x = x || 0;
-            this.y = y || 0;
+                _super.call(this, x, y);
             this.width = width || 0;
             this.height = height || 0;
         }
@@ -1765,7 +1772,7 @@ var exte;
             this.x = sprite.x;
             this.y = sprite.y;
             this.height = sprite.height * sprite.scaleX;
-            this.width = sprite.width;
+            this.width = sprite.width * sprite.scaleY;
         };
         Area.prototype.setTo = function (sprite, updateSize) {
             sprite.x = this.x;
@@ -1802,7 +1809,7 @@ var exte;
             return new Area(this.x, this.y, this.width, this.height);
         };
         return Area;
-    })();
+    })(Point);
     exte.Area = Area;    
     var Rectangle = (function (_super) {
         __extends(Rectangle, _super);
@@ -1819,7 +1826,7 @@ var exte;
             return this.x < point.x && point.x < this.right && this.y < point.y && point.y < this.bottom;
         };
         Rectangle.prototype.intersectRect = function (rect) {
-            return this.x < rect.right && rect.x < this.right && this.y < rect.bottom && rect.y < this.bottom;
+            return this.x < (rect.x + rect.width) && rect.x < this.right && this.y < (rect.y + rect.height) && rect.y < this.bottom;
         };
         Rectangle.prototype.intersectLine = function (line) {
             if(this.hitTest(line.posS) || this.hitTest(line.posE)) {
@@ -1883,7 +1890,7 @@ var exte;
 
                 }
             }
-            var line = new Line(0, 0, 0, 0);
+            var line = new Line();
             line.posS = this.getPos(key1);
             line.posE = this.getPos(key2);
             return line;
@@ -1912,7 +1919,7 @@ var exte;
 
                 }
             }
-            var line = new Line(0, 0, 0, 0);
+            var line = new Line();
             line.posS = this.getPos(key);
             line.posE = this.getPos(key2);
             return line;
@@ -1966,7 +1973,7 @@ var exte;
             this.width = d;
         };
         Circle.prototype.hitTest = function (point) {
-            return this.center.getDistance(point) < this.radius;
+            return getDistance(this.center, point) < this.radius;
         };
         Circle.prototype.intersectRect = function (rect) {
             throw new Error('Circle.intersectRect is not implemented');
@@ -1980,7 +1987,7 @@ var exte;
             return (_ = this.x - circle.x + (this.width - circle.width) / 2) * _ + (_ = this.y - circle.y + (this.height - circle.height) / 2) * _ < distance * distance;
         };
         Circle.prototype.adjustPos = function (pos) {
-            var distance = this.center.getDistance(pos);
+            var distance = getDistance(this.center, pos);
             if(distance < this.radius) {
                 return;
             }
@@ -1991,10 +1998,9 @@ var exte;
         Circle.prototype.getRandomPos = function () {
             var r = Math.random() * this.radius;
             var angle = Math.random() * Math.PI * 2;
-            var point = this.center;
-            point.x += Math.floor(Math.cos(angle) * r);
-            point.y += Math.floor(Math.sin(angle) * r);
-            return point;
+            var x = this.center.x + Math.floor(Math.cos(angle) * r);
+            var y = this.center.y + Math.floor(Math.sin(angle) * r);
+            return new Point(x, y);
         };
         Circle.prototype.createSurface = function (color, fill) {
             return createCircleSurface(this.radius, color, fill);
@@ -2091,10 +2097,9 @@ var exte;
         Arc.prototype.getRandomPos = function () {
             var r = Math.random() * this.radius;
             var angle = this.angle + Math.random() * this.range - this.range * 0.5;
-            var point = this.center;
-            point.x += Math.floor(Math.cos(angle) * r);
-            point.y += Math.floor(Math.sin(angle) * r);
-            return point;
+            var x = this.center.x + Math.floor(Math.cos(angle) * r);
+            var y = this.center.y + Math.floor(Math.sin(angle) * r);
+            return new Point(x, y);
         };
         Arc.prototype.createSurface = function (color, fill) {
             return createArcSurface(this.radius, this.angle, this.range, color, fill);
