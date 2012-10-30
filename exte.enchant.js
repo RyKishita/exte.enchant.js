@@ -1175,8 +1175,10 @@ var exte;
         return map;
     }
     exte.createSimpleMap = createSimpleMap;
-    function createSampleMap(typeNo, rowNum, columnNum) {
-        var assetName = 'map1.png';
+    function createSampleMap(typeNo, rowNum, columnNum, assetName) {
+        if(assetName === undefined) {
+            assetName = 'map1.png';
+        }
         switch(typeNo) {
             case 0: {
                 return createSimpleMap(assetName, 16, rowNum, columnNum, 33);
@@ -1268,8 +1270,8 @@ var exte;
             this._visible = true;
             this.x = x;
             this.y = y;
-            this.width = width;
-            this.height = height;
+            this._width = width;
+            this._height = height;
             if(backgroundColor) {
                 var back = createRectangleSprite(width, height, backgroundColor, true);
                 this.addChild(back);
@@ -1279,6 +1281,20 @@ var exte;
         LogList.WB_Normal = "normal";
         LogList.WB_BreakAll = "break-all";
         LogList.WB_KeepAll = "keep-all";
+        Object.defineProperty(LogList.prototype, "width", {
+            get: function () {
+                return this._width;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(LogList.prototype, "height", {
+            get: function () {
+                return this._height;
+            },
+            enumerable: true,
+            configurable: true
+        });
         LogList.prototype.createLabel = function () {
             var label = new enchant.Label('');
             if(this.adjustWidth) {

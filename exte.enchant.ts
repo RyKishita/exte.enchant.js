@@ -99,7 +99,7 @@ module exte {
             } else {
                 result = rand(this.range);
             }
-            
+
             this._table[result] += this.range;
             for (var i = 0; i < this.range; i++) {
                 this._table[i]--;
@@ -562,9 +562,9 @@ module exte {
             this.rowNum = map.length;
             this.columnNum = map[0].length;
             this.limitLeft = 0;
-            this.limitRight = this.columnNum-1;
+            this.limitRight = this.columnNum - 1;
             this.limitTop = 0;
-            this.limitBottom = this.rowNum-1;
+            this.limitBottom = this.rowNum - 1;
         }
 
         private map: number[][];
@@ -645,7 +645,7 @@ module exte {
         // @param {整数} [baseColumnNo] ユニットの現在位置の列番号
         // @param {整数} [cost] ユニットの移動力
         // @return {MapPoint[]} 結果。コストが足りれば開始地点が踏む魔れることもあります
-        public getRoute(baseRowNo: number, baseColumnNo: number, cost: number): ResultRoute[]{
+        public getRoute(baseRowNo: number, baseColumnNo: number, cost: number): ResultRoute[] {
 
             var route = new ResultRoute(baseRowNo, baseColumnNo, cost, [[]]);
 
@@ -711,7 +711,7 @@ module exte {
                 }
             }
 
-            for (var i = points.length -1; i >= 0; i--) {
+            for (var i = points.length - 1; i >= 0; i--) {
                 var point = points[i];
                 if (point.rest < 0) {
                     points.splice(i, 1);
@@ -896,7 +896,10 @@ module exte {
             super(type);
         }
 
+        // イベントID
         eventID: number;
+
+        // 入力完了までの時間
         sec: number;
     }
 
@@ -941,9 +944,9 @@ module exte {
                 enchant.Event.A_BUTTON_UP,
                 enchant.Event.B_BUTTON_DOWN,
                 enchant.Event.B_BUTTON_UP];
-            events.forEach(function(type) {
-                    this.addEventListener(type, this.changeInput);
-                }, this);
+            events.forEach(function (type) {
+                this.addEventListener(type, this.changeInput);
+            }, this);
         }
 
         private inputPatterns = [];
@@ -955,7 +958,7 @@ module exte {
             enchant.Game.instance.currentScene.dispatchEvent(ev);
         }
 
-        private enterFrame(e){
+        private enterFrame(e) {
             this.inputPatterns.forEach(p=>{
                 if (p.active) {
                     p.frame++;
@@ -1045,7 +1048,7 @@ module exte {
             var s = (fadeInSec == undefined) ? 0.5 : fadeInSec;
             if (0 < s) {
                 this._fadeInStep = 1.0 / (s * fps);
-                this.addEventListener(Event_SceneExStarting, function(e){
+                this.addEventListener(Event_SceneExStarting, function (e) {
                     this._setFadeIn = true;
                     this.opacity = 0;
                 });
@@ -1057,7 +1060,7 @@ module exte {
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
 
-        private enterFrame(e){
+        private enterFrame(e) {
             if (this._setFadeIn && this._fadeIn()) {
                 this._setFadeIn = false;
             }
@@ -1136,7 +1139,7 @@ module exte {
     // @param {enchant.Sprite} [targetsprite] 文字を出す基準となる要素
     // @param {文字列} [text] 文字。半角英数記号のみ
     // @param {実数} [sec] 表示している時間(省略時は1秒)
-    export function addFadeOutText(group: enchant.Group, targetsprite: enchant.IPoint, text: string, sec?: number) {
+    export function addFadeOutText(group: enchant.Group, targetsprite: enchant.IPoint, text: string, sec?: number): void {
         if (enchant.util.MutableText === undefined) return;
 
         var mt = new FadeOutMutableText(targetsprite.x, targetsprite.y);
@@ -1149,7 +1152,7 @@ module exte {
         constructor (x: number, y: number) {
             super(x, y);
 
-            this.addEventListener(enchant.Event.ENTER_FRAME, function(e){
+            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                 this.opacity -= this.fedingValue;
                 if (this.opacity < this.fedingValue) {
                     this.parentNode.removeChild(this);
@@ -1162,7 +1165,7 @@ module exte {
     // キーバインド。文字コードを調べるのが面倒なので
     // @param {文字列} [key] 割り当てる1文字
     // @param {文字列} [button] 'left', 'right', 'up', 'down', 'a', 'b' など
-    export function keyBind(key, button) {
+    export function keyBind(key: string, button: string): void {
         var game = enchant.Game.instance;
         game.keybind(key[0].toUpperCase().charCodeAt(0), button);
         game.keybind(key[0].toLowerCase().charCodeAt(0), button);
@@ -1180,7 +1183,7 @@ module exte {
             this._frame = 0;
             this._startFrame = 0;
             this._active = false;
-            this.addEventListener(enchant.Event.ENTER_FRAME, function(e) {
+            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                 if (!this._active) return;
 
                 this._frame--;
@@ -1313,7 +1316,7 @@ module exte {
     // @param {整数} [floorNo] 床にするイメージNo。背景に使用
     // @param {整数} [wallNo] 壁にするイメージNo。
     // @param {Boolen} [addframe] 外枠を壁にするかどうか。省略時はfalse(壁にしない)
-    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe?: bool) {
+    export function setMazeData(map: enchant.Map, rowNum: number, columnNum: number, floorNo: number, wallNo: number, addframe?: bool): void {
         var mapData1 = [];
         var mapData2 = [];
         var collisionData = map.collisionData;
@@ -1334,7 +1337,7 @@ module exte {
     // @param {enchant.Surface} [surface] 描画先
     // @param {String} [str] 文字列
     // @return {Number} 幅
-    export function stringWidth(surface: enchant.Surface, str: string) {
+    export function stringWidth(surface: enchant.Surface, str: string): number {
         return surface.context.measureText(str).width;
     }
 
@@ -1342,7 +1345,7 @@ module exte {
     // @param {Object} [obj] 対象の要素{x,y,width,height}。例えばenchant.Sprite
     // @param {整数} [padding] 内側への余白。指定しない場合は0(要素が見えなくなった時に戻り値がtrueになる)
     // @return {Boolen} 出たならtrue
-    export function isOutOfScreen(obj: enchant.IArea, padding?: number) {
+    export function isOutOfScreen(obj: enchant.IArea, padding?: number): bool {
         var game = enchant.Game.instance;
         padding = padding | 0;
         return obj.x + obj.width < padding ||
@@ -1404,8 +1407,9 @@ module exte {
     // @param {整数} [typeNo] タイプ 0～
     // @param {整数} [rowNum] 行数
     // @param {整数} [columnNum] 列数
-    export function createSampleMap(typeNo: number, rowNum: number, columnNum: number) {
-        var assetName = 'map1.png';
+    // @param {string} [assetName?] 画像パス
+    export function createSampleMap(typeNo: number, rowNum: number, columnNum: number, assetName?: string): enchant.Map {
+        if (assetName === undefined) assetName = 'map1.png';
         switch (typeNo) {
             case 0: return createSimpleMap(assetName, 16, rowNum, columnNum, 33);
             case 1: return createSimpleMap(assetName, 16, rowNum, columnNum, 36);
@@ -1482,8 +1486,8 @@ module exte {
 
             this.x = x;
             this.y = y;
-            this.width = width;
-            this.height = height;
+            this._width = width;
+            this._height = height;
 
             if (backgroundColor) {
                 var back = createRectangleSprite(width, height, backgroundColor, true);
@@ -1493,9 +1497,14 @@ module exte {
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
 
-        public width: number;
-        public height: number;
+        // 幅
+        public get width(): number { return this._width; }
 
+        // 高さ
+        public get height(): number { return this._height; }
+
+        private _width: number;
+        private _height: number;
         private _labels = [];
         private _texts: LogTextData[] = [];
         private _currentWork = 0; //0:check, 1:textout, 2:scroll, 3:textin
@@ -1624,7 +1633,7 @@ module exte {
         }
 
         // 表示状態の取得
-        public get visible() { return this._visible; }
+        public get visible(): bool { return this._visible; }
 
         // 表示状態の設定
         public set visible(v: bool) {
@@ -1874,7 +1883,7 @@ module exte {
         // 指定した点と自分との距離
         // @param {object} [point] 点{x,y}
         // @return {実数} 距離
-        public getDistance(point: enchant.IPoint) {
+        public getDistance(point: enchant.IPoint): number {
             var dx = point.x - this.x;
             var dy = point.y - this.y;
             return Math.sqrt(dx * dx + dy * dy);
@@ -1883,7 +1892,7 @@ module exte {
         // 指定した点と自分が同じ位置かどうか
         // @param {object} [point] 点{x,y}
         // @return {boolen} 同じならtrue
-        public isEqual(point) {
+        public isEqual(point): bool {
             return point.x == this.x && point.y == this.y;
         }
 
@@ -2367,7 +2376,7 @@ module exte {
         }
 
         // 直径を取得
-        public get diameter():number {
+        public get diameter(): number {
             return this.width;
         }
         // 直径を設定
@@ -2739,7 +2748,7 @@ module exte {
 
             this.image = new enchant.Surface(width, height);
 
-            this.addEventListener(enchant.Event.ENTER_FRAME, function(e) {
+            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
                 if (!this._active) return;
 
                 this._radius += this._speed;
@@ -2892,7 +2901,7 @@ module exte {
         game.pushScene(scene);
     }
 
-    //HTTP→文字列
+    //URLで指定されたものを読み込んで文字列化
     export function http2str(url: string): string {
         try {
             var request = new XMLHttpRequest();

@@ -124,7 +124,7 @@ module exte {
         public moveSceneTo(name: string): void;
     }
     export function addFadeOutText(group: enchant.Group, targetsprite: enchant.IPoint, text: string, sec?: number): void;
-    export function keyBind(key, button): void;
+    export function keyBind(key: string, button: string): void;
     export var Event_TimerTimeOut: string;
     export class Timer extends enchant.Node {
         constructor ();
@@ -140,7 +140,7 @@ module exte {
     export function stringWidth(surface: enchant.Surface, str: string): number;
     export function isOutOfScreen(obj: enchant.IArea, padding?: number): bool;
     export function createSimpleMap(assetName: string, tileSize: number, rowNum: number, columnNum: number, no: number, tlNo?: number, tNo?: number, trNo?: number, lNo?: number, rNo?: number, blNo?: number, bNo?: number, brNo?: number): enchant.Map;
-    export function createSampleMap(typeNo: number, rowNum: number, columnNum: number): enchant.Map;
+    export function createSampleMap(typeNo: number, rowNum: number, columnNum: number, assetName?: string): enchant.Map;
     export class LogList extends enchant.Group {
         public fadeIn: number;
         public fadeOut: number;
@@ -158,8 +158,10 @@ module exte {
         public adjustWidth: bool;
         public stackLimit: number;
         constructor (x: number, y: number, width: number, height: number, backgroundColor?: string);
-        public width: number;
-        public height: number;
+        public width : number;
+        public height : number;
+        private _width: number;
+        private _height: number;
         private _labels: any[];
         private _texts;
         private _currentWork: number;
