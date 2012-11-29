@@ -1,8 +1,8 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
-}
+};
 var exte;
 (function (exte) {
     function rand(num) {
@@ -115,11 +115,7 @@ var exte;
         for (var _i = 0; _i < (arguments.length - 0); _i++) {
             argArray[_i] = arguments[_i + 0];
         }
-        var r;
-        var g;
-        var b;
-        var a;
-
+        var r, g, b, a;
         if(3 <= argArray.length) {
             r = argArray[0];
             g = argArray[1];
@@ -647,7 +643,7 @@ var exte;
         var x = (index % columnNum) * width;
         var y = Math.floor(index / columnNum) * height;
         var image = new enchant.Surface(width * count, height);
-        image.draw(enchant.Game.instance.assets[assetName], x, y, width * count, height, 0, 0, width * count, height);
+        image.draw(enchant.Core.instance.assets[assetName], x, y, width * count, height, 0, 0, width * count, height);
         return image;
     }
     exte.createIconSurface = createIconSurface;
@@ -658,7 +654,7 @@ var exte;
         height = height || 16;
         var sprite = new enchant.Sprite(width, height);
         if(count == 1) {
-            sprite.image = enchant.Game.instance.assets[assetName];
+            sprite.image = enchant.Core.instance.assets[assetName];
             sprite.frame = index;
         } else {
             sprite.image = createIconSurface(index, count, assetName, width, height, columnNum);
@@ -668,11 +664,11 @@ var exte;
     }
     exte.createIconSprite = createIconSprite;
     function isDebug() {
-        return enchant.Game.instance._debug;
+        return enchant.Core.instance._debug;
     }
     exte.isDebug = isDebug;
     function playSound(assetName) {
-        enchant.Game.instance.assets[assetName].clone().play();
+        enchant.Core.instance.assets[assetName].clone().play();
     }
     exte.playSound = playSound;
     var RepeatSoundPlayer = (function (_super) {
@@ -752,8 +748,8 @@ var exte;
         SceneInput.prototype.makeEvent = function (p) {
             var ev = new SceneExEvent(exte.Event_SceneInput);
             ev.eventID = p.eventID;
-            ev.sec = p.frame / enchant.Game.instance.fps;
-            enchant.Game.instance.currentScene.dispatchEvent(ev);
+            ev.sec = p.frame / enchant.Core.instance.fps;
+            enchant.Core.instance.currentScene.dispatchEvent(ev);
         };
         SceneInput.prototype.enterFrame = function (e) {
             this.inputPatterns.forEach(function (p) {
@@ -797,7 +793,7 @@ var exte;
             var data = new InputPatternData();
             data.eventID = eventID;
             data.pattern = pattern;
-            data.framelimit = Math.floor((timelimit || 1) * enchant.Game.instance.fps);
+            data.framelimit = Math.floor((timelimit || 1) * enchant.Core.instance.fps);
             data.loop = (loop === true);
             this.inputPatterns.push(data);
         };
@@ -815,7 +811,7 @@ var exte;
             this._nextSceneName = '';
             this.name = name;
             SceneEx._scenes[name] = this;
-            var fps = enchant.Game.instance.fps;
+            var fps = enchant.Core.instance.fps;
             var s = (fadeInSec == undefined) ? 0.5 : fadeInSec;
             if(0 < s) {
                 this._fadeInStep = 1 / (s * fps);
@@ -844,7 +840,7 @@ var exte;
             if(scene === this) {
                 scene.dispatchEvent(new enchant.Event(enchant.Event.ENTER));
             } else {
-                enchant.Game.instance.replaceScene(scene);
+                enchant.Core.instance.replaceScene(scene);
             }
         };
         SceneEx.prototype._fadeIn = function () {
@@ -903,30 +899,23 @@ var exte;
     })(SceneInput);
     exte.SceneEx = SceneEx;    
     function addFadeOutText(group, targetsprite, text, sec) {
-        if(enchant.util.MutableText === undefined) {
+        if(enchant.ui.MutableText === undefined) {
             return;
         }
-        var mt = new FadeOutMutableText(targetsprite.x, targetsprite.y);
+        var mt = new enchant.ui.MutableText(targetsprite.x, targetsprite.y);
         mt.text = text;
-        mt.fedingValue = 1 / (enchant.Game.instance.fps * (sec || 1));
+        var fedingValue = 1 / (enchant.Core.instance.fps * (sec || 1));
+        mt.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
+            mt.opacity -= fedingValue;
+            if(mt.opacity < fedingValue) {
+                group.removeChild(mt);
+            }
+        });
         group.addChild(mt);
     }
     exte.addFadeOutText = addFadeOutText;
-    var FadeOutMutableText = (function (_super) {
-        __extends(FadeOutMutableText, _super);
-        function FadeOutMutableText(x, y) {
-                _super.call(this, x, y);
-            this.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
-                this.opacity -= this.fedingValue;
-                if(this.opacity < this.fedingValue) {
-                    this.parentNode.removeChild(this);
-                }
-            });
-        }
-        return FadeOutMutableText;
-    })(enchant.util.MutableText);    
     function keyBind(key, button) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         game.keybind(key[0].toUpperCase().charCodeAt(0), button);
         game.keybind(key[0].toLowerCase().charCodeAt(0), button);
     }
@@ -950,13 +939,13 @@ var exte;
                 if(0 < this._frame) {
                     return;
                 }
-                enchant.Game.instance.currentScene.dispatchEvent(new enchant.Event(exte.Event_TimerTimeOut));
+                enchant.Core.instance.currentScene.dispatchEvent(new enchant.Event(exte.Event_TimerTimeOut));
                 this._frame = this._startFrame;
             });
         }
         Timer.prototype.start = function (sec) {
             if(typeof sec == 'number') {
-                this._frame = this._startFrame = sec * enchant.Game.instance.fps;
+                this._frame = this._startFrame = sec * enchant.Core.instance.fps;
             }
             this._active = (0 < this._startFrame);
         };
@@ -967,7 +956,7 @@ var exte;
     })(enchant.Node);
     exte.Timer = Timer;    
     function inputToRad() {
-        var input = enchant.Game.instance.input;
+        var input = enchant.Core.instance.input;
         if(input.down && input.right) {
             return Math.PI * 0.25;
         }
@@ -1135,7 +1124,7 @@ var exte;
     }
     exte.stringWidth = stringWidth;
     function isOutOfScreen(obj, padding) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         padding = padding | 0;
         return obj.x + obj.width < padding || obj.y + obj.height < padding || game.width - padding < obj.x || game.height - padding < obj.y;
     }
@@ -1170,7 +1159,7 @@ var exte;
             data.push(rowData);
         }
         var map = new enchant.Map(tileSize, tileSize);
-        map.image = enchant.Game.instance.assets[assetName];
+        map.image = enchant.Core.instance.assets[assetName];
         map.loadData(data);
         return map;
     }
@@ -1255,8 +1244,6 @@ var exte;
             this.color = null;
             this.backgroundColor = null;
             this.font = null;
-            this.fontSize = null;
-            this.wordBreak = null;
             this.textAlign = null;
             this.adjustWidth = true;
             this.stackLimit = 0;
@@ -1278,9 +1265,6 @@ var exte;
             }
             this.addEventListener(enchant.Event.ENTER_FRAME, this.enterFrame);
         }
-        LogList.WB_Normal = "normal";
-        LogList.WB_BreakAll = "break-all";
-        LogList.WB_KeepAll = "keep-all";
         Object.defineProperty(LogList.prototype, "width", {
             get: function () {
                 return this._width;
@@ -1296,17 +1280,18 @@ var exte;
             configurable: true
         });
         LogList.prototype.createLabel = function () {
-            var label = new enchant.Label('');
+            var labelData = new LogLabelData();
+            labelData.label = new enchant.Label('');
             if(this.adjustWidth) {
-                label.width = this.width;
+                labelData.label.width = this.width;
             }
-            label.visible = false;
+            labelData.label.visible = false;
             if(this.font) {
-                label.font = this.font;
+                labelData.label.font = this.font;
             }
-            this.addChild(label);
-            this._labels.push(label);
-            return label;
+            this.addChild(labelData.label);
+            this._labels.push(labelData);
+            return labelData;
         };
         LogList.prototype.enterFrame0 = function () {
             if(this._texts.length == 0) {
@@ -1314,30 +1299,34 @@ var exte;
             }
             this._outAllLog = this._outAllLog ? 0 < this._texts.length : 0 < this.stackLimit && this.stackLimit <= this._texts.length;
             var t = this._texts.shift();
-            var label = null;
+            var labelData = null;
             for(var i = 0; i < this._labels.length; i++) {
                 if(!this._labels[i].valid) {
-                    label = this._labels[i];
+                    labelData = this._labels[i];
                     break;
                 }
             }
-            if(!label) {
-                label = this.createLabel();
-                if(this.wordBreak) {
-                    label._style.wordBreak = this.wordBreak;
-                }
-                label.valid = false;
+            if(labelData === null) {
+                labelData = this.createLabel();
+                labelData.valid = false;
             }
+            var label = labelData.label;
             label.x = 0;
             label.y = 0;
             label.text = t.text;
-            label._style.fontSize = t.fontSize || "";
-            label.color = t.color || "";
-            label.backgroundColor = t.backgroundColor || "";
+            if(t.font) {
+                label.font = t.font;
+            }
+            if(t.color) {
+                label.color = t.color;
+            }
+            if(t.backgroundColor) {
+                label.backgroundColor = t.backgroundColor;
+            }
             label.height = t.lineHeight || 10;
             label.opacity = 0;
             label.textAlign = t.textAlign || 'left';
-            this._fadeInLabel = label;
+            this._fadeInLabel = labelData;
             this._scrollNum = label.height;
             var bottom = 0;
             for(var i = 0; i < this._labels.length; i++) {
@@ -1345,7 +1334,7 @@ var exte;
                 if(!l.valid) {
                     continue;
                 }
-                var b = l.y + l.height;
+                var b = l.label.y + l.label.height;
                 if(bottom < b) {
                     bottom = b;
                     this._fadeOutLabel = l;
@@ -1358,13 +1347,13 @@ var exte;
             }
         };
         LogList.prototype.enterFrame1 = function () {
-            if(this._outAllLog || this._fadeOutLabel.opacity < this.fadeOut) {
-                this._fadeOutLabel.opacity = 0;
-                this._fadeOutLabel.visible = false;
+            if(this._outAllLog || this._fadeOutLabel.label.opacity < this.fadeOut) {
+                this._fadeOutLabel.label.opacity = 0;
+                this._fadeOutLabel.label.visible = false;
                 this._fadeOutLabel.valid = false;
                 this._currentWork = 2;
             } else {
-                this._fadeOutLabel.opacity -= this.fadeOut;
+                this._fadeOutLabel.label.opacity -= this.fadeOut;
             }
         };
         LogList.prototype.enterFrame2 = function () {
@@ -1372,24 +1361,24 @@ var exte;
                 var px = (this._outAllLog || this._scrollNum <= this.scrollPx) ? this._scrollNum : this.scrollPx;
                 for(var i = 0; i < this._labels.length; i++) {
                     var l = this._labels[i];
-                    if(l.visible) {
-                        l.y += px;
+                    if(l.label.visible) {
+                        l.label.y += px;
                     }
                 }
                 this._scrollNum -= px;
             }
             if(this._scrollNum <= 0) {
                 this._currentWork = 3;
-                this._fadeInLabel.visible = true;
+                this._fadeInLabel.label.visible = true;
                 this._fadeInLabel.valid = true;
             }
         };
         LogList.prototype.enterFrame3 = function () {
-            if(this._outAllLog || (1 - this.fadeIn) < this._fadeInLabel.opacity) {
-                this._fadeInLabel.opacity = 1;
+            if(this._outAllLog || (1 - this.fadeIn) < this._fadeInLabel.label.opacity) {
+                this._fadeInLabel.label.opacity = 1;
                 this._currentWork = 0;
             } else {
-                this._fadeInLabel.opacity += this.fadeIn;
+                this._fadeInLabel.label.opacity += this.fadeIn;
             }
         };
         LogList.prototype.enterFrame = function (e) {
@@ -1427,14 +1416,14 @@ var exte;
                 this._visible = v;
                 for(var i = 0; i < this._labels.length; i++) {
                     var l = this._labels[i];
-                    l.visible = v && l.valid;
+                    l.label.visible = v && l.valid;
                 }
             },
             enumerable: true,
             configurable: true
         });
-        LogList.prototype.regist = function (text, color, fontSize, lineHeight, textAlign, backgroundColor) {
-            this._texts.push(new LogTextData(text, color || this.color, fontSize || this.fontSize, lineHeight || this.lineHeight, textAlign || this.textAlign, backgroundColor || this.backgroundColor));
+        LogList.prototype.regist = function (text, color, font, lineHeight, textAlign, backgroundColor) {
+            this._texts.push(new LogTextData(text, color || this.color, font || this.font, lineHeight || this.lineHeight, textAlign || this.textAlign, backgroundColor || this.backgroundColor));
         };
         LogList.prototype.outAllLog = function () {
             this._outAllLog = true;
@@ -1443,7 +1432,7 @@ var exte;
             this._texts.length = 0;
             for(var i = 0; i < this._labels.length; i++) {
                 var l = this._labels[i];
-                l.visible = l.valid = false;
+                l.label.visible = l.valid = false;
             }
             this._currentWork = 0;
         };
@@ -1451,15 +1440,21 @@ var exte;
     })(enchant.Group);
     exte.LogList = LogList;    
     var LogTextData = (function () {
-        function LogTextData(text, color, fontSize, lineHeight, textAlign, backgroundColor) {
+        function LogTextData(text, color, font, lineHeight, textAlign, backgroundColor) {
             this.text = text;
             this.color = color;
-            this.fontSize = fontSize;
+            this.font = font;
             this.lineHeight = lineHeight;
             this.textAlign = textAlign;
             this.backgroundColor = backgroundColor;
         }
         return LogTextData;
+    })();    
+    var LogLabelData = (function () {
+        function LogLabelData() {
+            this.valid = false;
+        }
+        return LogLabelData;
     })();    
     function createRectangleSurface(width, height, color, fill) {
         var s = new enchant.Surface(width, height);
@@ -1653,11 +1648,7 @@ var exte;
             return (doc < 0);
         };
         Line.prototype.createSurface = function (color, width) {
-            var x1 = 0;
-            var y1;
-            var x2;
-            var y2;
-
+            var x1 = 0, y1, x2, y2;
             if((this.posS.x < this.posE.x) == (this.posS.y < this.posE.y)) {
                 y1 = 0;
                 x2 = Math.abs(this.dx);
@@ -1877,9 +1868,7 @@ var exte;
             return new Point(this.x + rand(this.width), this.y + rand(this.height));
         };
         Rectangle.prototype.getSideLine = function (no) {
-            var key1;
-            var key2;
-
+            var key1, key2;
             switch(no) {
                 case 0: {
                     key1 = 7;
@@ -2256,7 +2245,7 @@ var exte;
     })(enchant.Sprite);
     exte.Ripple = Ripple;    
     function pushWaitScene(eventEnterFrame, image) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new enchant.Scene();
         if(image) {
             var backSprite = new enchant.Sprite(image.width, image.height);
@@ -2287,7 +2276,6 @@ var exte;
     }
     exte.http2str = http2str;
 })(exte || (exte = {}));
-
 var exte;
 (function (exte) {
     var Card = (function () {
@@ -2411,7 +2399,7 @@ var exte;
                 return null;
             }
             var image = new enchant.Surface(Card.WIDTH * 2, Card.HEIGHT);
-            var assetName = enchant.Game.instance.assets[Card.CARD];
+            var assetName = enchant.Core.instance.assets[Card.CARD];
             var x = (Card.getNumber(data) - 1) * Card.WIDTH;
             var y = (Card.getSuit(data) - 1) * Card.HEIGHT;
             image.draw(assetName, x, y, Card.WIDTH, Card.HEIGHT, 0, 0, Card.WIDTH, Card.HEIGHT);
@@ -2431,7 +2419,7 @@ var exte;
             ; ;
             cards.draw(Card.drawCard(Card.JOKER), 0, 0, Card.WIDTH, Card.HEIGHT, 0, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
             cards.draw(Card.drawCard(Card.ERROR), 0, 0, Card.WIDTH, Card.HEIGHT, Card.WIDTH, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
-            enchant.Game.instance.assets[Card.CARD] = cards;
+            enchant.Core.instance.assets[Card.CARD] = cards;
         }
         Card.drawCard = function drawCard(card) {
             var face = new enchant.Surface(Card.WIDTH, Card.HEIGHT);
@@ -2452,19 +2440,19 @@ var exte;
             c.stroke();
             switch(Card.getSuit(card)) {
                 case Card.JOKER: {
-                    face.draw(enchant.Game.instance.assets[Card.ICON], 16 * 11, 0, 16, 16, 4, 12, 24, 24);
+                    face.draw(enchant.Core.instance.assets[Card.ICON], 16 * 11, 0, 16, 16, 4, 12, 24, 24);
                     break;
 
                 }
                 case Card.ERROR: {
-                    face.draw(enchant.Game.instance.assets[Card.BACK], 0, 0, 48, 48, 0, 8, 32, 32);
+                    face.draw(enchant.Core.instance.assets[Card.BACK], 0, 0, 48, 48, 0, 8, 32, 32);
                     break;
 
                 }
                 default: {
                     var sx = Card.getSuit(card) == Card.SPADE ? 48 : Card.getSuit(card) == Card.HEART ? 96 : Card.getSuit(card) == Card.DIAMOND ? 80 : Card.getSuit(card) == Card.CLUB ? 64 : 0;
-                    face.draw(enchant.Game.instance.assets[Card.ICON], sx, 64, 16, 16, 8, 4, 16, 16);
-                    var fontAssetName = enchant.Game.instance.assets[Card.FONT];
+                    face.draw(enchant.Core.instance.assets[Card.ICON], sx, 64, 16, 16, 8, 4, 16, 16);
+                    var fontAssetName = enchant.Core.instance.assets[Card.FONT];
                     if(Card.getNumber(card) == 10) {
                         face.draw(fontAssetName, 16, 16, 16, 16, 1, 26, 16, 16);
                         face.draw(fontAssetName, 0, 16, 16, 16, 13, 26, 16, 16);
@@ -2529,7 +2517,6 @@ var exte;
     })(enchant.Sprite);
     exte.TCardSprite = TCardSprite;    
 })(exte || (exte = {}));
-
 var exte;
 (function (exte) {
     var Dice = (function (_super) {
@@ -2572,15 +2559,14 @@ var exte;
             c.fill();
             var rad = 45 * Math.PI / 180;
             face.context.setTransform(1, 1, -1, 1, 12, -5);
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[0], 32, 16, 16, 0, 0, 16, 16);
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE], num[0], 32, 16, 16, 0, 0, 16, 16);
             face.context.setTransform(1, 1, 0, 1, -2, 7);
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[1], 32, 16, 16, 0, 0, 16, 16);
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE], num[1], 32, 16, 16, 0, 0, 16, 16);
             face.context.setTransform(1, -1, 0, 1, 10, 23);
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE], num[2], 32, 16, 16, 0, 0, 16, 16);
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE], num[2], 32, 16, 16, 0, 0, 16, 16);
             return face;
         };
         return Dice;
     })(enchant.Sprite);
     exte.Dice = Dice;    
 })(exte || (exte = {}));
-

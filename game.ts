@@ -1,4 +1,4 @@
-/// <reference path="enchant.d.ts"/>
+﻿/// <reference path="enchant.d.ts"/>
 /// <reference path="exte.enchant.d.ts"/>
 /// <reference path="manager.ts"/>
 /// <reference path="play.ts"/>

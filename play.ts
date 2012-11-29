@@ -1,13 +1,12 @@
-/// <reference path="enchant.d.ts"/>
+Ôªø/// <reference path="enchant.d.ts"/>
 /// <reference path="ui.enchant.d.ts"/>
-/// <reference path="util.enchant.d.ts"/>
 /// <reference path="exte.enchant.d.ts"/>
 /// <reference path="ja.exte.enchant.d.ts"/>
 /// <reference path="manager.ts"/>
 
 module ExteGame {
     function CreatePlayScene1(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('1');
 
@@ -26,7 +25,7 @@ module ExteGame {
         var mainGroup = new enchant.Group();
         (function () {
 
-            // ê¸
+            // Á∑ö
             var line1 = new exte.Line(10, 10, 60, 60);
             mainGroup.addChild(line1.createSprite(exte.toRGBString(100, 0, 0)));
 
@@ -60,11 +59,11 @@ module ExteGame {
             label2.y = 40;
             mainGroup.addChild(label2);
 
-            // éläpå`
+            // ÂõõËßíÂΩ¢
             var rect = new exte.Rectangle(10, 100, 100, 50);
             mainGroup.addChild(rect.createSprite(exte.toRGBString(100), false));
 
-            // éläpå`ì‡Ç…ÉâÉìÉ_ÉÄîzíu
+            // ÂõõËßíÂΩ¢ÂÜÖ„Å´„É©„É≥„ÉÄ„É†ÈÖçÁΩÆ
             for (var i = 0; i < 20; i++) {
                 var r = new exte.Rectangle(0,0,0,0);
                 r.diagonal = 10;
@@ -72,22 +71,22 @@ module ExteGame {
                 mainGroup.addChild(r.createSprite(exte.toRGBString(100), false));
             }
 
-            // â~
+            // ÂÜÜ
             var circle = new exte.Circle(60, 190, 30);
             mainGroup.addChild(circle.createSprite(exte.toRGBString(100), false));
 
-            // â~ì‡Ç…ÉâÉìÉ_ÉÄîzíu
+            // ÂÜÜÂÜÖ„Å´„É©„É≥„ÉÄ„É†ÈÖçÁΩÆ
             for (var i = 0; i < 20; i++) {
                 var c = new exte.Circle(0,0,5);
                 c.center = circle.getRandomPos();
                 mainGroup.addChild(c.createSprite(exte.toRGBString(100), false));
             }
 
-            // ë»â~
+            // Ê•ïÂÜÜ
             var ellipse = new exte.Ellipse(200, 200, 100, 50);
             mainGroup.addChild(ellipse.createSprite(exte.toRGBString(100), false));
 
-            // â~å 
+            // ÂÜÜÂºß
             var arc = new exte.Arc(160, 130, 50, exte.degToRad(0), exte.degToRad(60));
             mainGroup.addChild(arc.createSprite(exte.toRGBString(100), false));
         })();
@@ -117,7 +116,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -133,7 +132,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
                 ;
@@ -161,7 +160,7 @@ module ExteGame {
     }
 
     function CreatePlayScene2(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('2');
 
@@ -201,8 +200,8 @@ module ExteGame {
             kLabel2.y = 25;
             mainGroup.addChild(kLabel2);
 
-            // ãÛîíÇìríÜÇ…ì¸ÇÍÇÈ
-            label = new enchant.Label('Ñ†Å_ÑüA' + exte.makeSpace() + 'ÉnÉhÅ[ÉPÉì' + exte.makeSpace() + '!');
+            // Á©∫ÁôΩ„ÇíÈÄî‰∏≠„Å´ÂÖ•„Çå„Çã
+            label = new enchant.Label('‚îÇÔºº‚îÄA „Éè„Éâ„Éº„Ç±„É≥ !');
             label.x = 10;
             label.y = 60;
             mainGroup.addChild(label);
@@ -287,7 +286,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -315,12 +314,12 @@ module ExteGame {
                     exte.playSound(gameData.soundOK);
                     break;
                 case 2:
-                    rLabel.text += aRand.next.toString() + exte.makeSpace();
+                    rLabel.text += aRand.next.toString() + ' ';
                     break;
                 case 3:
                     var value = exte.rand(100000);
-                    kLabel.text = value.toString() + 'Å®' + exte.toKanji1(value);
-                    kLabel2.text = value.toString() + 'Å®' + exte.toKanji2(value);
+                    kLabel.text = value.toString() + '‚Üí' + exte.toKanji1(value);
+                    kLabel2.text = value.toString() + '‚Üí' + exte.toKanji2(value);
                     break;
             }
         });
@@ -331,7 +330,7 @@ module ExteGame {
         });
 
         scene.addEventListener(exte.Event_TimerTimeOut, function (e) {
-            tLabel.text += 'Åú';
+            tLabel.text += '‚óè';
             if (14 < tLabel.text.length) {
                 tLabel.text = 'timer';
             }
@@ -340,7 +339,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
                 ;
@@ -367,7 +366,7 @@ module ExteGame {
     }
 
     function CreatePlayScene3(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('3');
 
@@ -447,7 +446,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -463,7 +462,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
             }
@@ -485,7 +484,7 @@ module ExteGame {
     }
 
     function CreatePlayScene4(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('4');
 
@@ -585,7 +584,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -601,7 +600,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
             }
@@ -623,7 +622,7 @@ module ExteGame {
     }
 
     function CreatePlayScene5(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('5');
 
@@ -634,7 +633,7 @@ module ExteGame {
         //------------------------------------------
         var mainGroup = new enchant.Group();
         (function () {
-            var label = new enchant.Label('exte.MapPointSeacher.getRoute(row5 column5 cost10) push"a"Å®update');
+            var label = new enchant.Label('exte.MapPointSeacher.getRoute(row5 column5 cost10) push"a"‚Üíupdate');
             label.x = 0;
             label.y = 10;
             label.width = game.width;
@@ -667,7 +666,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -756,7 +755,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
                 cursorRow--;
@@ -786,7 +785,7 @@ module ExteGame {
     }
 
     function CreatePlayScene6(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('6');
 
@@ -807,7 +806,7 @@ module ExteGame {
             backMap.y = 50;
             mainGroup.addChild(backMap);
 
-            var label = new enchant.Label('exte.LogList push"a"Å®regist');
+            var label = new enchant.Label('exte.LogList push"a"‚Üíregist');
             label.x = 10;
             label.y = 30;
             mainGroup.addChild(label);
@@ -844,7 +843,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -860,7 +859,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
             }
@@ -872,8 +871,8 @@ module ExteGame {
             }
             if (game.input.a) {
                 var size = 10 + exte.rand(10);
-                var fontSize = size + 'px';
-                logList.regist(fontSize, null, fontSize, size);
+                var font = size + 'px';
+                logList.regist(font, null, font + ' sans-serif', size);
             }
             if (game.input.b) {
                 scene.moveSceneTo('7');
@@ -884,7 +883,7 @@ module ExteGame {
     }
 
     function CreatePlayScene7(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('7');
 
@@ -911,17 +910,17 @@ module ExteGame {
 
             var suffles = exte.shuffleArray(ary);
 
-            var label1 = new enchant.Label('exte.shuffleArray Å® [' + suffles.join(',') + ']');
+            var label1 = new enchant.Label('exte.shuffleArray ‚Üí [' + suffles.join(',') + ']');
             label1.x = 10;
             label1.y = 25;
             mainGroup.addChild(label1);
 
-            rlabel = new enchant.Label('exte.randomString' + exte.makeSpace() + 'push"A"');
+            rlabel = new enchant.Label('exte.randomString push"A"');
             rlabel.x = 10;
             rlabel.y = 50;
             mainGroup.addChild(rlabel);
 
-            var label7 = new enchant.Label('Å´Press arrow key.Try out screen');
+            var label7 = new enchant.Label('‚ÜìPress arrow key.Try out screen');
             label7.x = 10;
             label7.y = 80;
             mainGroup.addChild(label7);
@@ -936,14 +935,14 @@ module ExteGame {
             alabel.y = 135;
             mainGroup.addChild(alabel);
 
-            var str5 = 'Ç†Ç¢Ç§Ç¶Ç®';
-            var label5 = new enchant.Label(str5 + 'Å®' + exte.toKatakanaCase(str5));
+            var str5 = '„ÅÇ„ÅÑ„ÅÜ„Åà„Åä';
+            var label5 = new enchant.Label(str5 + '‚Üí' + exte.toKatakanaCase(str5));
             label5.x = 10;
             label5.y = 160;
             mainGroup.addChild(label5);
 
-            var str6 = 'ÉKÉMÉOÉQÉS';
-            var label6 = new enchant.Label(str6 + 'Å®' + exte.toHirakanaCase(str6));
+            var str6 = '„Ç¨„ÇÆ„Ç∞„Ç≤„Ç¥';
+            var label6 = new enchant.Label(str6 + '‚Üí' + exte.toHirakanaCase(str6));
             label6.x = 10;
             label6.y = 180;
             mainGroup.addChild(label6);
@@ -976,7 +975,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -992,7 +991,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
                 moveSprite.y -= 3;
@@ -1022,7 +1021,7 @@ module ExteGame {
     }
 
     function CreatePlayScene8(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('8');
 
@@ -1034,13 +1033,13 @@ module ExteGame {
 
         var mainGroup = new enchant.Group();
         (function () {
-            var label6 = new enchant.Label('var' + exte.makeSpace() + 'color={r:128, g:0, b:255}');
+            var label6 = new enchant.Label('var color={r:128, g:0, b:255}');
             label6.x = 10;
             label6.y = 10;
             mainGroup.addChild(label6);
 
             var color = { r: 128, g: 0, b: 255 };
-            var label7 = new enchant.Label('exte.formatString("rgb({r}, {g}, {b})", color)<br />Å®' + exte.formatString('rgb({r}, {g}, {b})', color));
+            var label7 = new enchant.Label('exte.formatString("rgb({r}, {g}, {b})", color)<br />‚Üí' + exte.formatString('rgb({r}, {g}, {b})', color));
             label7.x = 10;
             label7.y = 30;
             mainGroup.addChild(label7);
@@ -1048,7 +1047,7 @@ module ExteGame {
             var ary = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
             exte.arrayEraseIf(ary, function (elm, index, ar) { return elm % 3 == 0 });
-            var label8 = new enchant.Label('exte.arrayEraseIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)Å®' + ary);
+            var label8 = new enchant.Label('exte.arrayEraseIf _ [1,2,3,4,5,6,7,8,9] fn(n%3==0)‚Üí' + ary);
             label8.x = 10;
             label8.y = 130;
             mainGroup.addChild(label8);
@@ -1081,7 +1080,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -1096,7 +1095,7 @@ module ExteGame {
         scene.addEventListener(enchant.Event.ENTER_FRAME, function (e) {
             if (scene.fadeProsessing) return;
 
-            // game.end(scoreLabel.score, scoreLabel.score + 'ì_');
+            // game.end(scoreLabel.score, scoreLabel.score + 'ÁÇπ');
 
             if (game.input.up) {
             }
@@ -1117,7 +1116,7 @@ module ExteGame {
     }
 
     function CreatePlayScene9(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('9');
 
@@ -1138,7 +1137,7 @@ module ExteGame {
             label2.y = 40;
             mainGroup.addChild(label2);
 
-            var label3 = new enchant.Label("http2str('Text.txt')Å®"+ exte.http2str('Text.txt'));
+            var label3 = new enchant.Label("http2str('Text.txt')‚Üí"+ exte.http2str('Text.txt'));
             label3.x = 10;
             label3.y = 70;
             mainGroup.addChild(label3);
@@ -1170,7 +1169,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);
@@ -1209,7 +1208,7 @@ module ExteGame {
     }
 
     function CreatePlaySceneTemplate(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
 
         var scene = new exte.SceneEx('');
 
@@ -1253,7 +1252,7 @@ module ExteGame {
             buttonBSprite.buttonMode = "b";
             uiGroup.addChild(buttonBSprite);
 
-            var nextLabel = new enchant.Label('push"B"Å®next');
+            var nextLabel = new enchant.Label('push"B"‚Üínext');
             nextLabel.x = 220;
             nextLabel.y = 240;
             uiGroup.addChild(nextLabel);

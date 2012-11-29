@@ -1,4 +1,4 @@
-// http://9leap.net/games/2243
+ï»¿// http://9leap.net/games/2243
 
 /// <reference path="enchant.d.ts"/>
 
@@ -10,24 +10,24 @@ module exte {
         static BACK = 'enchant_normal.png';
         static WIDTH     = 32;
         static HEIGHT    = 48;
-        // ‹[—’è”éŒ¾
-        static SUIT_SIZE =  4; // ƒX[ƒg‚Ì‘”iƒXƒy[ƒhAƒn[ƒgAƒ_ƒCƒAAƒNƒ‰ƒuj
-        static NUME_SIZE = 13; // ”Ô†‚Ì‘”i‚`A‚QA‚RA‚SA‚TA‚UA‚VA‚WA‚XA‚P‚OA‚iC‚pC‚jj
-        static CARD_SIZE = 52; // ƒWƒ‡[ƒJ[‚ğ”`‚¢‚½ƒJ[ƒh‚Ì‘”iƒXƒy[ƒh‚Ì‚`‚©‚çƒNƒ‰ƒu‚Ì‚jj
-        // ƒX[ƒg‚Ì’è‹`
-        static SPADE   =  1; // ƒX[ƒg‚Ì’è‹`
+        // æ“¬ä¼¼å®šæ•°å®£è¨€
+        static SUIT_SIZE =  4; // ã‚¹ãƒ¼ãƒˆã®ç·æ•°ï¼ˆã‚¹ãƒšãƒ¼ãƒ‰ã€ãƒãƒ¼ãƒˆã€ãƒ€ã‚¤ã‚¢ã€ã‚¯ãƒ©ãƒ–ï¼‰
+        static NUME_SIZE = 13; // ç•ªå·ã®ç·æ•°ï¼ˆï¼¡ã€ï¼’ã€ï¼“ã€ï¼”ã€ï¼•ã€ï¼–ã€ï¼—ã€ï¼˜ã€ï¼™ã€ï¼‘ï¼ã€ï¼ªï¼Œï¼±ï¼Œï¼«ï¼‰
+        static CARD_SIZE = 52; // ã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ã‚’è¦—ã„ãŸã‚«ãƒ¼ãƒ‰ã®ç·æ•°ï¼ˆã‚¹ãƒšãƒ¼ãƒ‰ã®ï¼¡ã‹ã‚‰ã‚¯ãƒ©ãƒ–ã®ï¼«ï¼‰
+        // ã‚¹ãƒ¼ãƒˆã®å®šç¾©
+        static SPADE   =  1; // ã‚¹ãƒ¼ãƒˆã®å®šç¾©
         static HEART   =  2;
         static DIAMOND =  3;
         static CLUB    =  4;
-        // ƒgƒ‰ƒ“ƒv‚Ì”’è‹`
-        static ACE   =  1; // ”D‚Ì’è‹`
+        // ãƒˆãƒ©ãƒ³ãƒ—ã®æ•°å®šç¾©
+        static ACE   =  1; // æ•°æœ­ã®å®šç¾©
         static JACK    = 11;
         static QUEEN   = 12;
         static KING    = 13;
-        // ”Dipipcards/numeralcardsj‘¼‚Ì’è‹`
-        static ERROR   = -1; // ƒJ[ƒh‚ÌI’[‚È‚Ç‚ÌƒGƒ‰[’l
-        static JOKER   =  0; // ƒWƒ‡[ƒJ[
-        static S01   =  1; // ƒXƒy[ƒh
+        // æ•°æœ­ï¼ˆpipcards/numeralcardsï¼‰ä»–ã®å®šç¾©
+        static ERROR   = -1; // ã‚«ãƒ¼ãƒ‰ã®çµ‚ç«¯ãªã©ã®ã‚¨ãƒ©ãƒ¼å€¤
+        static JOKER   =  0; // ã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼
+        static S01   =  1; // ã‚¹ãƒšãƒ¼ãƒ‰
         static S02   =  2;
         static S03   =  3;
         static S04   =  4;
@@ -40,7 +40,7 @@ module exte {
         static S11   = 11;
         static S12   = 12;
         static S13   = 13;
-        static H01   = 14; // ƒn[ƒg
+        static H01   = 14; // ãƒãƒ¼ãƒˆ
         static H02   = 15;
         static H03   = 16;
         static H04   = 17;
@@ -53,7 +53,7 @@ module exte {
         static H11   = 24;
         static H12   = 25;
         static H13   = 26;
-        static D01   = 27; // ƒ_ƒCƒA
+        static D01   = 27; // ãƒ€ã‚¤ã‚¢
         static D02   = 28;
         static D03   = 29;
         static D04   = 30;
@@ -66,7 +66,7 @@ module exte {
         static D11   = 37;
         static D12   = 38;
         static D13   = 39;
-        static C01   = 40; // ƒNƒ[ƒo[
+        static C01   = 40; // ã‚¯ãƒ­ãƒ¼ãƒãƒ¼
         static C02   = 41;
         static C03   = 42;
         static C04   = 43;
@@ -79,82 +79,82 @@ module exte {
         static C11   = 50;
         static C12   = 51;
         static C13   = 52;
-        // ŠGDicourTCardsj‚Ì’è‹`
-        static SA    = Card.S01;  // ƒXƒy[ƒh
+        // çµµæœ­ï¼ˆcourTCardsï¼‰ã®å®šç¾©
+        static SA    = Card.S01;  // ã‚¹ãƒšãƒ¼ãƒ‰
         static SJ    = Card.S11;
         static SQ    = Card.S12;
         static SK    = Card.S13;
-        static HA    = Card.H01;  // ƒn[ƒg
+        static HA    = Card.H01;  // ãƒãƒ¼ãƒˆ
         static HJ    = Card.H11;
         static HQ    = Card.H12;
         static HK    = Card.H13;
-        static DA    = Card.D01;  // ƒ_ƒCƒA
+        static DA    = Card.D01;  // ãƒ€ã‚¤ã‚¢
         static DJ    = Card.D11;
         static DQ    = Card.D12;
         static DK    = Card.D13;
-        static CA    = Card.C01;  // ƒNƒ[ƒo[
+        static CA    = Card.C01;  // ã‚¯ãƒ­ãƒ¼ãƒãƒ¼
         static CJ    = Card.C11;
         static CQ    = Card.C12;
         static CK    = Card.C13;
         /**
-         * ƒJ[ƒh‚ÌƒX[ƒgæ“¾
-         * @param card  <int> ƒJ[ƒh‚Ì’Ê‚µ”Ô†
-         * @return          ƒJ[ƒh‚ÌƒX[ƒg
+         * ã‚«ãƒ¼ãƒ‰ã®ã‚¹ãƒ¼ãƒˆå–å¾—
+         * @param card  <int> ã‚«ãƒ¼ãƒ‰ã®é€šã—ç•ªå·
+         * @return          ã‚«ãƒ¼ãƒ‰ã®ã‚¹ãƒ¼ãƒˆ
          */
         static getSuit(card: number): number {
-          // ’Ê‚µ”Ô†‚ªƒWƒ‡[ƒJ[‚È‚çƒWƒ‡[ƒJ[‚Æ‚µ‚Ä•Ô‚·B
+          // é€šã—ç•ªå·ãŒã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ãªã‚‰ã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ã¨ã—ã¦è¿”ã™ã€‚
           if (card == Card.JOKER) return Card.JOKER;
-          // ’Ê‚µ”Ô†‚ª”ÍˆÍŠO‚Å‚ ‚Á‚½‚Æ‚«‚ÍƒGƒ‰[‚ğ•Ô‚·B
+          // é€šã—ç•ªå·ãŒç¯„å›²å¤–ã§ã‚ã£ãŸã¨ãã¯ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™ã€‚
           if (card <= Card.ERROR || Card.CARD_SIZE < card) return Card.ERROR;
-          // ƒ}[ƒN‚ğŒvZ‚µ‚Ä•Ô‚·B
+          // ãƒãƒ¼ã‚¯ã‚’è¨ˆç®—ã—ã¦è¿”ã™ã€‚
           return Math.floor((card + Card.NUME_SIZE - 1) / Card.NUME_SIZE);
         }
         /**
-         * ƒJ[ƒh‚Ì”Ô†æ“¾
-         * @param card  <int> ƒJ[ƒh‚Ì’Ê‚µ”Ô†
-         * @return          ƒJ[ƒh‚Ì”Ô†
+         * ã‚«ãƒ¼ãƒ‰ã®ç•ªå·å–å¾—
+         * @param card  <int> ã‚«ãƒ¼ãƒ‰ã®é€šã—ç•ªå·
+         * @return          ã‚«ãƒ¼ãƒ‰ã®ç•ªå·
          */
         static getNumber(card: number): number {
-          // ’Ê‚µ”Ô†‚ªƒWƒ‡[ƒJ[‚È‚çƒWƒ‡[ƒJ[‚Æ‚µ‚Ä•Ô‚·B
+          // é€šã—ç•ªå·ãŒã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ãªã‚‰ã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ã¨ã—ã¦è¿”ã™ã€‚
           if (card == Card.JOKER) return Card.JOKER;
-          // ’Ê‚µ”Ô†‚ª”ÍˆÍŠO‚Å‚ ‚Á‚½‚Æ‚«‚ÍƒGƒ‰[‚ğ•Ô‚·B
+          // é€šã—ç•ªå·ãŒç¯„å›²å¤–ã§ã‚ã£ãŸã¨ãã¯ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™ã€‚
           if (card <= Card.ERROR || Card.CARD_SIZE < card) return Card.ERROR;
-          // ”Ô†‚ğŒvZ‚µ‚Ä•Ô‚·B
+          // ç•ªå·ã‚’è¨ˆç®—ã—ã¦è¿”ã™ã€‚
           return (card - 1) % Card.NUME_SIZE + 1;
         }
         /**
-         * ƒJ[ƒh‚Ì’Ê‚µ”Ô†æ“¾
-         * @param suit  <int> ƒJ[ƒh‚ÌƒX[ƒg
-         * @param no <int> ƒJ[ƒh‚Ì”Ô†
-         * @return          ƒJ[ƒh‚Ì”Ô†
+         * ã‚«ãƒ¼ãƒ‰ã®é€šã—ç•ªå·å–å¾—
+         * @param suit  <int> ã‚«ãƒ¼ãƒ‰ã®ã‚¹ãƒ¼ãƒˆ
+         * @param no <int> ã‚«ãƒ¼ãƒ‰ã®ç•ªå·
+         * @return          ã‚«ãƒ¼ãƒ‰ã®ç•ªå·
          */
         static getData(suit: number, no: number) {
-          // ƒX[ƒgA‚Ü‚½‚Í”Ô†‚ªƒWƒ‡[ƒJ[‚Ì‚Æ‚«‚ÍƒWƒ‡[ƒJ[‚ğ•Ô‚·B
+          // ã‚¹ãƒ¼ãƒˆã€ã¾ãŸã¯ç•ªå·ãŒã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ã®ã¨ãã¯ã‚¸ãƒ§ãƒ¼ã‚«ãƒ¼ã‚’è¿”ã™ã€‚
           if (suit == Card.JOKER || no == Card.JOKER) return Card.JOKER;
-          // ƒX[ƒgA‚Ü‚½‚Í”Ô†‚ª”ÍˆÍŠO‚Å‚ ‚Á‚½‚Æ‚«‚ÍƒGƒ‰[‚ğ•Ô‚·B
+          // ã‚¹ãƒ¼ãƒˆã€ã¾ãŸã¯ç•ªå·ãŒç¯„å›²å¤–ã§ã‚ã£ãŸã¨ãã¯ã‚¨ãƒ©ãƒ¼ã‚’è¿”ã™ã€‚
           if (suit <= Card.ERROR || Card.SUIT_SIZE < suit ||
             no <= Card.ERROR || Card.NUME_SIZE < no) return Card.ERROR;
-          // ’Ê‚µ”Ô†‚ğŒvZ‚µ‚Ä•Ô‚·B
+          // é€šã—ç•ªå·ã‚’è¨ˆç®—ã—ã¦è¿”ã™ã€‚
           return (suit - 1) * Card.NUME_SIZE + no;
         }
         /**
-@        * data‚Åw’è‚µ‚½ƒJ[ƒh‰æ‘œ‚ğæ“¾
-         * @param data <int> ƒJ[ƒh‚Ì’Ê‚µ”Ô†
-         * @return          ƒJ[ƒh‰æ‘œ
+ã€€        * dataã§æŒ‡å®šã—ãŸã‚«ãƒ¼ãƒ‰ç”»åƒã‚’å–å¾—
+         * @param data <int> ã‚«ãƒ¼ãƒ‰ã®é€šã—ç•ªå·
+         * @return          ã‚«ãƒ¼ãƒ‰ç”»åƒ
          */
         static getCard(data: number): TCardSprite {
             if (data <= Card.ERROR || Card.CARD_SIZE < data) return null;
 
             var image = new enchant.Surface(Card.WIDTH * 2, Card.HEIGHT);
 
-            var assetName = enchant.Game.instance.assets[Card.CARD];
-            // •\‚Ì•`‰æ
+            var assetName = enchant.Core.instance.assets[Card.CARD];
+            // è¡¨ã®æç”»
             var x = (Card.getNumber(data) - 1) * Card.WIDTH;
             var y = (Card.getSuit(data) - 1) * Card.HEIGHT;
             image.draw(assetName
                         , x, y, Card.WIDTH, Card.HEIGHT
                         , 0, 0, Card.WIDTH, Card.HEIGHT);
-            // — ‚Ì•`‰æ
+            // è£ã®æç”»
             image.draw(assetName
                         , Card.WIDTH, Card.HEIGHT * 4, Card.WIDTH, Card.HEIGHT
                         , Card.WIDTH, 0, Card.WIDTH, Card.HEIGHT);
@@ -165,7 +165,7 @@ module exte {
             return card;
         };
         /**
-         * ƒJ[ƒh‰æ‘œ‚ğassets‚É“o˜^‚·‚é
+         * ã‚«ãƒ¼ãƒ‰ç”»åƒã‚’assetsã«ç™»éŒ²ã™ã‚‹
          * Card.setImage();
          * var img = new Sprite(size,size);
          * img.image = game.assets[Card.CARD];
@@ -173,7 +173,7 @@ module exte {
         static setImage(): void {
             var cards = new enchant.Surface(Card.WIDTH * Card.NUME_SIZE, Card.HEIGHT * (Card.SUIT_SIZE + 1));
 
-            // ’ÊíƒJ[ƒh‚Ì•`‰æ
+            // é€šå¸¸ã‚«ãƒ¼ãƒ‰ã®æç”»
             for (var card = Card.S01; card <= Card.CARD_SIZE; card++) {
                 var x = (Card.getNumber(card) - 1) * Card.WIDTH;
                 var y = (Card.getSuit(card) - 1) * Card.HEIGHT;
@@ -181,22 +181,22 @@ module exte {
                           , 0, 0, Card.WIDTH, Card.HEIGHT
                           , x, y, Card.WIDTH, Card.HEIGHT);
             };
-            // Joker‚Ì•`‰æ
+            // Jokerã®æç”»
             cards.draw(Card.drawCard(Card.JOKER)
                        , 0, 0, Card.WIDTH, Card.HEIGHT
                        , 0, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
-            // ”w•\†‚Ì•`‰æ
+            // èƒŒè¡¨ç´™ã®æç”»
             cards.draw(Card.drawCard(Card.ERROR)
                        , 0, 0, Card.WIDTH, Card.HEIGHT
                        , Card.WIDTH, Card.SUIT_SIZE * Card.HEIGHT, Card.WIDTH, Card.HEIGHT);
 
-            enchant.Game.instance.assets[Card.CARD] = cards;
+            enchant.Core.instance.assets[Card.CARD] = cards;
         };
         static drawCard(card): enchant.Surface {
             var face = new enchant.Surface(Card.WIDTH,Card.HEIGHT);
-            // ŠO˜g•`‰æ
+            // å¤–æ æç”»
             var c = face.context;
-            //with(face.context) {  //with‚Íany‚¶‚á‚È‚¢‚Æƒ_ƒH
+            //with(face.context) {  //withã¯anyã˜ã‚ƒãªã„ã¨ãƒ€ãƒ¡ï¼Ÿ
                 c.fillStyle = 'white';
                 c.strokeStyle = 'black';
                 c.beginPath();
@@ -214,24 +214,24 @@ module exte {
             //};
             switch (Card.getSuit(card)) {
                 case Card.JOKER:
-                    face.draw(enchant.Game.instance.assets[Card.ICON]
+                    face.draw(enchant.Core.instance.assets[Card.ICON]
                                , 16 * 11, 0, 16, 16, 4, 12, 24, 24);
                     break;
                 case Card.ERROR:
-                    face.draw(enchant.Game.instance.assets[Card.BACK]
+                    face.draw(enchant.Core.instance.assets[Card.BACK]
                                  , 0, 0, 48, 48, 0, 8, 32, 32);
                     break;
                 default:
-                    // ƒX[ƒg•`‰æ
+                    // ã‚¹ãƒ¼ãƒˆæç”»
                     var sx = Card.getSuit(card) == Card.SPADE ? 48 :
                              Card.getSuit(card) == Card.HEART ? 96 :
                              Card.getSuit(card) == Card.DIAMOND ? 80 :
                              Card.getSuit(card) == Card.CLUB ? 64 : 0;
-                    face.draw(enchant.Game.instance.assets[Card.ICON]
+                    face.draw(enchant.Core.instance.assets[Card.ICON]
                                  , sx, 64, 16, 16, 8, 4, 16, 16);
 
-                    // ”•`‰æ
-                    var fontAssetName = enchant.Game.instance.assets[Card.FONT];
+                    // æ•°æç”»
+                    var fontAssetName = enchant.Core.instance.assets[Card.FONT];
                     if (Card.getNumber(card) == 10) {
                         face.draw(fontAssetName
                                     , 16, 16, 16, 16, 1, 26, 16, 16);

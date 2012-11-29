@@ -1,3 +1,7 @@
+// enchant.jsŠg’£ƒ‰ƒCƒuƒ‰ƒŠ
+// The MIT License
+// Copyright (c) 2012 Ryuuma Kishita
+
 module exte {
     declare function toKanji1(value: number): string;
     declare function toKanji2(value: number): string;

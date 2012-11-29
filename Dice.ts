@@ -1,4 +1,4 @@
-// http://9leap.net/games/2250
+ï»¿// http://9leap.net/games/2250
 
 
 /// <reference path="enchant.d.ts"/>
@@ -26,7 +26,7 @@ module exte {
             if (0 < num && num <= Dice.MAXNUM) this.frame = num - 1;
         }
 
-        /* // tl.enchant‚ÍTypeScript‚¾‚Æ‚Ç‚¤ŽÀ‘•‚·‚é‚©•s–¾‚È‚Ì‚Å‚Æ‚è‚ ‚¦‚¸ƒRƒƒ“ƒgƒAƒEƒg
+        /* // tl.enchantã¯TypeScriptã ã¨ã©ã†å®Ÿè£…ã™ã‚‹ã‹ä¸æ˜Žãªã®ã§ã¨ã‚Šã‚ãˆãšã‚³ãƒ¡ãƒ³ãƒˆã‚¢ã‚¦ãƒˆ
         private _rolled = false;
 
         get rolled(): bool {
@@ -59,7 +59,7 @@ module exte {
                        num.push(0,0,0);
             var face = new enchant.Surface(Dice.WIDTH,Dice.HEIGHT);
             var c = face.context;
-            //with(face.context) { //with‚Íany‚¶‚á‚È‚¢‚Æƒ_ƒH
+            //with(face.context) { //withã¯anyã˜ã‚ƒãªã„ã¨ãƒ€ãƒ¡ï¼Ÿ
                 c.moveTo(12,0);
                 c.lineTo(24,12);
                 c.lineTo(24,24);
@@ -72,36 +72,36 @@ module exte {
             var rad = 45 * Math.PI / 180;
             // top
             face.context.setTransform(
-                1,		// ‰¡‚Ì”ä—¦ 1‚ª100%
-                1,		// cŽ²‚ÌˆÚ“®—Ê
-                -1,		// ‰¡Ž²‚ÌˆÚ“®—Ê
-                1,		// c‚Ì”ä—¦ 1‚ª100%
-                12,		// ‚˜Ž²‚Ì•\Ž¦ŠJŽnˆÊ’u
-                -5		// yŽ²‚Ì•\Ž¦ŠJŽnˆÊ’u
+                1,		// æ¨ªã®æ¯”çŽ‡ 1ãŒ100%
+                1,		// ç¸¦è»¸ã®ç§»å‹•é‡
+                -1,		// æ¨ªè»¸ã®ç§»å‹•é‡
+                1,		// ç¸¦ã®æ¯”çŽ‡ 1ãŒ100%
+                12,		// ï½˜è»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
+                -5		// yè»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
             );
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE],
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE],
                       num[0],32,16,16,0, 0,16,16);
             // left
             face.context.setTransform(
-                1,		// ‰¡‚Ì”ä—¦ 1‚ª100%
-                1,		// cŽ²‚ÌˆÚ“®—Ê
-                0,		// ‰¡Ž²‚ÌˆÚ“®—Ê
-                1,		// c‚Ì”ä—¦ 1‚ª100%
-                -2,		// ‚˜Ž²‚Ì•\Ž¦ŠJŽnˆÊ’u
-                7		// yŽ²‚Ì•\Ž¦ŠJŽnˆÊ’u
+                1,		// æ¨ªã®æ¯”çŽ‡ 1ãŒ100%
+                1,		// ç¸¦è»¸ã®ç§»å‹•é‡
+                0,		// æ¨ªè»¸ã®ç§»å‹•é‡
+                1,		// ç¸¦ã®æ¯”çŽ‡ 1ãŒ100%
+                -2,		// ï½˜è»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
+                7		// yè»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
             );
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE],
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE],
                       num[1],32,16,16,0, 0,16,16);
             // right
             face.context.setTransform(
-                1,		// ‰¡‚Ì”ä—¦ 1‚ª100%
-                -1,		// cŽ²‚ÌˆÚ“®—Ê
-                0,		// ‰¡Ž²‚ÌˆÚ“®—Ê
-                1,		// c‚Ì”ä—¦ 1‚ª100%
-                10,		// ‚˜Ž²‚Ì•\Ž¦ŠJŽnˆÊ’u
-                23		// yŽ²‚Ì•\Ž¦ŠJŽnˆÊ’u
+                1,		// æ¨ªã®æ¯”çŽ‡ 1ãŒ100%
+                -1,		// ç¸¦è»¸ã®ç§»å‹•é‡
+                0,		// æ¨ªè»¸ã®ç§»å‹•é‡
+                1,		// ç¸¦ã®æ¯”çŽ‡ 1ãŒ100%
+                10,		// ï½˜è»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
+                23		// yè»¸ã®è¡¨ç¤ºé–‹å§‹ä½ç½®
             );
-            face.draw(enchant.Game.instance.assets[Dice.IMAGE],
+            face.draw(enchant.Core.instance.assets[Dice.IMAGE],
                       num[2],32,16,16,0, 0,16,16);
             return face;
         }

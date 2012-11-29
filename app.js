@@ -28,17 +28,14 @@
     })();
     ExteGame.GameData = GameData;    
 })(ExteGame || (ExteGame = {}));
-
 var ExteGame;
 (function (ExteGame) {
     function CreatePlayScene1(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('1');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
-        var sp1;
-        var sp2;
-
+        var sp1, sp2;
         var label2;
         function updateCol() {
             label2.text = 'exte.collision2Sprites=' + exte.collision2Sprites(sp1, sp2);
@@ -146,7 +143,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene2(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('2');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -176,7 +173,7 @@ var ExteGame;
             kLabel2.x = 140;
             kLabel2.y = 25;
             mainGroup.addChild(kLabel2);
-            label = new enchant.Label('│＼─A' + exte.makeSpace() + 'ハドーケン' + exte.makeSpace() + '!');
+            label = new enchant.Label('│＼─A ハドーケン !');
             label.x = 10;
             label.y = 60;
             mainGroup.addChild(label);
@@ -279,7 +276,7 @@ var ExteGame;
 
                 }
                 case 2: {
-                    rLabel.text += aRand.next.toString() + exte.makeSpace();
+                    rLabel.text += aRand.next.toString() + ' ';
                     break;
 
                 }
@@ -329,7 +326,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene3(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('3');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -418,7 +415,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene4(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('4');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -525,7 +522,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene5(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('5');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -667,7 +664,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene6(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('6');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -732,8 +729,8 @@ var ExteGame;
             }
             if(game.input.a) {
                 var size = 10 + exte.rand(10);
-                var fontSize = size + 'px';
-                logList.regist(fontSize, null, fontSize, size);
+                var font = size + 'px';
+                logList.regist(font, null, font + ' sans-serif', size);
             }
             if(game.input.b) {
                 scene.moveSceneTo('7');
@@ -742,7 +739,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene7(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('7');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -775,7 +772,7 @@ var ExteGame;
             label1.x = 10;
             label1.y = 25;
             mainGroup.addChild(label1);
-            rlabel = new enchant.Label('exte.randomString' + exte.makeSpace() + 'push"A"');
+            rlabel = new enchant.Label('exte.randomString push"A"');
             rlabel.x = 10;
             rlabel.y = 50;
             mainGroup.addChild(rlabel);
@@ -861,13 +858,13 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene8(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('8');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
         var mainGroup = new enchant.Group();
         (function () {
-            var label6 = new enchant.Label('var' + exte.makeSpace() + 'color={r:128, g:0, b:255}');
+            var label6 = new enchant.Label('var color={r:128, g:0, b:255}');
             label6.x = 10;
             label6.y = 10;
             mainGroup.addChild(label6);
@@ -948,7 +945,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlayScene9(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('9');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -1022,7 +1019,7 @@ var ExteGame;
         return scene;
     }
     function CreatePlaySceneTemplate(gameData) {
-        var game = enchant.Game.instance;
+        var game = enchant.Core.instance;
         var scene = new exte.SceneEx('');
         var backGroup = new enchant.Group();
         scene.addChild(backGroup);
@@ -1095,7 +1092,6 @@ var ExteGame;
     }
     ExteGame.CreatePlayScene = CreatePlayScene;
 })(ExteGame || (ExteGame = {}));
-
 var ExteGame;
 (function (ExteGame) {
     window.onload = function () {
@@ -1132,4 +1128,3 @@ var ExteGame;
         game.start();
     };
 })(ExteGame || (ExteGame = {}));
-

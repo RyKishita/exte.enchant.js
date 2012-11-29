@@ -1,4 +1,4 @@
-module ExteGame {
+﻿module ExteGame {
     export class GameData{
         constructor () { }
 
