@@ -2,7 +2,7 @@
 (function (ExteGame) {
     var GameData = (function () {
         function GameData() {
-            this.mapAssetName = 'map1.gif';
+            this.mapAssetName = 'map1.png';
             this.waitAssetName = 'img/wait.png';
             this.buttonWidth = 60;
             this.buttonHeight = 40;
